@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Skills - arc documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arc documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arc-evolve" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="skills"><a class="header" href="#skills">Skills</a></h1>
+<p>Skills are markdown files that provide additional context and instructions to arc. They're loaded at startup and added to the agent's context.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<pre><code class="language-bash">arc --skills ./skills
+</code></pre>
+<p>You can pass multiple skill directories:</p>
+<pre><code class="language-bash">arc --skills ./skills --skills ./my-custom-skills
+</code></pre>
+<h2 id="what-is-a-skill"><a class="header" href="#what-is-a-skill">What is a skill?</a></h2>
+<p>A skill file is a markdown file with YAML frontmatter. It contains instructions, rules, or context that the agent should follow. For example:</p>
+<pre><code class="language-markdown">---
+name: rust-expert
+description: Rust-specific coding guidelines
+tools: [bash, read_file, edit_file]
+---
+
+# Rust Guidelines
+
+- Always use `clippy` before committing
+- Prefer `?` over `.unwrap()` in production code
+- Write tests for every public function
+</code></pre>
+<h2 id="built-in-skills"><a class="header" href="#built-in-skills">Built-in skills</a></h2>
+<p>arc's own evolution is guided by skills in the <code>skills/</code> directory of the repository:</p>
+<ul>
+<li><strong>evolve</strong> — rules for safely modifying its own source code</li>
+<li><strong>communicate</strong> — writing journal entries and issue responses</li>
+<li><strong>self-assess</strong> — analyzing its own capabilities</li>
+<li><strong>research</strong> — searching the web and reading docs</li>
+<li><strong>release</strong> — evaluating readiness for publishing</li>
+</ul>
+<h2 id="managing-skills"><a class="header" href="#managing-skills">Managing skills</a></h2>
+<p>From the REPL, use the <code>/skill</code> command to manage skills:</p>
+<pre><code>/skill              List all loaded skills
+/skill list         List loaded skills with name and description
+/skill show &lt;name&gt;  Show the full content of a skill
+/skill path         Show the skills directory path(s)
+/skill search [query]           Search GitHub for community skills
+/skill install &lt;path&gt;           Install a skill from a local directory
+/skill install gh:user/repo     Install a skill from a GitHub repository
+</code></pre>
+<p>The <code>install</code> subcommand copies a skill directory into <code>~/.config/arc/skills/&lt;name&gt;/</code>. The source directory must contain a <code>SKILL.md</code> file with YAML frontmatter including a <code>name:</code> field.</p>
+<h3 id="searching-for-skills"><a class="header" href="#searching-for-skills">Searching for skills</a></h3>
+<p>Find community-created skills on GitHub:</p>
+<pre><code class="language-bash"># Search for skills by keyword
+/skill search research
+
+# Browse all available skills
+/skill search
+</code></pre>
+<p>The search command looks for repositories tagged with the <code>arc-skill</code> topic on GitHub. Results include the repository name, description, and an install hint. Requires the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>).</p>
+<p>To make your own skill discoverable, add the <code>arc-skill</code> topic to your GitHub repository.</p>
+<h3 id="local-install"><a class="header" href="#local-install">Local install</a></h3>
+<pre><code class="language-bash"># Install a local skill
+/skill install ./my-custom-skill/
+</code></pre>
+<p>This also works as a shell subcommand:</p>
+<pre><code class="language-bash">arc skill install ./my-custom-skill/
+</code></pre>
+<h3 id="remote-install-from-github"><a class="header" href="#remote-install-from-github">Remote install from GitHub</a></h3>
+<p>Install skills directly from GitHub repositories:</p>
+<pre><code class="language-bash"># Install from a repo root
+/skill install gh:user/awesome-skill
+
+# Install from a subdirectory
+/skill install gh:user/skill-collection/skills/my-skill
+
+# Install from a specific branch
+/skill install gh:user/repo@dev
+</code></pre>
+<p>The remote installer uses <code>git clone --depth 1</code> for efficiency, validates the SKILL.md frontmatter, and cleans up the temporary clone automatically. If no SKILL.md is found at the expected location, arc will search the repository and suggest the correct path.</p>
+<h2 id="mcp-servers"><a class="header" href="#mcp-servers">MCP servers</a></h2>
+<p>arc can connect to <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a> servers, giving the agent access to external tools provided by any MCP-compatible server. Use the <code>--mcp</code> flag with a shell command that starts the server via stdio:</p>
+<pre><code class="language-bash">arc --mcp "npx -y @modelcontextprotocol/server-fetch"
+</code></pre>
+<p>The flag is repeatable — connect to multiple MCP servers in a single session:</p>
+<pre><code class="language-bash">arc \
+  --mcp "npx -y @modelcontextprotocol/server-fetch" \
+  --mcp "npx -y @modelcontextprotocol/server-github" \
+  --mcp "python my_custom_server.py"
+</code></pre>
+<h3 id="mcp-in-config-files"><a class="header" href="#mcp-in-config-files">MCP in config files</a></h3>
+<p>You can also configure MCP servers in <code>.arc.toml</code>, <code>~/.arc.toml</code>, or <code>~/.config/arc/config.toml</code>, so they connect automatically without needing CLI flags:</p>
+<pre><code class="language-toml">mcp = ["npx -y @modelcontextprotocol/server-fetch", "npx open-websearch@latest"]
+</code></pre>
+<p>MCP servers from the config file are merged with any <code>--mcp</code> CLI flags — both sources contribute. CLI flags are additive, not overriding.</p>
+<p>Each <code>--mcp</code> command is launched as a child process. arc communicates with it over stdio using the MCP protocol, discovers the tools it offers, and makes them available to the agent alongside the built-in tools.</p>
+<h3 id="tool-name-collisions"><a class="header" href="#tool-name-collisions">Tool-name collisions</a></h3>
+<p>arc's builtin tools (<code>bash</code>, <code>read_file</code>, <code>write_file</code>, <code>edit_file</code>, <code>list_files</code>, <code>search</code>, <code>rename_symbol</code>, <code>ask_user</code>, <code>todo</code>, <code>sub_agent</code>, <code>shared_state</code>) take precedence over MCP tools. If an MCP server exposes a tool with one of those names, arc will skip the entire server at connect time with a warning on stderr — the colliding tool would otherwise cause the provider API to reject the first turn with <code>"Tool names must be unique"</code> and kill the session.</p>
+<p>Note: <code>@modelcontextprotocol/server-filesystem</code> exposes <code>read_file</code> and <code>write_file</code> and will therefore be skipped. Prefer servers with distinct tool names such as <code>@modelcontextprotocol/server-fetch</code>, <code>@modelcontextprotocol/server-memory</code>, or <code>@modelcontextprotocol/server-sequential-thinking</code> — or a filesystem server that prefixes its tools (e.g. <code>fs_read_file</code>).</p>
+<h2 id="openapi-specs"><a class="header" href="#openapi-specs">OpenAPI specs</a></h2>
+<p>You can give arc access to any HTTP API by pointing it at an OpenAPI specification file. arc parses the spec and registers each endpoint as a callable tool:</p>
+<pre><code class="language-bash">arc --openapi ./petstore.yaml
+</code></pre>
+<p>Like <code>--mcp</code>, this flag is repeatable:</p>
+<pre><code class="language-bash">arc --openapi ./api-v1.yaml --openapi ./internal-api.json
+</code></pre>
+<p>Both YAML and JSON spec formats are supported.</p>
+<h2 id="additional-configuration-flags"><a class="header" href="#additional-configuration-flags">Additional configuration flags</a></h2>
+<p>Beyond skills, MCP, and OpenAPI, a few other flags fine-tune agent behavior:</p>
+<h3 id="--temperature-float"><a class="header" href="#--temperature-float"><code>--temperature &lt;float&gt;</code></a></h3>
+<p>Set the sampling temperature (0.0–1.0). Lower values make output more deterministic; higher values make it more creative. Defaults to the model's own default.</p>
+<pre><code class="language-bash">arc --temperature 0.2   # More focused/deterministic
+arc --temperature 0.9   # More creative/varied
+</code></pre>
+<h3 id="--max-turns-int"><a class="header" href="#--max-turns-int"><code>--max-turns &lt;int&gt;</code></a></h3>
+<p>Limit the number of agentic turns (tool-use loops) per prompt. Defaults to 50. Useful for keeping costs predictable or preventing runaway tool loops:</p>
+<pre><code class="language-bash">arc --max-turns 10
+</code></pre>
+<p>Both flags can also be set in <code>.arc.toml</code>:</p>
+<pre><code class="language-toml">temperature = 0.5
+max_turns = 20
+</code></pre>
+<h3 id="--no-bell"><a class="header" href="#--no-bell"><code>--no-bell</code></a></h3>
+<p>Disable the terminal bell notification that rings after long-running prompts (≥3 seconds). By default, arc sends a bell character (<code>\x07</code>) when a prompt completes, which causes most terminals to flash the tab or play a sound — useful when you switch away while waiting. Disable it with the flag or environment variable:</p>
+<pre><code class="language-bash">arc --no-bell
+arc_NO_BELL=1 arc
+</code></pre>
+<h3 id="--no-update-check"><a class="header" href="#--no-update-check"><code>--no-update-check</code></a></h3>
+<p>Skip the startup update check. On startup (interactive REPL mode only), arc checks GitHub for a newer release and shows a notification if one exists. The check uses a 3-second timeout and fails silently on network errors. Disable it with the flag or environment variable:</p>
+<pre><code class="language-bash">arc --no-update-check
+arc_NO_UPDATE_CHECK=1 arc
+</code></pre>
+<p>The update check is automatically skipped in non-interactive modes (piped input, <code>--prompt</code> flag).</p>
+<h3 id="arc_session_budget_secs"><a class="header" href="#arc_session_budget_secs"><code>arc_SESSION_BUDGET_SECS</code></a></h3>
+<p>Soft wall-clock budget for an entire arc session, in seconds. Unset by default — interactive sessions are unbounded. When set, arc exposes a <code>session_budget_remaining()</code> helper that long-running loops (like the self-evolution pipeline) can poll to voluntarily wind down before an external timeout cancels them.</p>
+<pre><code class="language-bash">arc_SESSION_BUDGET_SECS=2700 arc   # 45-minute soft budget
+</code></pre>
+<p>The timer starts on the first call to the helper, not at process startup, so CI cold-start time doesn't burn the budget. If the env var is set but unparseable, arc falls back to the 45-minute default rather than silently disabling the guard. This was added to mitigate hourly cron overlap in the evolution workflow (<a href="https://github.com/MKonovalov/arc-evolve/issues/262">#262</a>).</p>
+<h2 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h2>
+<p>If the skills directory doesn't exist or can't be loaded, arc prints a warning and continues without skills:</p>
+<pre><code>warning: Failed to load skills: ...
+</code></pre>
+<p>This is intentional — skills are optional and should never prevent arc from starting.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../configuration/thinking.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../configuration/permissions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../configuration/thinking.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../configuration/permissions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

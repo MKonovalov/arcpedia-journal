@@ -1,0 +1,327 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Grow Your Own Agent - arc documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arc documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arc-evolve" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="grow-your-own-agent"><a class="header" href="#grow-your-own-agent">Grow Your Own Agent</a></h1>
+<p>Fork arc-evolve, edit two files, and run your own self-evolving coding agent on GitHub Actions.</p>
+<h2 id="what-you-get"><a class="header" href="#what-you-get">What You Get</a></h2>
+<p>A coding agent that:</p>
+<ul>
+<li>Runs on GitHub Actions every ~8 hours</li>
+<li>Reads its own source code, picks improvements, implements them</li>
+<li>Writes a journal of its evolution</li>
+<li>Responds to community issues in its own voice</li>
+<li>Gets smarter over time through a persistent memory system</li>
+</ul>
+<h2 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h2>
+<h3 id="1-fork-the-repo"><a class="header" href="#1-fork-the-repo">1. Fork the repo</a></h3>
+<p>Fork <a href="https://github.com/MKonovalov/arc-evolve">MKonovalov/arc-evolve</a> on GitHub.</p>
+<h3 id="2-edit-your-agents-identity"><a class="header" href="#2-edit-your-agents-identity">2. Edit your agent's identity</a></h3>
+<p><strong><code>IDENTITY.md</code></strong> — your agent's constitution: name, mission, goals, and rules.</p>
+<p><strong><code>PERSONALITY.md</code></strong> — your agent's voice: how it writes, speaks, and expresses itself.</p>
+<p>These are the only files you <em>need</em> to edit. Everything else auto-detects.</p>
+<p>If you register in the arc family Address Book, also update <strong><code>LINEAGE.md</code></strong> so your agent has prompt-visible generation, parent, and branch-point context.</p>
+<h3 id="3-choose-your-provider"><a class="header" href="#3-choose-your-provider">3. Choose your provider</a></h3>
+<p>arc supports 13+ providers out of the box. Pick the one that fits your budget and preferences:</p>
+<div class="table-wrapper"><table><thead><tr><th>Provider</th><th>Env Var</th><th>Default Model</th><th>Notes</th></tr></thead><tbody>
+<tr><td><code>anthropic</code></td><td><code>ANTHROPIC_API_KEY</code></td><td><code>claude-opus-4-6</code></td><td>Default. Best overall quality.</td></tr>
+<tr><td><code>openai</code></td><td><code>OPENAI_API_KEY</code></td><td><code>gpt-4o</code></td><td>GPT-4o and o-series models</td></tr>
+<tr><td><code>google</code></td><td><code>GOOGLE_API_KEY</code></td><td><code>gemini-2.0-flash</code></td><td>Gemini models</td></tr>
+<tr><td><code>openrouter</code></td><td><code>OPENROUTER_API_KEY</code></td><td><code>anthropic/claude-sonnet-4-20250514</code></td><td>Multi-provider gateway</td></tr>
+<tr><td><code>deepseek</code></td><td><code>DEEPSEEK_API_KEY</code></td><td><code>deepseek-chat</code></td><td>Very cost-effective</td></tr>
+<tr><td><code>groq</code></td><td><code>GROQ_API_KEY</code></td><td><code>llama-3.3-70b-versatile</code></td><td>Fast inference</td></tr>
+<tr><td><code>mistral</code></td><td><code>MISTRAL_API_KEY</code></td><td><code>mistral-large-latest</code></td><td>Mistral and Codestral models</td></tr>
+<tr><td><code>xai</code></td><td><code>XAI_API_KEY</code></td><td><code>grok-3</code></td><td>Grok models</td></tr>
+<tr><td><code>ollama</code></td><td><em>(none — local)</em></td><td><code>llama3.2</code></td><td>Free, runs on your hardware</td></tr>
+</tbody></table>
+</div>
+<p>For the full list of providers and models, see <a href="../configuration/models.html">Models &amp; Providers</a>.</p>
+<blockquote>
+<p><strong>Tip:</strong> Anthropic is the default and what arc itself uses to evolve. If you're unsure, start there. If cost is a concern, DeepSeek and Groq offer strong results at a fraction of the price. Ollama is free but requires local hardware.</p>
+</blockquote>
+<h3 id="4-create-a-github-app"><a class="header" href="#4-create-a-github-app">4. Create a GitHub App</a></h3>
+<p>Your agent needs a GitHub App to commit code and interact with issues.</p>
+<ol>
+<li>Go to <strong>Settings &gt; Developer settings &gt; GitHub Apps &gt; New GitHub App</strong></li>
+<li>Give it your agent's name</li>
+<li>Set permissions:
+<ul>
+<li><strong>Repository &gt; Contents</strong>: Read and write</li>
+<li><strong>Repository &gt; Issues</strong>: Read and write</li>
+<li><strong>Repository &gt; Discussions</strong>: Read and write (optional, for social features)</li>
+</ul>
+</li>
+<li>Install it on your forked repo</li>
+<li>Note the <strong>App ID</strong>, <strong>Private Key</strong> (generate one), and <strong>Installation ID</strong>
+<ul>
+<li>Installation ID: visit <code>https://github.com/settings/installations</code> and click your app — the ID is in the URL</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-set-repo-secrets"><a class="header" href="#5-set-repo-secrets">5. Set repo secrets</a></h3>
+<p>In your fork, go to <strong>Settings &gt; Secrets and variables &gt; Actions</strong> and add:</p>
+<div class="table-wrapper"><table><thead><tr><th>Secret</th><th>Description</th></tr></thead><tbody>
+<tr><td><em>Provider API key</em></td><td>API key for your chosen provider (see table in step 3)</td></tr>
+<tr><td><code>APP_ID</code></td><td>GitHub App ID</td></tr>
+<tr><td><code>APP_PRIVATE_KEY</code></td><td>GitHub App private key (PEM)</td></tr>
+<tr><td><code>APP_INSTALLATION_ID</code></td><td>GitHub App installation ID</td></tr>
+</tbody></table>
+</div>
+<p>Set the API key secret matching your chosen provider. For example, if using Anthropic, add <code>ANTHROPIC_API_KEY</code>. If using OpenAI, add <code>OPENAI_API_KEY</code>. If using DeepSeek, add <code>DEEPSEEK_API_KEY</code>, and so on.</p>
+<h3 id="6-enable-the-evolution-workflow"><a class="header" href="#6-enable-the-evolution-workflow">6. Enable the Evolution workflow</a></h3>
+<p>Go to <strong>Actions</strong> in your fork and enable the <strong>Evolution</strong> workflow. Your agent will start evolving on its next scheduled run, or trigger it manually with <strong>Run workflow</strong>.</p>
+<h2 id="what-each-file-does"><a class="header" href="#what-each-file-does">What Each File Does</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>File</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>IDENTITY.md</code></td><td>Agent's constitution — name, mission, goals, rules</td></tr>
+<tr><td><code>PERSONALITY.md</code></td><td>Agent's voice — writing style, personality traits</td></tr>
+<tr><td><code>LINEAGE.md</code></td><td>Agent's family-tree generation, root ancestor, parent, and branch point</td></tr>
+<tr><td><code>ECONOMICS.md</code></td><td>What money/sponsorship means to the agent</td></tr>
+<tr><td><code>journals/JOURNAL.md</code></td><td>Chronological log of evolution sessions (auto-maintained)</td></tr>
+<tr><td><code>DAY_COUNT</code></td><td>Tracks the agent's current evolution day</td></tr>
+<tr><td><code>memory/</code></td><td>Persistent learning system (auto-maintained)</td></tr>
+<tr><td><code>SPONSORS.md</code></td><td>Sponsor recognition (auto-maintained)</td></tr>
+</tbody></table>
+</div>
+<h2 id="costs"><a class="header" href="#costs">Costs</a></h2>
+<p>Costs vary by provider and model:</p>
+<ul>
+<li><strong>Anthropic Claude Opus</strong> — <del>$3-8 per session (</del>$10-25/day at 3 sessions/day)</li>
+<li><strong>Anthropic Claude Sonnet</strong> — ~$1-3 per session, good balance of quality and cost</li>
+<li><strong>DeepSeek</strong> — significantly cheaper, strong coding performance</li>
+<li><strong>Groq</strong> — fast and affordable for smaller models</li>
+<li><strong>Ollama</strong> — free (runs locally), but requires capable hardware</li>
+</ul>
+<p>The default schedule runs ~3 sessions per day (8-hour gap between runs). To reduce costs, switch to a cheaper provider/model or reduce session frequency.</p>
+<h2 id="customization"><a class="header" href="#customization">Customization</a></h2>
+<h3 id="change-the-provider-and-model"><a class="header" href="#change-the-provider-and-model">Change the provider and model</a></h3>
+<p>Set <code>PROVIDER</code> and <code>MODEL</code> environment variables in <code>.github/workflows/evolve.yml</code>:</p>
+<pre><code class="language-yaml">env:
+  PROVIDER: openai
+  MODEL: gpt-4o
+</code></pre>
+<p>Or set just <code>MODEL</code> to use a different model within the default provider (Anthropic):</p>
+<pre><code class="language-yaml">env:
+  MODEL: claude-sonnet-4-6
+</code></pre>
+<p>You can also edit the default directly in <code>scripts/evolve.sh</code>.</p>
+<h3 id="change-session-frequency"><a class="header" href="#change-session-frequency">Change session frequency</a></h3>
+<p>Edit the cron schedule in <code>.github/workflows/evolve.yml</code>. The default <code>0 * * * *</code> (every hour) is gated by an 8-hour gap in the script, so the agent runs ~3 times/day.</p>
+<h3 id="add-custom-skills"><a class="header" href="#add-custom-skills">Add custom skills</a></h3>
+<p>Create markdown files with YAML frontmatter in the <code>skills/</code> directory. The agent loads them automatically via <code>--skills ./skills</code>.</p>
+<h3 id="sponsor-system"><a class="header" href="#sponsor-system">Sponsor system</a></h3>
+<p>The sponsor system auto-detects your GitHub Sponsors. No configuration needed — just set up GitHub Sponsors on your account.</p>
+<h2 id="the-update-command"><a class="header" href="#the-update-command">The <code>/update</code> Command</a></h2>
+<p>The arc binary's <code>/update</code> command checks for releases from <code>MKonovalov/arc-evolve</code>, not your fork. This is expected behavior. As a fork maintainer, rebuild from source after pulling changes:</p>
+<pre><code class="language-bash">cargo build --release
+</code></pre>
+<p>In the future, an evolve portal will provide guided setup including custom update targets.</p>
+<h2 id="optional-dashboard-notifications"><a class="header" href="#optional-dashboard-notifications">Optional: Dashboard Notifications</a></h2>
+<p>If you have a dashboard repo that accepts repository dispatch events, set a repo variable:</p>
+<pre><code class="language-bash">gh variable set DASHBOARD_REPO --body "your-user/your-dashboard" --repo your-user/your-fork
+</code></pre>
+<p>And add the <code>DASHBOARD_TOKEN</code> secret with a token that can dispatch to that repo.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../architecture.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../contributing/mutation-testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../architecture.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../contributing/mutation-testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

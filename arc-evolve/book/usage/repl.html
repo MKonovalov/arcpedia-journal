@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Interactive Mode (REPL) - arc documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arc documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arc-evolve" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="interactive-mode-repl"><a class="header" href="#interactive-mode-repl">Interactive Mode (REPL)</a></h1>
+<p>Interactive mode is the default when you run arc in a terminal. It gives you a read-eval-print loop where you can have a multi-turn conversation with the agent.</p>
+<h2 id="starting"><a class="header" href="#starting">Starting</a></h2>
+<pre><code class="language-bash">arc
+# or
+cargo run
+</code></pre>
+<h2 id="the-prompt"><a class="header" href="#the-prompt">The prompt</a></h2>
+<p>The prompt shows your current git branch (if you're in a git repo):</p>
+<pre><code>main 🐙 › _
+</code></pre>
+<p>If you're not in a git repo, you get a plain prompt:</p>
+<pre><code>🐙 › _
+</code></pre>
+<h2 id="line-editing--history"><a class="header" href="#line-editing--history">Line editing &amp; history</a></h2>
+<p>arc uses <a href="https://crates.io/crates/rustyline">rustyline</a> for a full readline experience:</p>
+<ul>
+<li><strong>Arrow keys</strong>: Navigate within the current line (← →) and through command history (↑ ↓)</li>
+<li><strong>Inline hints</strong>: As you type a slash command, a dimmed suggestion appears after the cursor showing the completion and a short description — e.g. typing <code>/he</code> shows <code>lp — Show help for commands</code>. Press Tab or → to accept.</li>
+<li><strong>Tab completion</strong>: Type <code>/</code> and press Tab to see available slash commands with descriptions — each command is shown alongside a short summary of what it does. Partial matches work too — <code>/he&lt;Tab&gt;</code> suggests <code>/help</code> and <code>/health</code>. After typing a command + space, argument-aware completions kick in:
+<ul>
+<li><code>/model &lt;Tab&gt;</code> — suggests known model names (Claude, GPT, Gemini, etc.)</li>
+<li><code>/provider &lt;Tab&gt;</code> — suggests known provider names (anthropic, openai, google, etc.)</li>
+<li><code>/think &lt;Tab&gt;</code> — suggests thinking levels (off, minimal, low, medium, high)</li>
+<li><code>/git &lt;Tab&gt;</code> — suggests git subcommands (status, log, add, diff, branch, stash)</li>
+<li><code>/pr &lt;Tab&gt;</code> — suggests PR subcommands (list, view, diff, comment, create, checkout)</li>
+<li><code>/save &lt;Tab&gt;</code> and <code>/load &lt;Tab&gt;</code> — suggest <code>.json</code> session files in the current directory</li>
+<li>File paths also complete — type <code>src/ma&lt;Tab&gt;</code> to get <code>src/main.rs</code>, or <code>Cargo&lt;Tab&gt;</code> to get <code>Cargo.toml</code>. Directories complete with a trailing <code>/</code> for easy continued navigation.</li>
+</ul>
+</li>
+<li><strong>History recall</strong>: Previous inputs are saved across sessions</li>
+<li><strong>Keyboard shortcuts</strong>: Ctrl-A (start of line), Ctrl-E (end of line), Ctrl-K (kill to end), Ctrl-W (delete word back)</li>
+<li><strong>History file</strong>: Stored at <code>$XDG_DATA_HOME/arc/history</code> (defaults to <code>~/.local/share/arc/history</code>)</li>
+</ul>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
+<ol>
+<li>You type a message</li>
+<li>arc sends it to the LLM along with conversation history</li>
+<li>The LLM may call tools (read files, run commands, etc.)</li>
+<li>Tool results are streamed back — you see each tool as it executes</li>
+<li>The final text response is printed</li>
+<li>Token usage and cost are shown after each turn</li>
+</ol>
+<h3 id="auto-continue"><a class="header" href="#auto-continue">Auto-continue</a></h3>
+<p>If the model stops mid-work (e.g., it says "Next, I'll fix the tests..." but stops), arc automatically sends a follow-up prompt to continue. You'll see:</p>
+<pre><code>  ⚡ auto-continuing (1/3 — response appears incomplete)...
+</code></pre>
+<p>This happens up to 3 times per user turn. Auto-continue won't fire if:</p>
+<ul>
+<li>The model encountered an error</li>
+<li>The session budget is exhausted</li>
+<li>The response doesn't show clear signs of being incomplete</li>
+</ul>
+<h2 id="shell-passthrough"><a class="header" href="#shell-passthrough">Shell passthrough</a></h2>
+<p>Prefix a line with <code>!</code> to run a shell command directly — no API call, no tokens, no confirmation prompt:</p>
+<pre><code>🐙 › !git status
+🐙 › !ls -la src/
+</code></pre>
+<p>Output streams live to your terminal (via <code>sh -c</code> on Unix, <code>cmd /C</code> on Windows), and the exit code is shown only when non-zero. A bare <code>!</code> prints a usage hint.</p>
+<h3 id="--ask-about-the-last-commands-output"><a class="header" href="#--ask-about-the-last-commands-output"><code>!?</code> — ask about the last command's output</a></h3>
+<p><code>!</code> commands never enter the conversation, but sometimes you <em>want</em> arc to look at what just happened. Type <code>!?</code> to feed the last <code>!</code> command — its command line, exit code, and output tail (last ~200 lines / 8KB, captured as a tee while it streamed) — into the conversation:</p>
+<pre><code>🐙 › !cargo test
+   ... (output streams live) ...
+   exit 101
+   command failed (exit 101) — type !? to ask arc about the output
+🐙 › !? why did the second test fail
+</code></pre>
+<ul>
+<li>Bare <code>!?</code> uses a default question: after a failure, "explain what went wrong and how to fix it"; after a success, "summarize this output".</li>
+<li><code>!? &lt;question&gt;</code> asks your own question about the output.</li>
+<li>Works after successful commands too (the failure hint just doesn't appear).</li>
+<li>If no <code>!</code> command has run yet, <code>!?</code> prints a one-liner and does nothing.</li>
+<li>The capture is non-consuming — you can ask <code>!?</code> follow-ups about the same output more than once.</li>
+</ul>
+<p>This is fully opt-in: nothing enters the conversation (and no tokens are spent) unless you type <code>!?</code>.</p>
+<h2 id="tool-output"><a class="header" href="#tool-output">Tool output</a></h2>
+<p>When arc uses tools, you'll see status indicators:</p>
+<pre><code>  ▶ $ cargo test ✓ (2.1s)
+  ▶ read src/main.rs ✓ (42ms)
+  ▶ edit src/lib.rs ✓ (15ms)
+  ▶ $ cargo test ✗ (1.8s)
+</code></pre>
+<ul>
+<li><code>✓</code> means the tool succeeded</li>
+<li><code>✗</code> means the tool returned an error</li>
+<li>The duration shows how long the tool took</li>
+</ul>
+<h2 id="token-usage"><a class="header" href="#token-usage">Token usage</a></h2>
+<p>After each response, you'll see a compact token summary:</p>
+<pre><code>  ↳ 3.2s · 1523→842 tokens · $0.0234
+</code></pre>
+<p>Use <code>--verbose</code> (or <code>-v</code>) for the full breakdown including session totals and cache info.</p>
+<p>This shows:</p>
+<ul>
+<li>Wall-clock time for the response</li>
+<li>Input→output tokens for this turn</li>
+<li>Estimated cost for this turn</li>
+</ul>
+<h2 id="interrupting"><a class="header" href="#interrupting">Interrupting</a></h2>
+<p>Press <strong>Ctrl+C</strong> to cancel the current response. The agent will stop and you can type a new prompt. Press Ctrl+C again to exit.</p>
+<h2 id="completion-notifications"><a class="header" href="#completion-notifications">Completion notifications</a></h2>
+<p>When a prompt takes more than a few seconds, arc rings the terminal bell so you notice the finish even if you switched windows (disable with <code>no_bell = true</code> or <code>--no-bell</code>).</p>
+<p>For an actionable desktop alert, set the opt-in <code>notify_command</code> config key — a shell command arc runs (fire-and-forget) whenever a long prompt finishes, at the same threshold as the bell:</p>
+<pre><code class="language-toml"># .arc.toml — Linux
+notify_command = "notify-send 'arc' 'done'"
+
+# macOS
+notify_command = "osascript -e 'display notification \"done\" with title \"arc\"'"
+</code></pre>
+<p>Or set it from inside the REPL:</p>
+<pre><code>/config set notify_command notify-send 'arc' 'done'
+</code></pre>
+<p>Details:</p>
+<ul>
+<li><strong>Opt-in and inert by default</strong> — when the key is absent (or empty), nothing is spawned and no tools are probed.</li>
+<li>Runs via <code>sh -c</code> on Unix and <code>cmd /C</code> on Windows, fully detached: arc never waits on it and its output is discarded, so it can never block the REPL.</li>
+<li>The command receives two environment variables so one script can serve multiple purposes: <code>arc_EVENT=prompt_completed</code> and <code>arc_ELAPSED_SECS=&lt;seconds&gt;</code>.</li>
+<li>If the command fails to spawn, arc stays silent by default (one-line warning with <code>--verbose</code>).</li>
+<li>Setting it to an empty string clears it: <code>/config set notify_command ""</code>.</li>
+</ul>
+<h2 id="inline-file-mentions"><a class="header" href="#inline-file-mentions">Inline @file mentions</a></h2>
+<p>You can reference files directly in your prompts using <code>@path</code> syntax. The file content is automatically read and injected into the conversation — no need for a separate <code>/add</code> command.</p>
+<pre><code>&gt; explain @src/main.rs
+  ✓ added src/main.rs (250 lines)
+  (1 file inlined from @mentions)
+
+&gt; refactor @src/cli.rs:50-100
+  ✓ added src/cli.rs (lines 50-100) (51 lines)
+  (1 file inlined from @mentions)
+
+&gt; compare @Cargo.toml and @README.md
+  ✓ added Cargo.toml (35 lines)
+  ✓ added README.md (120 lines)
+  (2 files inlined from @mentions)
+</code></pre>
+<p><strong>How it works:</strong></p>
+<ul>
+<li><code>@path</code> — injects the entire file</li>
+<li><code>@path:start-end</code> — injects a specific line range</li>
+<li>If the path doesn't exist, the <code>@mention</code> is left as-is (it might be a username)</li>
+<li>Email-like patterns (<code>user@example.com</code>) are not treated as file mentions</li>
+<li>Images work too: <code>@screenshot.png</code> inlines the image into the conversation</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../getting-started/quick-start.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../usage/single-prompt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../getting-started/quick-start.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../usage/single-prompt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

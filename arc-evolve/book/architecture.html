@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Architecture Overview - arc documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arc documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arc-evolve" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="architecture"><a class="header" href="#architecture">Architecture</a></h1>
+<p>This page explains the <em>reasoning</em> behind arc's internal design — why the codebase is shaped the way it is, what trade-offs were made, and what invariants contributors should understand before changing things. For a machine-generated dependency graph, see <a href="https://deepwiki.com/MKonovalov/arc-evolve">DeepWiki</a>.</p>
+<h2 id="why-13-modules-instead-of-3"><a class="header" href="#why-13-modules-instead-of-3">Why 13 modules instead of 3?</a></h2>
+<p>arc started as a single 200-line file. By Day 10 it was a single 3,400-line <code>main.rs</code>. That file was split over Days 10–15 into the current structure, not because someone sat down and designed thirteen modules, but because the code kept telling us where the seams were.</p>
+<p>The split follows a simple heuristic: <strong>if two chunks of code change for different reasons, they belong in different files.</strong> Adding a new <code>/git</code> subcommand shouldn't force you to scroll past the markdown renderer. Fixing a cost-calculation bug shouldn't put you in the same file as the CLI argument parser.</p>
+<p>The current modules, from smallest to largest:</p>
+<div class="table-wrapper"><table><thead><tr><th>Module</th><th style="text-align: right">Lines</th><th>Role</th></tr></thead><tbody>
+<tr><td><code>memory.rs</code></td><td style="text-align: right">~375</td><td>Project-specific <code>.arc/memory.json</code> persistence</td></tr>
+<tr><td><code>docs.rs</code></td><td style="text-align: right">~550</td><td>Fetching and parsing docs.rs HTML</td></tr>
+<tr><td><code>help.rs</code></td><td style="text-align: right">~840</td><td>Per-command help text and <code>/help</code> handler</td></tr>
+<tr><td><code>git.rs</code></td><td style="text-align: right">~1,080</td><td>Low-level git operations (branch, commit, diff)</td></tr>
+<tr><td><code>commands_git.rs</code></td><td style="text-align: right">~1,130</td><td><code>/commit</code>, <code>/diff</code>, <code>/undo</code>, <code>/pr</code>, <code>/review</code> handlers</td></tr>
+<tr><td><code>repl.rs</code></td><td style="text-align: right">~1,270</td><td>Readline loop, tab completion, multi-line input</td></tr>
+<tr><td><code>commands_session.rs</code></td><td style="text-align: right">~1,340</td><td><code>/save</code>, <code>/load</code>, <code>/export</code>, <code>/spawn</code>, <code>/mark</code>, <code>/jump</code></td></tr>
+<tr><td><code>main.rs</code></td><td style="text-align: right">~1,560</td><td>Entry point, agent construction, tool wiring</td></tr>
+<tr><td><code>prompt.rs</code></td><td style="text-align: right">~1,870</td><td>Agent execution, streaming event loop, retry logic</td></tr>
+<tr><td><code>cli.rs</code></td><td style="text-align: right">~2,520</td><td>Argument parsing, config files, provider selection</td></tr>
+<tr><td><code>commands.rs</code></td><td style="text-align: right">~2,910</td><td>Core command dispatch, re-exports sub-modules</td></tr>
+<tr><td><code>commands_project.rs</code></td><td style="text-align: right">~3,660</td><td><code>/add</code>, <code>/fix</code>, <code>/test</code>, <code>/lint</code>, <code>/tree</code>, <code>/find</code>, <code>/web</code>, <code>/plan</code></td></tr>
+<tr><td><code>format.rs</code></td><td style="text-align: right">~4,700</td><td>Colors, markdown rendering, cost calc, spinner, diffs</td></tr>
+</tbody></table>
+</div>
+<p>Thirteen modules is a lot for ~24k lines. The alternative — three or four large files — would be easier to navigate in a directory listing but harder to work in. When a module is under 1,500 lines, you can hold its entire API in your head. When it's 4,700 lines (like <code>format.rs</code>), you start wanting to split it further — and that's a fair instinct, discussed below.</p>
+<h2 id="the-layered-design-and-why-it-matters"><a class="header" href="#the-layered-design-and-why-it-matters">The layered design and why it matters</a></h2>
+<p>The modules form five rough layers, and the key invariant is: <strong>dependencies only point downward.</strong></p>
+<pre><code>  ┌─────────────────────────────────────────────────┐
+  │  Entry          main.rs                         │
+  ├─────────────────────────────────────────────────┤
+  │  REPL           repl.rs                         │
+  ├─────────────────────────────────────────────────┤
+  │  Commands       commands.rs                     │
+  │                 commands_git.rs                  │
+  │                 commands_project.rs              │
+  │                 commands_session.rs              │
+  │                 help.rs                          │
+  ├─────────────────────────────────────────────────┤
+  │  Engine         prompt.rs       format.rs       │
+  ├─────────────────────────────────────────────────┤
+  │  Utilities      git.rs   memory.rs   docs.rs    │
+  └─────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Entry layer.</strong> <code>main.rs</code> parses CLI args (via <code>cli.rs</code>), builds the agent, wires up tools with permission checks, and hands control to either <code>repl.rs</code> (interactive) or <code>prompt.rs</code> (single-prompt / piped mode). It owns the <code>AgentConfig</code> struct and the <code>build_agent()</code> / <code>configure_agent()</code> functions. It also defines <code>StreamingBashTool</code>, a custom replacement for arcagent's default <code>BashTool</code> that reads subprocess stdout/stderr line-by-line via <code>tokio::io::AsyncBufReadExt</code> and emits periodic <code>ToolExecutionUpdate</code> events through the <code>on_update</code> callback. This means when a user runs <code>cargo build</code> or <code>npm install</code>, partial output appears in real-time instead of after the command finishes. The reasoning: agent construction is complex (provider selection, tool wiring, MCP/OpenAPI setup, permission configuration) and shouldn't be tangled with either the REPL loop or command handlers.</p>
+<p><strong>REPL layer.</strong> <code>repl.rs</code> owns the readline loop, tab completion, multi-line input detection, and the big <code>match</code> block that dispatches <code>/</code> commands. It depends on nearly everything below it because it's the traffic cop — but nothing depends on it. This is intentional: piped mode and single-prompt mode bypass the REPL entirely and go straight to <code>prompt.rs</code>.</p>
+<p><strong>Command layer.</strong> <code>commands.rs</code> is the hub — it re-exports handlers from three sub-modules (<code>commands_git.rs</code>, <code>commands_project.rs</code>, <code>commands_session.rs</code>) and <code>help.rs</code>. The sub-module split follows <em>domain</em>, not <em>size</em>: git-workflow commands in one file, project-workflow commands in another, session-management commands in a third. This means adding a new <code>/git stash pop</code> subcommand only touches <code>commands_git.rs</code>, even though <code>commands_project.rs</code> is three times larger. The split is by reason-to-change, not by line count.</p>
+<p><strong>Engine layer.</strong> <code>prompt.rs</code> and <code>format.rs</code> are the two largest modules by complexity. <code>prompt.rs</code> runs the agent, processes the streaming event channel, handles retries on transient errors, and manages context overflow (auto-compaction). <code>format.rs</code> handles everything the user <em>sees</em>: ANSI colors, the incremental <code>MarkdownRenderer</code>, cost calculations for seven providers, the terminal spinner, diff formatting, and dozens of small display utilities. These two modules sit at the same layer because they collaborate tightly — <code>prompt.rs</code> feeds events to <code>format.rs</code>'s renderer — but neither depends on commands or the REPL.</p>
+<p><strong>Utility layer.</strong> <code>git.rs</code>, <code>memory.rs</code>, and <code>docs.rs</code> are leaf modules with no upward dependencies. They wrap external systems (git CLI, filesystem JSON, docs.rs HTTP) behind clean Rust APIs. Any module above can call into them, but they never call up. This makes them easy to test in isolation — and they are: <code>git.rs</code> has 41 tests, <code>memory.rs</code> has 14, <code>docs.rs</code> has 23.</p>
+<p>The layering isn't enforced by the compiler — Rust's module system doesn't prevent circular <code>use crate::</code> imports at the module level. It's enforced by convention and by the fact that violations immediately feel wrong: if <code>git.rs</code> needed to call a command handler, that would be a sign the abstraction is leaking.</p>
+<h2 id="why-formatrs-is-the-largest-file"><a class="header" href="#why-formatrs-is-the-largest-file">Why format.rs is the largest file</a></h2>
+<p>At ~4,700 lines with 256 tests, <code>format.rs</code> is twice the size of any other module. This isn't accidental — it's the consequence of a design choice: <strong>all terminal presentation logic lives in one place.</strong></p>
+<p>The module contains:</p>
+<ul>
+<li><strong>Color system</strong> — the <code>Color</code> wrapper that respects <code>NO_COLOR</code>, all ANSI color constants</li>
+<li><strong>MarkdownRenderer</strong> — incremental streaming renderer that turns text deltas into ANSI-colored output with syntax highlighting, handling code blocks, headers, bold/italic, lists, and inline code as tokens arrive</li>
+<li><strong>Cost calculations</strong> — pricing tables for seven providers, input/output/cache cost breakdowns</li>
+<li><strong>Spinner</strong> — background activity indicator for API roundtrips</li>
+<li><strong>Display utilities</strong> — <code>pluralize</code>, <code>truncate</code>, <code>context_bar</code>, <code>format_duration</code>, <code>format_token_count</code>, <code>format_edit_diff</code>, <code>format_tool_summary</code>, and more</li>
+</ul>
+<p>The alternative would be splitting into <code>color.rs</code>, <code>renderer.rs</code>, <code>cost.rs</code>, etc. That's probably the right move eventually. But today, having all presentation in one file has a benefit: when you change how something looks, you only need to look in one place. The <code>MarkdownRenderer</code> uses the color system, cost formatting uses the color system, the spinner uses the color system — they're coupled by the shared presentation layer, and co-location makes that coupling visible rather than hiding it across five small files.</p>
+<p>The 256 tests are the reason this works at ~4,700 lines. Every public function has test coverage. The <code>MarkdownRenderer</code> alone has tests for every markdown construct it handles. If those tests didn't exist, the file would be unmaintainable at this size.</p>
+<h2 id="why-clirs-is-so-large"><a class="header" href="#why-clirs-is-so-large">Why cli.rs is so large</a></h2>
+<p><code>cli.rs</code> (~2,520 lines) handles three jobs that sound simple but aren't:</p>
+<ol>
+<li>
+<p><strong>Argument parsing</strong> — arc doesn't use <code>clap</code> or <code>structopt</code>. Arguments are parsed by hand from <code>std::env::args</code>. This was a deliberate choice: the CLI has unusual needs (multi-value <code>--mcp</code> flags, <code>--provider</code> with fallback chains, config file merging) that are easier to handle with custom parsing than with a framework's escape hatches. The trade-off is more code in <code>cli.rs</code>, but zero macro magic and full control over error messages.</p>
+</li>
+<li>
+<p><strong>Config file merging</strong> — <code>.arc.toml</code> and <code>arc.md</code> settings merge with CLI flags and environment variables, with a clear precedence chain. This merging logic accounts for hundreds of lines.</p>
+</li>
+<li>
+<p><strong>Provider configuration</strong> — selecting the right API key, endpoint, and default model for each of eight providers, including fallback behavior when keys aren't set.</p>
+</li>
+</ol>
+<p>The 92 tests in <code>cli.rs</code> verify the parsing of every flag and every merge scenario. Adding a new CLI flag means adding it in one place and adding a test.</p>
+<h2 id="the-command-dispatch-pattern"><a class="header" href="#the-command-dispatch-pattern">The command dispatch pattern</a></h2>
+<p>Every <code>/command</code> follows the same pattern:</p>
+<ol>
+<li>User types <code>/foo bar baz</code> in the REPL</li>
+<li><code>repl.rs</code> matches on <code>"/foo"</code> and calls <code>commands::handle_foo(args, agent, ...)</code></li>
+<li>The handler does its work, possibly calling into utility modules</li>
+<li>If it needs the LLM, it calls <code>prompt::run_prompt()</code> with a constructed input</li>
+</ol>
+<p>This pattern is enforced by convention, not by a trait. Early versions tried a <code>Command</code> trait with <code>execute()</code>, but it added ceremony without value — every command has different arguments, different return types, and different needs (some need the agent, some don't, some are async, some aren't). A simple function per command turned out to be the right abstraction level.</p>
+<p>The <code>commands.rs</code> hub re-exports all handlers so the REPL only needs <code>use crate::commands::*</code>. The sub-modules (<code>commands_git</code>, <code>commands_project</code>, <code>commands_session</code>) group by domain. When you run <code>/commit</code>, the REPL calls <code>handle_commit()</code>, which is defined in <code>commands_git.rs</code> and re-exported through <code>commands.rs</code>.</p>
+<h2 id="why-promptrs-handles-retries-internally"><a class="header" href="#why-promptrs-handles-retries-internally">Why prompt.rs handles retries internally</a></h2>
+<p><code>prompt.rs</code> encapsulates the entire agent interaction lifecycle: sending the prompt, receiving streaming events, rendering output, and handling errors. Retry logic lives here — not in the REPL or in <code>main.rs</code> — because retries need access to the event stream state.</p>
+<p>Three kinds of retries happen:</p>
+<ul>
+<li><strong>Tool failures</strong> — if a tool execution fails, the error is sent back to the LLM as context and it retries (up to 2 times). This happens inside the agent's own loop.</li>
+<li><strong>Transient API errors</strong> (429, 5xx) — retried with exponential backoff. The REPL doesn't need to know this happened.</li>
+<li><strong>Context overflow</strong> — when the conversation exceeds the context window, <code>prompt.rs</code> triggers auto-compaction (asking the LLM to summarize the conversation so far) and retries with the compressed context.</li>
+</ul>
+<p>Keeping this in <code>prompt.rs</code> means the REPL's contract is simple: call <code>run_prompt()</code>, get back a <code>PromptOutcome</code> with the response text, token usage, and any unrecoverable errors. The REPL never has to think about retries, backoff, or context management.</p>
+<h2 id="the-streaming-renderer-design"><a class="header" href="#the-streaming-renderer-design">The streaming renderer design</a></h2>
+<p>arc streams LLM output token-by-token. The <code>MarkdownRenderer</code> in <code>format.rs</code> is an incremental state machine that receives text deltas (often partial words or half a markdown construct) and emits ANSI-colored output. This is architecturally significant because:</p>
+<ul>
+<li><strong>It can't buffer entire lines.</strong> If it did, the output would appear in chunks instead of flowing. An early version had this bug — it was technically correct but felt broken. (Day 17 fix.)</li>
+<li><strong>It must track state across deltas.</strong> When a delta contains <code>`</code> and the next delta contains <code>rs</code>, the renderer must know it's inside a code block header. The state machine tracks: are we in a code block? What language? Are we in bold? Italic? A header? A list item?</li>
+<li><strong>It must handle malformed markdown gracefully.</strong> LLMs sometimes emit unclosed code blocks, nested formatting that doesn't resolve, or markdown-like syntax that isn't actually markdown. The renderer must produce reasonable output regardless.</li>
+</ul>
+<p>The alternative — buffering the entire response and rendering it at the end — would be simpler but would make the tool feel unresponsive. Streaming is a UX requirement that imposes real architectural cost.</p>
+<h2 id="invariants-contributors-should-know"><a class="header" href="#invariants-contributors-should-know">Invariants contributors should know</a></h2>
+<p><strong>No upward dependencies from utilities.</strong> <code>git.rs</code>, <code>memory.rs</code>, and <code>docs.rs</code> must never <code>use crate::commands</code> or <code>use crate::repl</code>. If you find yourself wanting to, the abstraction boundary is wrong.</p>
+<p><strong><code>format.rs</code> is the only module that writes ANSI escape codes.</strong> Other modules call <code>format::Color</code>, <code>format::DIM</code>, etc. — they don't hardcode escape sequences. This is enforced by convention and makes <code>NO_COLOR</code> support work globally.</p>
+<p><strong>Every command handler is a standalone function.</strong> No command state persists between invocations (except through the <code>Agent</code>'s conversation history and <code>SessionChanges</code>). This makes commands testable in isolation.</p>
+<p><strong>Tests live next to the code they test.</strong> Each module has a <code>#[cfg(test)] mod tests</code> block at the bottom. The project has ~1,000 tests total. Integration tests live in <code>tests/integration.rs</code> and test the CLI binary as a black box.</p>
+<p><strong>The agent is the only LLM dependency.</strong> arc delegates all LLM interaction to the <code>arcagent</code> crate. <code>prompt.rs</code> receives <code>AgentEvent</code>s through a channel — it never constructs HTTP requests or parses API responses directly. This means swapping the LLM backend (or the entire agent framework) would only require changes to <code>main.rs</code> (construction) and <code>prompt.rs</code> (event handling).</p>
+<h2 id="trade-offs-and-known-debt"><a class="header" href="#trade-offs-and-known-debt">Trade-offs and known debt</a></h2>
+<p><strong><code>format.rs</code> should probably be split.</strong> The <code>MarkdownRenderer</code>, cost tables, and color utilities are three distinct concerns sharing a file. The blocker isn't technical — it's that all three are coupled through the color system, and splitting would require deciding where <code>Color</code> lives.</p>
+<p><strong>Hand-rolled CLI parsing is a maintenance burden.</strong> Every new flag requires manual parsing code, help text updates, and config file support. A framework like <code>clap</code> would reduce this at the cost of a dependency and less control over error messages. The current approach works because flags don't change often.</p>
+<p><strong><code>commands.rs</code> as a hub creates a wide dependency surface.</strong> Because it re-exports everything, changing any command sub-module can trigger recompilation of anything that imports <code>commands::*</code>. In a larger project this would matter for build times. At ~24k lines, it doesn't yet.</p>
+<p><strong>No trait abstraction for commands.</strong> This is fine at the current scale but means there's no compile-time guarantee that all commands follow the same pattern. A new contributor might put command logic directly in <code>repl.rs</code> instead of in a handler function. Code review catches this, not the type system.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="features/cost-tracking.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="guides/fork.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="features/cost-tracking.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="guides/fork.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
