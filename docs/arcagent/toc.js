@@ -1,0 +1,70 @@
+// Populate the sidebar
+//
+// This is a script, and not included directly in the page, to control the total size of the book.
+// The TOC contains an entry for each page, so if each page includes a copy of the TOC,
+// the total size of the page becomes O(n**2).
+class MDBookSidebarScrollbox extends HTMLElement {
+    constructor() {
+        super();
+    }
+    connectedCallback() {
+        this.innerHTML = '<ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Getting Started</li><li class="chapter-item expanded "><a href="getting-started/installation.html"><strong aria-hidden="true">1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting-started/quick-start.html"><strong aria-hidden="true">2.</strong> Quick Start</a></li><li class="chapter-item expanded affix "><li class="part-title">Core Concepts</li><li class="chapter-item expanded "><a href="concepts/agent-loop.html"><strong aria-hidden="true">3.</strong> The Agent Loop</a></li><li class="chapter-item expanded "><a href="concepts/messages-events.html"><strong aria-hidden="true">4.</strong> Messages &amp; Events</a></li><li class="chapter-item expanded "><a href="concepts/tools.html"><strong aria-hidden="true">5.</strong> Tools</a></li><li class="chapter-item expanded "><a href="concepts/structured-outputs.html"><strong aria-hidden="true">6.</strong> Structured Outputs</a></li><li class="chapter-item expanded "><a href="concepts/context-management.html"><strong aria-hidden="true">7.</strong> Context Management</a></li><li class="chapter-item expanded "><a href="concepts/prompt-caching.html"><strong aria-hidden="true">8.</strong> Prompt Caching</a></li><li class="chapter-item expanded "><a href="concepts/retry.html"><strong aria-hidden="true">9.</strong> Retry with Backoff</a></li><li class="chapter-item expanded "><a href="concepts/skills.html"><strong aria-hidden="true">10.</strong> Skills</a></li><li class="chapter-item expanded "><a href="concepts/sub-agents.html"><strong aria-hidden="true">11.</strong> Sub-Agents</a></li><li class="chapter-item expanded "><a href="concepts/persistence.html"><strong aria-hidden="true">12.</strong> State Persistence</a></li><li class="chapter-item expanded "><a href="concepts/session-trees.html"><strong aria-hidden="true">13.</strong> Session Trees</a></li><li class="chapter-item expanded "><a href="concepts/gasp.html"><strong aria-hidden="true">14.</strong> GASP: Your Agent Is a Git Repo</a></li><li class="chapter-item expanded "><a href="concepts/callbacks.html"><strong aria-hidden="true">15.</strong> Lifecycle Callbacks</a></li><li class="chapter-item expanded "><a href="concepts/telemetry.html"><strong aria-hidden="true">16.</strong> Telemetry</a></li><li class="chapter-item expanded affix "><li class="part-title">Guides</li><li class="chapter-item expanded "><a href="guides/mcp.html"><strong aria-hidden="true">17.</strong> MCP Integration</a></li><li class="chapter-item expanded "><a href="guides/openapi.html"><strong aria-hidden="true">18.</strong> OpenAPI Tools</a></li><li class="chapter-item expanded affix "><li class="part-title">Providers</li><li class="chapter-item expanded "><a href="providers/overview.html"><strong aria-hidden="true">19.</strong> Overview</a></li><li class="chapter-item expanded "><a href="providers/model-presets.html"><strong aria-hidden="true">20.</strong> Model Presets</a></li><li class="chapter-item expanded "><a href="providers/anthropic.html"><strong aria-hidden="true">21.</strong> Anthropic</a></li><li class="chapter-item expanded "><a href="providers/openai-compat.html"><strong aria-hidden="true">22.</strong> OpenAI Compatible</a></li><li class="chapter-item expanded "><a href="providers/google.html"><strong aria-hidden="true">23.</strong> Google Gemini</a></li><li class="chapter-item expanded "><a href="providers/bedrock.html"><strong aria-hidden="true">24.</strong> Amazon Bedrock</a></li><li class="chapter-item expanded "><a href="providers/azure-openai.html"><strong aria-hidden="true">25.</strong> Azure OpenAI</a></li><li class="chapter-item expanded "><a href="providers/opencode.html"><strong aria-hidden="true">26.</strong> OpenCode Zen &amp; Go</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference</li><li class="chapter-item expanded "><a href="reference/tools.html"><strong aria-hidden="true">27.</strong> Built-in Tools</a></li><li class="chapter-item expanded "><a href="reference/configuration.html"><strong aria-hidden="true">28.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="reference/api.html"><strong aria-hidden="true">29.</strong> API Reference</a></li><li class="chapter-item expanded affix "><li class="part-title">Architecture</li><li class="chapter-item expanded "><a href="architecture/overview.html"><strong aria-hidden="true">30.</strong> Overview</a></li></ol>';
+        // Set the current, active page, and reveal it if it's hidden
+        let current_page = document.location.href.toString();
+        if (current_page.endsWith("/")) {
+            current_page += "index.html";
+        }
+        var links = Array.prototype.slice.call(this.querySelectorAll("a"));
+        var l = links.length;
+        for (var i = 0; i < l; ++i) {
+            var link = links[i];
+            var href = link.getAttribute("href");
+            if (href && !href.startsWith("#") && !/^(?:[a-z+]+:)?\/\//.test(href)) {
+                link.href = path_to_root + href;
+            }
+            // The "index" page is supposed to alias the first chapter in the book.
+            if (link.href === current_page || (i === 0 && path_to_root === "" && current_page.endsWith("/index.html"))) {
+                link.classList.add("active");
+                var parent = link.parentElement;
+                if (parent && parent.classList.contains("chapter-item")) {
+                    parent.classList.add("expanded");
+                }
+                while (parent) {
+                    if (parent.tagName === "LI" && parent.previousElementSibling) {
+                        if (parent.previousElementSibling.classList.contains("chapter-item")) {
+                            parent.previousElementSibling.classList.add("expanded");
+                        }
+                    }
+                    parent = parent.parentElement;
+                }
+            }
+        }
+        // Track and set sidebar scroll position
+        this.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                sessionStorage.setItem('sidebar-scroll', this.scrollTop);
+            }
+        }, { passive: true });
+        var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+        sessionStorage.removeItem('sidebar-scroll');
+        if (sidebarScrollTop) {
+            // preserve sidebar scroll position when navigating via links within sidebar
+            this.scrollTop = sidebarScrollTop;
+        } else {
+            // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+            var activeSection = document.querySelector('#sidebar .active');
+            if (activeSection) {
+                activeSection.scrollIntoView({ block: 'center' });
+            }
+        }
+        // Toggle buttons
+        var sidebarAnchorToggles = document.querySelectorAll('#sidebar a.toggle');
+        function toggleSection(ev) {
+            ev.currentTarget.parentElement.classList.toggle('expanded');
+        }
+        Array.from(sidebarAnchorToggles).forEach(function (el) {
+            el.addEventListener('click', toggleSection);
+        });
+    }
+}
+window.customElements.define("mdbook-sidebar-scrollbox", MDBookSidebarScrollbox);

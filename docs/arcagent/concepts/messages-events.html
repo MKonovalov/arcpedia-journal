@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Messages &amp; Events - arcgent Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../docs/theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arcgent Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent/edit/main/docs/concepts/messages-events.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="messages--events"><a class="header" href="#messages--events">Messages &amp; Events</a></h1>
+<h2 id="message-types"><a class="header" href="#message-types">Message Types</a></h2>
+<h3 id="message"><a class="header" href="#message"><code>Message</code></a></h3>
+<p>The core LLM message type, tagged by role:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum Message {
+    User {
+        content: Vec&lt;Content&gt;,
+        timestamp: u64,
+    },
+    Assistant {
+        content: Vec&lt;Content&gt;,
+        stop_reason: StopReason,
+        model: String,
+        provider: String,
+        usage: Usage,
+        timestamp: u64,
+        error_message: Option&lt;String&gt;,
+    },
+    ToolResult {
+        tool_call_id: String,
+        tool_name: String,
+        content: Vec&lt;Content&gt;,
+        is_error: bool,
+        timestamp: u64,
+    },
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Create user messages easily:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let msg = Message::user("Hello, world!");
+<span class="boring">}</span></code></pre></pre>
+<h3 id="agentmessage"><a class="header" href="#agentmessage"><code>AgentMessage</code></a></h3>
+<p>Wraps <code>Message</code> with support for extension messages (UI-only, notifications, etc.):</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum AgentMessage {
+    Llm(Message),
+    Extension(ExtensionMessage),
+}
+
+pub struct ExtensionMessage {
+    pub role: String,
+    pub kind: String,
+    pub data: serde_json::Value,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Create extension messages with the convenience constructor:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let ext = ExtensionMessage::new("status_update", serde_json::json!({"status": "running"}));
+let msg = AgentMessage::Extension(ext);
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>kind</code> field categorizes the extension (e.g., <code>"status_update"</code>, <code>"ui_event"</code>, <code>"notification"</code>). Use <code>as_llm()</code> to extract the <code>Message</code> if it's an LLM message. The default <code>convert_to_llm</code> function filters out <code>Extension</code> messages before sending to the provider.</p>
+<p>All core message types implement <code>Serialize</code>, <code>Deserialize</code>, <code>Clone</code>, and <code>PartialEq</code>, enabling state persistence and test assertions.</p>
+<h2 id="content"><a class="header" href="#content">Content</a></h2>
+<p>Each message contains <code>Vec&lt;Content&gt;</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum Content {
+    Text { text: String },
+    Image { data: String, mime_type: String },
+    Thinking { thinking: String, signature: Option&lt;String&gt; },
+    ToolCall {
+        id: String,
+        name: String,
+        arguments: serde_json::Value,
+        provider_metadata: Option&lt;serde_json::Value&gt;, // e.g. Gemini thought signatures
+    },
+}
+<span class="boring">}</span></code></pre></pre>
+<p>An assistant message can contain multiple content blocks — e.g., thinking + text + tool calls.</p>
+<p><code>Content</code> is <code>#[non_exhaustive]</code> (match with a wildcard arm), and the <code>ToolCall</code> and <code>Thinking</code> variants are separately <code>#[non_exhaustive]</code> — construct them via <code>Content::tool_call()</code> / <code>tool_call_with_metadata()</code> / <code>thinking()</code> / <code>thinking_signed()</code>. <code>Message::Assistant</code> is likewise <code>#[non_exhaustive]</code>; custom providers construct it via <code>Message::assistant()</code>.</p>
+<h2 id="stopreason"><a class="header" href="#stopreason">StopReason</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum StopReason {
+    Stop,       // Natural completion
+    Length,     // Hit max tokens
+    ToolUse,    // Wants to call tools
+    Error,      // Provider error
+    Aborted,    // Cancelled by user
+    Refusal,    // Declined by the provider's safety system
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>Token usage from the provider:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Usage {
+    pub input: u64,
+    pub output: u64,
+    pub cache_read: u64,
+    pub cache_write: u64,
+    pub total_tokens: u64,
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="agentevent"><a class="header" href="#agentevent">AgentEvent</a></h2>
+<p>Events emitted during the agent loop for real-time UI updates:</p>
+<div class="table-wrapper"><table><thead><tr><th>Event</th><th>When</th></tr></thead><tbody>
+<tr><td><code>AgentStart</code></td><td>Loop begins</td></tr>
+<tr><td><code>AgentEnd { messages }</code></td><td>Loop finishes, all new messages</td></tr>
+<tr><td><code>TurnStart</code></td><td>New LLM call starting</td></tr>
+<tr><td><code>TurnEnd { message, tool_results }</code></td><td>LLM call + tool execution complete</td></tr>
+<tr><td><code>MessageStart { message }</code></td><td>A message is available</td></tr>
+<tr><td><code>MessageUpdate { message, delta }</code></td><td>Streaming delta arrived</td></tr>
+<tr><td><code>MessageEnd { message }</code></td><td>Message finalized</td></tr>
+<tr><td><code>ToolExecutionStart { tool_call_id, tool_name, args }</code></td><td>Tool about to run</td></tr>
+<tr><td><code>ToolExecutionUpdate { tool_call_id, tool_name, partial_result }</code></td><td>Tool progress</td></tr>
+<tr><td><code>ToolExecutionEnd { tool_call_id, tool_name, result, is_error }</code></td><td>Tool finished</td></tr>
+<tr><td><code>ProgressMessage { tool_call_id, tool_name, text }</code></td><td>User-facing progress text from a tool</td></tr>
+<tr><td><code>InputRejected { reason }</code></td><td>Input filter rejected the user's message</td></tr>
+</tbody></table>
+</div>
+<h2 id="streamdelta"><a class="header" href="#streamdelta">StreamDelta</a></h2>
+<p>Deltas within <code>MessageUpdate</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum StreamDelta {
+    Text { delta: String },
+    Thinking { delta: String },
+    ToolCallDelta { delta: String },
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="agent-state"><a class="header" href="#agent-state">Agent State</a></h2>
+<p>The <code>Agent</code> struct provides access to its current state:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Check if the agent is currently streaming a response
+if agent.is_streaming() {
+    // Use steer() or follow_up() instead of prompt()
+    agent.steer(AgentMessage::Llm(Message::user("New instruction")));
+}
+
+// Access the full message history
+let messages: &amp;[AgentMessage] = agent.messages();
+
+// Check the last message
+if let Some(last) = messages.last() {
+    println!("Last message role: {}", last.role());
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>is_streaming()</code> flag is <code>true</code> between <code>prompt()</code>/<code>continue_loop()</code> call and completion. While streaming, calling <code>prompt()</code> will panic — use <code>steer()</code> or <code>follow_up()</code> instead.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../concepts/agent-loop.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../concepts/tools.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../concepts/agent-loop.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../concepts/tools.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
