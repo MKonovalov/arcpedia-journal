@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Context Management - arcgent Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../docs/theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arcgent Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent/edit/main/docs/concepts/context-management.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="context-management"><a class="header" href="#context-management">Context Management</a></h1>
+<p>Long-running agents accumulate messages that exceed the model's context window. arcgent provides token tracking, overflow detection, tiered compaction, and execution limits.</p>
+<h2 id="token-estimation"><a class="header" href="#token-estimation">Token Estimation</a></h2>
+<p>Fast estimation without external tokenizer dependencies:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::context::{estimate_tokens, message_tokens, total_tokens};
+
+estimate_tokens("Hello world");          // ~3 tokens (chars / 4)
+message_tokens(&amp;agent_message);          // estimate for a single message
+total_tokens(&amp;messages);                 // estimate for all messages
+<span class="boring">}</span></code></pre></pre>
+<h2 id="context-tracking"><a class="header" href="#context-tracking">Context Tracking</a></h2>
+<p><code>ContextTracker</code> combines real token counts from provider responses with estimation for new messages — more accurate than pure estimation:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::context::ContextTracker;
+
+let mut tracker = ContextTracker::new();
+
+// After each assistant response, record the real usage:
+tracker.record_usage(&amp;assistant_usage, message_index);
+
+// Get current context size (real usage + estimated trailing):
+let tokens = tracker.estimate_context_tokens(agent.messages());
+
+// After compaction, reset the tracker:
+tracker.reset();
+<span class="boring">}</span></code></pre></pre>
+<p>When no usage data is available, it falls back to chars/4 estimation.</p>
+<h2 id="context-overflow-detection"><a class="header" href="#context-overflow-detection">Context Overflow Detection</a></h2>
+<p>When the context exceeds a model's window, providers return overflow errors. arcgent detects these automatically across all major providers.</p>
+<h3 id="http-level-detection"><a class="header" href="#http-level-detection">HTTP-level detection</a></h3>
+<p>Providers that check before streaming (Google, Bedrock, Vertex) return <code>ProviderError::ContextOverflow</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::provider::ProviderError;
+
+match agent.prompt("...").await {
+    // The loop already handles this — but you can also match it:
+    Err(ProviderError::ContextOverflow { message }) =&gt; {
+        // Compact and retry
+    }
+    _ =&gt; {}
+}
+<span class="boring">}</span></code></pre></pre>
+<p><code>ProviderError::classify()</code> auto-detects overflow from error messages covering Anthropic, OpenAI, Google, AWS Bedrock, xAI, Groq, OpenRouter, llama.cpp, LM Studio, MiniMax, Kimi, GitHub Copilot, and generic patterns.</p>
+<h3 id="message-level-detection"><a class="header" href="#message-level-detection">Message-level detection</a></h3>
+<p>SSE-based providers (Anthropic, OpenAI) return overflow as a <code>StopReason::Error</code> message. Check with:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>if message.is_context_overflow() {
+    // Compact and retry
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="handling-overflow-in-your-application"><a class="header" href="#handling-overflow-in-your-application">Handling overflow in your application</a></h3>
+<p>arcgent provides the detection and building blocks. Your application wires the compaction strategy:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Proactive: check before each prompt
+let tokens = tracker.estimate_context_tokens(agent.messages());
+if tokens &gt; context_window - reserve {
+    let compacted = compact_messages(agent.messages().to_vec(), &amp;config);
+    agent.replace_messages(compacted);
+}
+
+// Reactive: catch overflow errors
+// ... on ContextOverflow or message.is_context_overflow():
+//   compact, then retry with agent.continue_loop()
+<span class="boring">}</span></code></pre></pre>
+<p>For LLM-based summarization (asking the model to summarize old messages), implement that in your application layer — arcgent provides <code>replace_messages()</code> and <code>compact_messages()</code> as building blocks.</p>
+<h2 id="contextconfig"><a class="header" href="#contextconfig">ContextConfig</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct ContextConfig {
+    pub max_context_tokens: usize,      // Default: 100,000
+    pub system_prompt_tokens: usize,    // Default: 4,000
+    pub keep_recent: usize,             // Default: 10
+    pub keep_first: usize,              // Default: 2
+    pub tool_output_max_lines: usize,   // Default: 50
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="auto-derivation-from-modelconfig"><a class="header" href="#auto-derivation-from-modelconfig">Auto-Derivation from ModelConfig</a></h3>
+<p>When you set a <code>ModelConfig</code> but don't explicitly set a <code>ContextConfig</code>, the compaction budget is automatically derived from the model's <code>context_window</code> — reserving 80% for context and 20% for output:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// MiniMax with 1M context → compacts at 800K (no manual config needed)
+let agent = Agent::from_config(ModelConfig::minimax("MiniMax-Text-01", "MiniMax Text 01"));
+
+// Anthropic with 200K context → compacts at 160K
+let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"));
+<span class="boring">}</span></code></pre></pre>
+<p>The priority chain:</p>
+<ol>
+<li>Explicit <code>with_context_config(...)</code> → always wins</li>
+<li>Has <code>model_config</code> → auto-derives from <code>context_window</code> (80%)</li>
+<li>Neither → <code>ContextConfig::default()</code> (100K)</li>
+</ol>
+<p>You can also derive manually:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let config = ContextConfig::from_context_window(1_000_000);
+// config.max_context_tokens == 800_000
+<span class="boring">}</span></code></pre></pre>
+<h2 id="tiered-compaction"><a class="header" href="#tiered-compaction">Tiered Compaction</a></h2>
+<p><code>compact_messages()</code> tries each level in order, stopping as soon as messages fit the budget:</p>
+<h3 id="level-1-truncate-tool-outputs"><a class="header" href="#level-1-truncate-tool-outputs">Level 1: Truncate Tool Outputs</a></h3>
+<p>Replaces long tool outputs with head + tail (keeping first N/2 and last N/2 lines). This is the cheapest — preserves conversation structure, typically saves 50-70% in coding sessions.</p>
+<h3 id="level-2-summarize-old-turns"><a class="header" href="#level-2-summarize-old-turns">Level 2: Summarize Old Turns</a></h3>
+<p>Keeps the last <code>keep_recent</code> messages in full detail. Older assistant messages are replaced with one-line summaries like <code>"[Summary] [Assistant used 3 tool(s)]"</code>, and their tool results are dropped.</p>
+<h3 id="level-3-drop-middle-messages"><a class="header" href="#level-3-drop-middle-messages">Level 3: Drop Middle Messages</a></h3>
+<p>Keeps <code>keep_first</code> messages from the start and <code>keep_recent</code> from the end, dropping everything in between. A marker message notes how many were removed.</p>
+<h2 id="executionlimits"><a class="header" href="#executionlimits">ExecutionLimits</a></h2>
+<p>Prevents runaway agents:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct ExecutionLimits {
+    pub max_turns: usize,              // Default: 50
+    pub max_total_tokens: usize,       // Default: 1,000,000
+    pub max_duration: Duration,        // Default: 600s (10 min)
+}
+<span class="boring">}</span></code></pre></pre>
+<p>When a limit is reached, the agent stops with a message like <code>"[Agent stopped: Max turns reached (50/50)]"</code>.</p>
+<h2 id="disabling-context-management"><a class="header" href="#disabling-context-management">Disabling Context Management</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
+    .without_context_management();
+<span class="boring">}</span></code></pre></pre>
+<p>This sets both <code>context_config</code> and <code>execution_limits</code> to <code>None</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../concepts/structured-outputs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../concepts/prompt-caching.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../concepts/structured-outputs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../concepts/prompt-caching.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

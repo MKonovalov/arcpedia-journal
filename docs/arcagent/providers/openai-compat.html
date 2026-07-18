@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>OpenAI Compatible - arcgent Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../docs/theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arcgent Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent/edit/main/docs/providers/openai-compat.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="openai-compatible-provider"><a class="header" href="#openai-compatible-provider">OpenAI Compatible Provider</a></h1>
+<p><code>OpenAiCompatProvider</code> implements the OpenAI Chat Completions API. One implementation covers OpenAI, xAI, Groq, Cerebras, OpenRouter, Mistral, DeepSeek, MiniMax, Z.ai, Qwen, Ollama, and any other compatible API.</p>
+<p>For the first-class <code>ModelConfig::*</code> constructors and default model metadata, see <a href="model-presets.html">Model Presets</a>.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>Requires a <code>ModelConfig</code> with <code>compat</code> flags set in <code>StreamConfig.model_config</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::provider::ModelConfig;
+
+let agent = Agent::from_config(ModelConfig::openai("gpt-5.5", "GPT-5.5"));
+<span class="boring">}</span></code></pre></pre>
+<h2 id="openaicompat-quirk-flags"><a class="header" href="#openaicompat-quirk-flags">OpenAiCompat Quirk Flags</a></h2>
+<p>Different providers have behavioral differences even though they share the same API:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct OpenAiCompat {
+    pub supports_store: bool,
+    pub supports_developer_role: bool,
+    pub supports_reasoning_effort: bool,
+    pub supports_thinking_control: bool,
+    pub supports_usage_in_streaming: bool,
+    pub max_tokens_field: MaxTokensField,       // MaxTokens or MaxCompletionTokens
+    pub requires_tool_result_name: bool,
+    pub requires_assistant_after_tool_result: bool,
+    pub thinking_format: ThinkingFormat,        // OpenAi, Xai, or Qwen
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="provider-presets"><a class="header" href="#provider-presets">Provider Presets</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Provider</th><th>Constructor</th><th>Key Differences</th></tr></thead><tbody>
+<tr><td>OpenAI</td><td><code>OpenAiCompat::openai()</code></td><td><code>developer</code> role, <code>max_completion_tokens</code>, <code>store</code>, <code>reasoning_effort</code></td></tr>
+<tr><td>xAI (Grok)</td><td><code>OpenAiCompat::xai()</code></td><td><code>reasoning</code> field for thinking (not <code>reasoning_content</code>)</td></tr>
+<tr><td>Groq</td><td><code>OpenAiCompat::groq()</code></td><td>Standard defaults</td></tr>
+<tr><td>Cerebras</td><td><code>OpenAiCompat::cerebras()</code></td><td>Standard defaults</td></tr>
+<tr><td>OpenRouter</td><td><code>OpenAiCompat::openrouter()</code></td><td><code>max_completion_tokens</code></td></tr>
+<tr><td>Mistral</td><td><code>OpenAiCompat::mistral()</code></td><td><code>max_tokens</code> field</td></tr>
+<tr><td>DeepSeek</td><td><code>OpenAiCompat::deepseek()</code></td><td><code>max_tokens</code>, <code>thinking</code>, <code>reasoning_effort</code>, 1M context window</td></tr>
+<tr><td>MiniMax</td><td><code>OpenAiCompat::minimax()</code></td><td>Standard defaults, 1M context window</td></tr>
+<tr><td>Z.ai (Zhipu)</td><td><code>OpenAiCompat::zai()</code></td><td>Standard defaults</td></tr>
+<tr><td>Qwen</td><td><code>OpenAiCompat::qwen()</code></td><td>Qwen reasoning content format, <code>max_tokens</code>, streaming usage</td></tr>
+<tr><td>Ollama</td><td><code>OpenAiCompat::ollama()</code></td><td>Inserts an empty assistant message after tool result runs</td></tr>
+</tbody></table>
+</div>
+<p><code>OpenAiCompat</code> presets are lower-level quirk flags. A provider is first-class when it also has a <code>ModelConfig::*</code> constructor; see <a href="model-presets.html">Model Presets</a>.</p>
+<p>DeepSeek context caching is automatic on DeepSeek's side. arcgent does not send
+<code>cache_control</code> markers for DeepSeek, but it does parse DeepSeek's
+<code>prompt_cache_hit_tokens</code> and <code>prompt_cache_miss_tokens</code> usage fields into
+<code>Usage.cache_read</code> and <code>Usage.input</code>.</p>
+<h2 id="adding-a-new-compatible-provider"><a class="header" href="#adding-a-new-compatible-provider">Adding a New Compatible Provider</a></h2>
+<ol>
+<li>Add a constructor to <code>OpenAiCompat</code>:</li>
+</ol>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl OpenAiCompat {
+    pub fn my_provider() -&gt; Self {
+        Self {
+            supports_usage_in_streaming: true,
+            // set flags as needed...
+            ..Default::default()
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<ol start="2">
+<li>Create a <code>ModelConfig</code> that uses it:</li>
+</ol>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let config = ModelConfig::openai_compat(
+    "https://api.myprovider.com/v1",
+    "my-model",
+    "my-provider",
+    OpenAiCompat::my_provider(),
+);
+<span class="boring">}</span></code></pre></pre>
+<h2 id="thinkingreasoning"><a class="header" href="#thinkingreasoning">Thinking/Reasoning</a></h2>
+<p>The <code>ThinkingFormat</code> enum controls how reasoning content is parsed from streams:</p>
+<ul>
+<li><code>ThinkingFormat::OpenAi</code> — Uses <code>reasoning_content</code> field (DeepSeek, default)</li>
+<li><code>ThinkingFormat::Xai</code> — Uses <code>reasoning</code> field (Grok)</li>
+<li><code>ThinkingFormat::Qwen</code> — Uses <code>reasoning_content</code> field (Qwen)</li>
+</ul>
+<h2 id="local-servers-lm-studio-ollama-llamacpp-vllm"><a class="header" href="#local-servers-lm-studio-ollama-llamacpp-vllm">Local Servers (LM Studio, Ollama, llama.cpp, vLLM)</a></h2>
+<p>Use <code>ModelConfig::ollama()</code> for Ollama, or <code>ModelConfig::local()</code> for any other local OpenAI-compatible server. No API key required:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::agent::Agent;
+use arcgent::provider::ModelConfig;
+
+// The `local` provider resolves to an empty API key automatically — none needed.
+let agent = Agent::from_config(ModelConfig::local("http://localhost:1234/v1", "my-model"));
+<span class="boring">}</span></code></pre></pre>
+<p>For Ollama:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let agent = Agent::from_config(ModelConfig::ollama("http://localhost:11434/v1", "llama3.1:8b"));
+<span class="boring">}</span></code></pre></pre>
+<p>Or via the CLI example:</p>
+<pre><code class="language-bash">cargo run --example cli -- --api-url http://localhost:1234/v1 --model my-model
+</code></pre>
+<p>For locally deployed open-source model families, keep the local endpoint and choose the model-family compat profile:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let qwen_local = ModelConfig::openai_compat(
+    "http://localhost:1234/v1",
+    "qwen3-local",
+    "qwen",
+    OpenAiCompat::qwen(),
+);
+<span class="boring">}</span></code></pre></pre>
+<p>Serving-layer quirks and model-family quirks can be combined because <code>OpenAiCompat</code> fields are public:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut compat = OpenAiCompat::qwen();
+compat.requires_assistant_after_tool_result = true;
+
+let qwen_on_ollama = ModelConfig::openai_compat(
+    "http://localhost:11434/v1",
+    "qwen2.5-coder:7b",
+    "ollama",
+    compat,
+);
+<span class="boring">}</span></code></pre></pre>
+<h2 id="github-copilot-bring-your-own-token"><a class="header" href="#github-copilot-bring-your-own-token">GitHub Copilot (bring-your-own-token)</a></h2>
+<blockquote>
+<p><strong>Terms of service.</strong> <code>api.githubcopilot.com</code> is intended for use through official
+GitHub Copilot editor integrations. Accessing it from a third-party agent is against
+GitHub's Copilot terms of service and may result in token revocation or account
+suspension. arcgent does <strong>not</strong> ship a first-class Copilot preset for this reason.
+The configuration below is documented only for users who understand and accept that
+risk. Use at your own discretion.</p>
+</blockquote>
+<p>Copilot's chat endpoint is OpenAI Chat Completions–shaped, so it works with
+<code>OpenAiCompatProvider</code> given the right base URL, integration headers, and a valid
+Copilot token as the API key:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::agent::Agent;
+use arcgent::provider::{ModelConfig, OpenAiCompat};
+
+let mut config = ModelConfig::openai_compat(
+    "https://api.githubcopilot.com",
+    "gpt-5.5",
+    "copilot",
+    OpenAiCompat::openai(),
+);
+// Copilot fingerprints clients via these headers; they are required.
+config.headers.insert("Copilot-Integration-Id".into(), "vscode-chat".into());
+config.headers.insert("Editor-Version".into(), "Neovim/0.10.0".into());
+
+let agent = Agent::from_config(config)
+    .with_api_key(copilot_token); // see below
+<span class="boring">}</span></code></pre></pre>
+<p><strong>The API key is a short-lived Copilot token, not your GitHub token.</strong> You obtain it by
+exchanging a GitHub OAuth token (from the device-login flow, or from the local Copilot
+config under <code>~/.config/github-copilot/</code>) at
+<code>https://api.github.com/copilot_internal/v2/token</code>. That token <strong>expires after ~25–30
+minutes</strong>.</p>
+<p>arcgent has no built-in credential refresh — <code>api_key</code> is static for the life of the
+provider (<code>Authorization: Bearer {api_key}</code>). For anything longer than a single short
+turn, <strong>you</strong> must exchange and refresh the token yourself and rebuild the agent's config
+with a fresh token before it expires; otherwise long runs will fail with <code>401</code>.</p>
+<h2 id="auth"><a class="header" href="#auth">Auth</a></h2>
+<p>Uses <code>Authorization: Bearer {api_key}</code> header. Extra headers can be added via <code>ModelConfig.headers</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../providers/anthropic.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../providers/google.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../providers/anthropic.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../providers/google.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

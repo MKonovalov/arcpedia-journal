@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Session Trees - arcgent Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../docs/theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arcgent Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent/edit/main/docs/concepts/session-trees.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="session-trees"><a class="header" href="#session-trees">Session Trees</a></h1>
+<p>A <code>Session</code> stores conversation history as a <strong>tree</strong>, not a flat list. Every
+entry has an <code>id</code> and <code>parent_id</code>; the <em>head</em> points at the current branch
+tip. Appending after a <code>seek</code> creates a <strong>new branch</strong> — history is never
+overwritten. This is the primitive behind:</p>
+<ul>
+<li><strong>Fork</strong> — try a different direction from any point</li>
+<li><strong>Checkpoints</strong> — label a state, come back to it later</li>
+<li><strong>Edit &amp; re-run</strong> — change an earlier turn on a new branch; the original
+branch stays intact</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::{Agent, Session, provider::ModelConfig};
+
+let mut session = Session::new();
+
+// Run a turn, record it.
+let mut agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Sonnet 5"));
+let mut rx = agent.prompt("draft a plan").await;
+while rx.recv().await.is_some() {}
+agent.finish().await;
+session.append_new(agent.messages())?;
+session.checkpoint("first-draft")?;
+
+// ... more turns ...
+
+// Rewind to the checkpoint and branch.
+session.seek_checkpoint("first-draft")?;
+let mut agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Sonnet 5"))
+    .with_messages(session.path_messages());   // only this branch's history
+let mut rx = agent.prompt("actually, make it a library instead").await;
+while rx.recv().await.is_some() {}
+agent.finish().await;
+session.append_new(agent.messages())?;          // new branch recorded
+
+// Both branches exist:
+assert_eq!(session.branch_tips().len(), 2);
+<span class="boring">}</span></code></pre></pre>
+<h2 id="persistence-jsonl"><a class="header" href="#persistence-jsonl">Persistence: JSONL</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>std::fs::write("session.jsonl", session.to_jsonl())?;
+let restored = Session::from_jsonl(&amp;std::fs::read_to_string("session.jsonl")?)?;
+<span class="boring">}</span></code></pre></pre>
+<p>One entry per line, append-friendly, diff-friendly. On load the head is the
+last line's entry, and the file is validated (duplicate ids and
+dangling/forward parent references are rejected — which also makes cycles
+impossible).</p>
+<blockquote>
+<p><strong>Compaction caveat:</strong> <code>append_new</code> verifies the agent's history still
+extends the session path and returns <code>SessionError::HistoryDiverged</code> when it
+doesn't. The usual cause is context compaction (on by default) rewriting the
+agent's messages — disable context management on session-tracked agents, or
+rebuild the branch with <code>Session::from_messages</code> after a divergence. The flat <code>save_messages()</code> / <code>restore_messages()</code> API
+remains for single-branch persistence.</p>
+</blockquote>
+<h2 id="api-sketch"><a class="header" href="#api-sketch">API sketch</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>append(msg) -&gt; id</code></td><td>Add as child of head, advance head</td></tr>
+<tr><td><code>append_new(&amp;agent_messages)</code></td><td>Record everything beyond the current path (verifies the prefix; errors on divergence)</td></tr>
+<tr><td><code>seek(id)</code> / <code>seek_checkpoint(label)</code></td><td>Move the head (fork point)</td></tr>
+<tr><td><code>checkpoint(label)</code></td><td>Label the head</td></tr>
+<tr><td><code>path_messages()</code></td><td>Root→head messages — feed to <code>Agent::with_messages</code></td></tr>
+<tr><td><code>branch_tips()</code> / <code>children(id)</code> / <code>entries()</code></td><td>Inspect the tree</td></tr>
+<tr><td><code>to_jsonl()</code> / <code>from_jsonl()</code></td><td>Persist / restore</td></tr>
+</tbody></table>
+</div>
+<h2 id="gasp"><a class="header" href="#gasp">GASP</a></h2>
+<p>This tree is a natural format for the
+<a href="https://github.com/MKonovalov/gasp">GASP</a> <code>transcripts/</code> tier — the
+raw-conversation cold tier (the spec leaves its format open). The semantic event log
+lives in the <a href="gasp.html"><code>gasp</code> feature</a>: a recorder over the <code>AgentEvent</code>
+stream that emits a conformance-checked agent repo.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../concepts/persistence.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../concepts/gasp.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../concepts/persistence.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../concepts/gasp.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

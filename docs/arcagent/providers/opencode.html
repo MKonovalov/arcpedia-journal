@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>OpenCode Zen &amp; Go - arcgent Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../docs/theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arcgent Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent/edit/main/docs/providers/opencode.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="opencode-zen--go"><a class="header" href="#opencode-zen--go">OpenCode Zen &amp; Go</a></h1>
+<p><a href="https://opencode.ai/docs/zen">OpenCode Zen</a> (pay-per-use) and <a href="https://opencode.ai/docs/go">OpenCode Go</a> (subscription) are model gateways run by the OpenCode team. Both are supported through the <code>ModelConfig::opencode_zen()</code> and <code>ModelConfig::opencode_go()</code> presets.</p>
+<p>The gateways serve different model families over different protocols. The presets select the protocol automatically from the model id:</p>
+<div class="table-wrapper"><table><thead><tr><th>Gateway</th><th>Model family</th><th>Protocol</th><th>Pair with</th></tr></thead><tbody>
+<tr><td>Zen</td><td><code>gpt-*</code></td><td>OpenAI Responses</td><td><code>OpenAiResponsesProvider</code></td></tr>
+<tr><td>Zen</td><td><code>claude-*</code>, <code>qwen*</code></td><td>Anthropic Messages</td><td><code>AnthropicProvider</code></td></tr>
+<tr><td>Zen</td><td>DeepSeek, MiniMax, GLM, Kimi, ...</td><td>Chat Completions</td><td><code>OpenAiCompatProvider</code></td></tr>
+<tr><td>Go</td><td><code>qwen*</code>, <code>minimax-*</code></td><td>Anthropic Messages</td><td><code>AnthropicProvider</code></td></tr>
+<tr><td>Go</td><td>GLM, Kimi, DeepSeek, MiMo, ...</td><td>Chat Completions</td><td><code>OpenAiCompatProvider</code></td></tr>
+</tbody></table>
+</div>
+<p>Gemini models on Zen are <strong>not supported</strong> — Zen serves them over a Google-native endpoint shape arcgent does not target. A <code>gemini-*</code> id falls through to Chat Completions (with a warning logged) and will fail at request time.</p>
+<p>The routing table mirrors the Zen/Go endpoint docs as of mid-2026. OpenCode can change gateway-side routing at any time — if a model errors, verify its protocol against <code>{base}/models</code>.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p><code>Agent::from_config</code> selects the built-in provider from the preset's protocol
+(<code>config.api</code>) and resolves the key from <code>OPENCODE_API_KEY</code>, so the same call
+works whichever model family you pick:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use arcgent::provider::ModelConfig;
+use arcgent::Agent;
+
+// Chat-completions model (GLM, Kimi, DeepSeek, ...)
+let agent = Agent::from_config(ModelConfig::opencode_zen("glm-5.2"));
+
+// Claude/Qwen model — Anthropic Messages protocol
+let agent = Agent::from_config(ModelConfig::opencode_zen("claude-sonnet-5"));
+<span class="boring">}</span></code></pre></pre>
+<p>For OpenCode Go, use <code>ModelConfig::opencode_go("kimi-k2.7-code")</code> — the base URL and protocol map differ, the usage pattern is identical.</p>
+<h2 id="authentication"><a class="header" href="#authentication">Authentication</a></h2>
+<p>Both gateways use <code>Authorization: Bearer {api_key}</code>. For the Anthropic-protocol models the presets set <code>AnthropicCompat { bearer_auth: true, .. }</code> so the Anthropic provider sends Bearer auth instead of its native <code>x-api-key</code> header.</p>
+<p>Get an API key by signing in at <a href="https://opencode.ai">opencode.ai</a> (Zen) or subscribing to Go.</p>
+<h2 id="defaults"><a class="header" href="#defaults">Defaults</a></h2>
+<p>The presets use conservative defaults (128K context window, 16K max output). Override the fields for models with larger limits:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut config = ModelConfig::opencode_zen("kimi-k2.7-code");
+config.context_window = 256_000;
+<span class="boring">}</span></code></pre></pre>
+<h2 id="endpoints"><a class="header" href="#endpoints">Endpoints</a></h2>
+<ul>
+<li>Zen: <code>https://opencode.ai/zen/v1/{chat/completions | messages | responses}</code></li>
+<li>Go: <code>https://opencode.ai/zen/go/v1/{chat/completions | messages}</code></li>
+</ul>
+<p>Model list and metadata: <code>https://opencode.ai/zen/v1/models</code> and <code>https://opencode.ai/zen/go/v1/models</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../providers/azure-openai.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../reference/tools.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../providers/azure-openai.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../reference/tools.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

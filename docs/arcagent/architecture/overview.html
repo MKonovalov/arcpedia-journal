@@ -1,0 +1,361 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Overview - arcgent Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../docs/theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arcgent Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arcagent/edit/main/docs/architecture/overview.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="architecture-overview"><a class="header" href="#architecture-overview">Architecture Overview</a></h1>
+<h2 id="layered-design"><a class="header" href="#layered-design">Layered Design</a></h2>
+<p>arcgent is organized as three conceptual layers within a single crate. Dependencies flow strictly downward — upper layers use lower layers, never the reverse.</p>
+<pre><code>┌─────────────────────────────────────────────┐
+│  Layer 3: Orchestration          (planned)   │
+│  Multi-agent, delegation, work modes         │
+├─────────────────────────────────────────────┤
+│  Layer 2: Agent + Providers                  │
+│  Concrete providers, tools, retry, caching,  │
+│  context management, MCP                     │
+├─────────────────────────────────────────────┤
+│  Layer 1: Core Loop                          │
+│  agent_loop, types, traits                   │
+│  Provider-agnostic. Tool-agnostic.           │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h3 id="layer-1-core-loop"><a class="header" href="#layer-1-core-loop">Layer 1: Core Loop</a></h3>
+<p>The pure agent loop. No opinions about LLMs, no built-in tools. Just the control flow.</p>
+<p><strong>Modules:</strong> <code>types.rs</code>, <code>agent_loop.rs</code>, <code>provider/traits.rs</code></p>
+<p><strong>Owns:</strong></p>
+<ul>
+<li><code>agent_loop()</code> / <code>agent_loop_continue()</code> — the loop itself</li>
+<li><code>AgentTool</code> trait — interface tools must implement</li>
+<li><code>StreamProvider</code> trait — interface providers must implement</li>
+<li><code>AgentMessage</code>, <code>AgentEvent</code>, <code>StreamDelta</code> — message &amp; event types</li>
+<li><code>AgentContext</code> — system prompt + messages + tools</li>
+<li>Tool execution strategies (parallel/sequential/batched)</li>
+<li>Streaming tool output (<code>ToolUpdateFn</code>)</li>
+<li>Steering &amp; follow-up message injection</li>
+</ul>
+<p><strong>Does not own:</strong> Any concrete provider or tool implementation.</p>
+<h3 id="layer-2-agent--providers"><a class="header" href="#layer-2-agent--providers">Layer 2: Agent + Providers</a></h3>
+<p>Batteries-included single-agent layer. Most users interact with this.</p>
+<p><strong>Modules:</strong> <code>agent.rs</code>, <code>context.rs</code>, <code>retry.rs</code>, <code>provider/*.rs</code>, <code>tools/*.rs</code>, <code>mcp/*.rs</code></p>
+<p><strong>Adds on top of Layer 1:</strong></p>
+<ul>
+<li>Concrete providers — Anthropic, OpenAI-compat, Google, Azure, Bedrock, Vertex</li>
+<li>Provider registry — dispatch by API protocol</li>
+<li>Prompt caching — automatic cache breakpoint placement</li>
+<li>Retry with backoff — exponential, jitter, respects retry-after</li>
+<li>Context management — token estimation, smart truncation, execution limits</li>
+<li>Built-in tools — bash, read_file, write_file, edit_file, list_files, search</li>
+<li>MCP client — stdio + HTTP transports, tool adapter</li>
+<li><code>Agent</code> struct — stateful builder wrapping it all together</li>
+</ul>
+<h3 id="layer-3-orchestration-planned"><a class="header" href="#layer-3-orchestration-planned">Layer 3: Orchestration (planned)</a></h3>
+<p>Multi-agent coordination. Not yet implemented — the architecture is designed to support it when needed.</p>
+<p><strong>Planned capabilities:</strong></p>
+<ul>
+<li><code>Orchestrator</code> struct — spawn, delegate, and coordinate multiple agents</li>
+<li>Work modes:
+<ul>
+<li><strong>Interactive</strong> — multi-turn, human in the loop (current default)</li>
+<li><strong>Autonomous</strong> — runs to completion without input (background tasks, CI)</li>
+<li><strong>Pipeline</strong> — input → output, chainable (scan → fix → verify)</li>
+<li><strong>Supervisor</strong> — delegates to other agents, synthesizes results</li>
+</ul>
+</li>
+<li>Fan-out — same task to multiple agents (different providers for diversity)</li>
+<li>Pipeline chaining — output of agent A feeds input of agent B</li>
+<li>Agent communication through the orchestrator event bus</li>
+</ul>
+<p><strong>Why not yet:</strong> Multi-agent orchestration adds complexity. The single-agent loop handles 95% of use cases. Layer 3 will be built when a concrete use case drives it, not speculatively.</p>
+<hr />
+<h2 id="module-layout"><a class="header" href="#module-layout">Module Layout</a></h2>
+<pre><code>arcgent/
+├── src/
+│   ├── lib.rs                  # Public re-exports
+│   │
+│   │── Layer 1: Core Loop ─────────────────────
+│   ├── types.rs                # Message, Content, AgentTool, AgentEvent
+│   ├── agent_loop.rs           # Core loop: prompt → LLM → tools → repeat
+│   │
+│   │── Layer 2: Agent + Providers ─────────────
+│   ├── agent.rs                # Agent struct (stateful wrapper)
+│   ├── context.rs              # Token estimation, compaction, limits
+│   ├── retry.rs                # Retry with exponential backoff
+│   ├── provider/
+│   │   ├── traits.rs           # StreamProvider trait, StreamEvent, ProviderError
+│   │   ├── model.rs            # ModelConfig, ApiProtocol, OpenAiCompat
+│   │   ├── registry.rs         # ProviderRegistry (protocol → provider)
+│   │   ├── anthropic.rs        # Anthropic Messages API
+│   │   ├── openai_compat.rs    # OpenAI Chat Completions (15+ providers)
+│   │   ├── openai_responses.rs # OpenAI Responses API
+│   │   ├── google.rs           # Google Generative AI
+│   │   ├── google_vertex.rs    # Google Vertex AI
+│   │   ├── bedrock.rs          # AWS Bedrock ConverseStream
+│   │   ├── azure_openai.rs     # Azure OpenAI
+│   │   ├── mock.rs             # Mock provider for testing
+│   │   └── sse.rs              # SSE utilities
+│   ├── tools/
+│   │   ├── bash.rs             # BashTool
+│   │   ├── file.rs             # ReadFileTool, WriteFileTool
+│   │   ├── edit.rs             # EditFileTool
+│   │   ├── list.rs             # ListFilesTool
+│   │   └── search.rs           # SearchTool
+│   └── mcp/
+│       ├── client.rs           # MCP client (stdio + HTTP)
+│       ├── tool_adapter.rs     # McpToolAdapter (MCP tool → AgentTool)
+│       ├── transport.rs        # Transport implementations
+│       └── types.rs            # MCP protocol types
+</code></pre>
+<h2 id="data-flow"><a class="header" href="#data-flow">Data Flow</a></h2>
+<pre><code>                    ┌─────────────┐
+                    │   Caller    │
+                    └──────┬──────┘
+                           │ prompt / prompt_messages
+                    ┌──────▼──────┐
+                    │    Agent    │  Layer 2: stateful wrapper
+                    │  (agent.rs) │  Manages queues, tools, state
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │ agent_loop  │  Layer 1: core loop
+                    │             │  Prompt → LLM → Tools → Repeat
+                    └──┬───────┬──┘
+                       │       │
+              ┌────────▼──┐ ┌──▼────────┐
+              │ Provider  │ │   Tools   │  Layer 2: implementations
+              │ .stream() │ │ .execute()│
+              └────────┬──┘ └──┬────────┘
+                       │       │
+              ┌────────▼──┐ ┌──▼────────┐
+              │ LLM API   │ │ OS / FS   │
+              │ (HTTP)    │ │ (shell)   │
+              └───────────┘ └───────────┘
+
+Events flow back via mpsc::UnboundedSender&lt;AgentEvent&gt;
+</code></pre>
+<h2 id="how-providers-plug-in"><a class="header" href="#how-providers-plug-in">How Providers Plug In</a></h2>
+<ol>
+<li>Implement <code>StreamProvider</code> trait (Layer 1 interface)</li>
+<li>Register with <code>ProviderRegistry</code> under an <code>ApiProtocol</code> (Layer 2)</li>
+<li>Set <code>ModelConfig.api</code> to match that protocol</li>
+<li>The registry dispatches <code>stream()</code> calls to the right provider</li>
+</ol>
+<p>Each provider translates between arcgent's <code>Message</code>/<code>Content</code> types and the provider's native API format. All providers emit <code>StreamEvent</code>s through the channel for real-time updates.</p>
+<h2 id="how-tools-plug-in"><a class="header" href="#how-tools-plug-in">How Tools Plug In</a></h2>
+<ol>
+<li>Implement <code>AgentTool</code> trait (Layer 1 interface)</li>
+<li>Add to the tools vec (via <code>default_tools()</code> or custom)</li>
+<li>The agent loop converts tools to <code>ToolDefinition</code> (name, description, schema) for the LLM</li>
+<li>When the LLM returns <code>Content::ToolCall</code>, the loop finds the matching tool and calls <code>execute()</code></li>
+<li>Results are wrapped in <code>Message::ToolResult</code> and added to context</li>
+</ol>
+<p>Tools receive a <code>CancellationToken</code> child token — they should check it for cooperative cancellation during long operations.</p>
+<h2 id="design-principles"><a class="header" href="#design-principles">Design Principles</a></h2>
+<ul>
+<li><strong>Layers are conceptual, not physical.</strong> One crate, clean module boundaries, no feature flags needed.</li>
+<li><strong>Dependencies flow down.</strong> Layer 1 never imports from Layer 2. Layer 2 never imports from Layer 3.</li>
+<li><strong>Layer 1 is stable.</strong> The core loop and traits change rarely. New features are added in Layer 2 or 3.</li>
+<li><strong>Build what's needed.</strong> Layer 3 is designed but not implemented. It will be built when a use case demands it, not speculatively.</li>
+<li><strong>Simple over clever.</strong> A straightforward loop with good defaults beats an elegant abstraction nobody can debug.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../reference/api.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../reference/api.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
