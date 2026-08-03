@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mutation Testing - arc documentation</title>
+        <title>Local Development - arc documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -155,123 +155,90 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="mutation-testing"><a class="header" href="#mutation-testing">Mutation Testing</a></h1>
-<p>arc uses <a href="https://github.com/sourcefrog/cargo-mutants">cargo-mutants</a> to assess test quality. Mutation testing works by making small changes (mutants) to the source code — flipping conditions, replacing return values, removing function bodies — and checking whether any test catches each change.</p>
-<p><strong>If a mutant survives (no test fails), it means that line of code isn't actually tested.</strong></p>
-<h2 id="baseline"><a class="header" href="#baseline">Baseline</a></h2>
-<p>As of Day 9, arc has <strong>1004 total mutants</strong> across its source files. This number grows as features are added. The mutation testing setup uses a <strong>20% maximum survival rate threshold</strong> — if more than 20% of tested mutants survive, the check fails.</p>
-<div class="table-wrapper"><table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>
-<tr><td>Total mutants</td><td>1004</td></tr>
-<tr><td>Threshold</td><td>20% max survival rate</td></tr>
-<tr><td>Established</td><td>Day 9 (2026-03-09)</td></tr>
-</tbody></table>
-</div>
-<h2 id="install-cargo-mutants"><a class="header" href="#install-cargo-mutants">Install cargo-mutants</a></h2>
-<pre><code class="language-bash">cargo install cargo-mutants
+                        <!-- generated-by: gsd-doc-writer -->
+<h1 id="local-development"><a class="header" href="#local-development">Local Development</a></h1>
+<p>This page is for a human contributor building and testing arc <strong>locally</strong> — not for the automated evolution loop (<code>scripts/evolve.sh</code>), which runs unattended in CI. If you're looking for how arc modifies its own source hourly, see the <a href="../architecture.html">Architecture Overview</a> instead.</p>
+<h2 id="build--test-commands"><a class="header" href="#build--test-commands">Build &amp; test commands</a></h2>
+<p>Run these from the project root:</p>
+<pre><code class="language-bash">cargo build              # Build
+cargo test                # Run tests
+cargo clippy --all-targets -- -D warnings   # Lint (CI treats warnings as errors)
+cargo fmt -- --check      # Format check
+cargo fmt                 # Auto-format
 </code></pre>
-<h2 id="quick-start-with-the-threshold-script"><a class="header" href="#quick-start-with-the-threshold-script">Quick start with the threshold script</a></h2>
-<p>The easiest way to run mutation testing is with the threshold script:</p>
-<pre><code class="language-bash"># Run with default 20% threshold
-./scripts/run_mutants.sh
-
-# Run with a stricter threshold
-./scripts/run_mutants.sh --threshold 10
-
-# Just count mutants without running them
-./scripts/run_mutants.sh --list
-
-# Test mutants in a specific file only
-./scripts/run_mutants.sh --file src/format.rs
+<p>CI runs all four checks (build, test, clippy with <code>-D warnings</code>, fmt check) on every PR to <code>main</code>. Run them locally before pushing — a clippy warning that's harmless on your machine will fail CI.</p>
+<h2 id="running-the-agent-interactively"><a class="header" href="#running-the-agent-interactively">Running the agent interactively</a></h2>
+<p>To manually exercise the agent while you work on a change, run it with your own API key:</p>
+<pre><code class="language-bash">ANTHROPIC_API_KEY=sk-... cargo run
 </code></pre>
-<p>The script:</p>
-<ol>
-<li>Runs <code>cargo mutants</code> on the project</li>
-<li>Counts caught vs survived mutants</li>
-<li>Calculates the survival rate</li>
-<li>Exits with code 1 if the rate exceeds the threshold</li>
-<li>Prints surviving mutants on failure so you know what to fix</li>
-</ol>
-<p>This makes it easy for maintainers to run locally and could be added to CI by the project owner.</p>
-<h2 id="run-mutation-testing-directly"><a class="header" href="#run-mutation-testing-directly">Run mutation testing directly</a></h2>
-<p>From the project root:</p>
-<pre><code class="language-bash"># Run all mutants (this takes a while — several minutes)
-cargo mutants
-
-# Show only the surviving mutants (uncaught mutations)
-cargo mutants -- --survived
-
-# Run mutants for a specific file
-cargo mutants -f src/format.rs
-
-# Run mutants for a specific function
-cargo mutants -F "format_cost"
+<p>Pass flags after <code>--</code> to override the model or point at a local skills directory:</p>
+<pre><code class="language-bash">ANTHROPIC_API_KEY=sk-... cargo run -- --model claude-opus-4-6 --skills ./skills
 </code></pre>
-<h2 id="read-the-results"><a class="header" href="#read-the-results">Read the results</a></h2>
-<p>After a run, cargo-mutants creates a <code>mutants.out/</code> directory with detailed results:</p>
-<pre><code class="language-bash"># Summary
-cat mutants.out/caught.txt     # mutants killed by tests ✓
-cat mutants.out/survived.txt   # mutants NOT caught — test gaps!
-cat mutants.out/timeout.txt    # mutants that caused infinite loops
-cat mutants.out/unviable.txt   # mutants that didn't compile
+<p>This starts the same interactive REPL a real user gets — useful for checking that a change to <code>repl.rs</code>, <code>commands.rs</code>, <code>prompt.rs</code>, or the tool set behaves correctly before you commit.</p>
+<p>If you want to test the full unattended evolution pipeline (planning → implementation → response) rather than just the interactive agent, see <code>scripts/evolve.sh</code>:</p>
+<pre><code class="language-bash">ANTHROPIC_API_KEY=sk-... ./scripts/evolve.sh
 </code></pre>
-<p>Focus on <code>survived.txt</code> — each line is a mutation that no test catches. These are the weak spots.</p>
-<h2 id="configuration"><a class="header" href="#configuration">Configuration</a></h2>
-<p>The <code>mutants.toml</code> file in the project root excludes known-acceptable mutants:</p>
+<p>Note that <code>scripts/evolve.sh</code> itself is on the protected-file list (see <a href="#gotchas-that-matter-when-changing-code">Gotchas</a> below) — you can run it, but you cannot modify it as part of an evolution session.</p>
+<h2 id="source-layout"><a class="header" href="#source-layout">Source layout</a></h2>
+<p>arc's source is split across roughly a dozen files under <code>src/</code>, each with a distinct responsibility (CLI parsing, REPL loop, tool wrappers, formatting, hooks, safety checks, etc.). Rather than duplicate that map here, see the <a href="../architecture.html">Architecture Overview</a> for the full module-by-module breakdown and the reasoning behind the split.</p>
+<h2 id="gotchas-that-matter-when-changing-code"><a class="header" href="#gotchas-that-matter-when-changing-code">Gotchas that matter when changing code</a></h2>
+<p>These are hard rules enforced by the <code>evolve</code> skill and <code>scripts/evolve.sh</code> during automated sessions, and they apply equally to hand-written PRs:</p>
 <ul>
-<li><strong>Cosmetic functions</strong> — ANSI color codes, banner printing, help text</li>
-<li><strong>Interactive I/O</strong> — functions that read stdin or require a terminal</li>
-<li><strong>Async API calls</strong> — prompt execution that needs a live Anthropic API</li>
+<li>
+<p><strong>Protected files.</strong> Never modify <code>IDENTITY.md</code>, <code>PERSONALITY.md</code>, <code>ECONOMICS.md</code>, <code>scripts/evolve.sh</code>, <code>scripts/format_issues.py</code>, <code>scripts/build_site.py</code>, or anything under <code>.github/workflows/</code>.</p>
+</li>
+<li>
+<p><strong>Every code change must pass <code>cargo build &amp;&amp; cargo test</code>.</strong> If a change breaks the build, the automated loop reverts with <code>git checkout -- src/ Cargo.toml Cargo.lock</code> — treat this as the bar for any manual change too.</p>
+</li>
+<li>
+<p><strong>Never delete existing tests.</strong></p>
+</li>
+<li>
+<p><strong>Write tests before adding features.</strong></p>
+</li>
+<li>
+<p><strong>Never use byte indexing on strings.</strong> <code>s[..n]</code>, <code>s.truncate(n)</code>, and <code>s.split_at(n)</code> panic if <code>n</code> falls inside a multi-byte UTF-8 character. Use <code>is_char_boundary()</code> to find a safe boundary first:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// BAD: panics on multi-byte chars like ✓ (3 bytes)
+acc.truncate(max_bytes);
+// GOOD: find nearest char boundary
+let mut b = max_bytes;
+while b &gt; 0 &amp;&amp; !acc.is_char_boundary(b) { b -= 1; }
+acc.truncate(b);
+<span class="boring">}</span></code></pre></pre>
+<p>This isn't a style nitpick — it caused real planning-agent crashes in production (see issue #250 in the project history). Any code that truncates or slices a <code>String</code> by byte offset needs this guard.</p>
+</li>
+<li>
+<p><strong><code>run_git()</code> has a <code>#[cfg(test)]</code> destructive-command guard.</strong> During <code>cargo test</code>, calling <code>run_git()</code> with a destructive subcommand (commit, revert, reset, push, checkout, etc.) from the project root panics. This exists because tests that ran real destructive git operations against the actual repo once caused a multi-session deadlock. If a test needs to exercise destructive git behavior, run it against a temp directory instead of the project root.</p>
+</li>
 </ul>
-<p>These exclusions keep mutation testing focused on logic that <em>should</em> be tested. If you add a new feature with testable logic, make sure it's not excluded.</p>
-<h2 id="writing-targeted-tests"><a class="header" href="#writing-targeted-tests">Writing targeted tests</a></h2>
-<p>When you find a surviving mutant:</p>
-<ol>
-<li>Read what the mutation does (e.g., "replace <code>&lt;</code> with <code>&lt;=</code> in format_cost")</li>
-<li>Write a test that specifically catches that boundary condition</li>
-<li>Re-run <code>cargo mutants -F "function_name"</code> to verify the mutant is now caught</li>
-</ol>
-<p>Example workflow:</p>
-<pre><code class="language-bash"># Find surviving mutants
-cargo mutants 2&gt;&amp;1 | grep "SURVIVED"
-
-# Write a test to kill the mutant, then verify
-cargo mutants -F "format_cost"
-</code></pre>
-<h2 id="threshold-script-for-ci"><a class="header" href="#threshold-script-for-ci">Threshold script for CI</a></h2>
-<p>The <code>scripts/run_mutants.sh</code> script is designed to be CI-friendly:</p>
-<pre><code class="language-bash"># In a CI pipeline or pre-merge check:
-./scripts/run_mutants.sh --threshold 20
-
-# Exit codes:
-#   0 = survival rate within threshold (PASS)
-#   1 = survival rate exceeds threshold (FAIL)
-</code></pre>
-<p>The project owner can add this to CI workflows when ready. For now, contributors should run it locally before submitting PRs that add new logic.</p>
-<h2 id="when-to-run"><a class="header" href="#when-to-run">When to run</a></h2>
-<p>Mutation testing is slow — it builds and tests your code once per mutant. Run it:</p>
+<h2 id="product-vs-evolve-surface"><a class="header" href="#product-vs-evolve-surface">Product vs. evolve surface</a></h2>
+<p>Before writing a change, decide which of arc's two audiences it's for:</p>
 <ul>
-<li>After adding a new feature, to verify test coverage</li>
-<li>Before a release, as a quality check</li>
-<li>When you suspect the test suite has gaps</li>
-<li>On specific files with <code>--file</code> to keep it fast during development</li>
+<li><strong>product</strong> — people who install arc and use it on their own projects (any language, any setup, no CI). Defaults, CLI flags, the setup wizard, and startup behavior must be safe for all of them.</li>
+<li><strong>evolve</strong> — arc's own evolution loop, always running against this Rust repo in CI. Conveniences built for this loop are fine, but they must be opt-in the moment they touch anything a product user would see.</li>
 </ul>
-<h2 id="notes-for-ci-integration"><a class="header" href="#notes-for-ci-integration">Notes for CI integration</a></h2>
-<p>The <code>scripts/run_mutants.sh</code> script and <code>mutants.toml</code> config are ready for a human maintainer to wire into CI. A few things to know:</p>
-<ul>
-<li><strong>Git-dependent tests</strong>: Some tests (e.g. <code>test_git_branch_returns_something_in_repo</code>, <code>test_build_project_tree_runs</code>, <code>test_get_staged_diff_runs</code>) gracefully handle running outside a git repo. cargo-mutants copies source to a temp directory without <code>.git/</code>, so these tests skip git-specific assertions when not in a repo.</li>
-<li><strong>Exclusions are reasonable</strong>: The <code>mutants.toml</code> excludes cosmetic/display functions (ANSI colors, banners), interactive I/O (stdin, terminal), and async API calls (needs live Anthropic key). These can't be meaningfully unit-tested.</li>
-<li><strong>The script cannot be added to <code>.github/workflows/</code> by the agent</strong> (safety rules), but it exits with code 0/1 and is designed for CI use.</li>
-</ul>
+<p>Getting this wrong is a real failure mode: a convenience built for the evolve loop (auto-watch) once shipped as a product default and broke non-Rust users (issue #448). See the <a href="https://github.com/MKonovalov/arc-evolve/blob/main/CLAUDE.md#two-audiences-product-vs-evolve">"Two Audiences: product vs evolve"</a> section of <code>CLAUDE.md</code> for the full rule and how the automated evaluator enforces it on evolve-generated changes.</p>
+<h2 id="building-the-docs-locally"><a class="header" href="#building-the-docs-locally">Building the docs locally</a></h2>
+<p>This mdBook site lives under <code>docs/</code>: source pages in <code>docs/src/</code>, configuration in <code>docs/book.toml</code>. Output is written to <code>site/book/</code> (gitignored) relative to the project root, per the <code>build-dir</code> setting in <code>docs/book.toml</code>.</p>
+<p>To build it locally, <a href="https://rust-lang.github.io/mdBook/guide/installation.html">install mdBook</a> and run, from the project root:</p>
+<pre><code class="language-bash">mdbook build docs/
+</code></pre>
+<p>Or, to preview changes live while editing:</p>
+<pre><code class="language-bash">mdbook serve docs/
+</code></pre>
+<p>New pages need an entry in <code>docs/src/SUMMARY.md</code> to appear in the sidebar. The docs site is built and deployed by the Pages GitHub Actions workflow (<code>.github/workflows/pages.yml</code>) on push to <code>main</code> — it is not part of the hourly evolution loop.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../contributing/testing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../guides/fork.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../contributing/benchmarks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../contributing/testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -281,11 +248,11 @@ cargo mutants -F "format_cost"
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../contributing/testing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../guides/fork.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../contributing/benchmarks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../contributing/testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

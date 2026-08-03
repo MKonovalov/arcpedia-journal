@@ -1,0 +1,355 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Testing - arc documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">arc documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/MKonovalov/arc-evolve" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- generated-by: gsd-doc-writer -->
+<h1 id="testing"><a class="header" href="#testing">Testing</a></h1>
+<p>arc's test suite spans thousands of unit tests colocated with the code plus a
+black-box integration suite that exercises the compiled binary as a
+subprocess. This page covers how tests are organized, how to run them, and
+the one gotcha that trips up almost every new contributor: the <code>run_git()</code>
+destructive-command guard.</p>
+<p>For finding <em>undertested</em> code (as opposed to writing and running tests),
+see <a href="./mutation-testing.html">Mutation Testing</a>.</p>
+<h2 id="how-tests-are-organized"><a class="header" href="#how-tests-are-organized">How tests are organized</a></h2>
+<p><strong>Unit tests live next to the code they test.</strong> Every <code>src/*.rs</code> module that
+has meaningful logic ends with a <code>#[cfg(test)] mod tests { ... }</code> block at
+the bottom of the file, using <code>use super::*;</code> to pull in the module's items.
+For example, <code>src/git.rs</code> ends with:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_run_git_valid_args() {
+        let result = run_git(&amp;["--version"]);
+        assert!(result.is_ok(), "git --version should succeed");
+        // ...
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This is the convention across the codebase — when you add a function to
+<code>src/commands_git.rs</code>, add its test to the <code>mod tests</code> block already at the
+bottom of <code>src/commands_git.rs</code>, not to a separate file. There is no
+<code>src/tests/</code> directory; test code and production code stay in the same file.</p>
+<p><strong>Integration tests live in <code>tests/</code>.</strong> <code>tests/integration.rs</code> spawns the
+compiled <code>arc</code> binary as a real subprocess (via <code>Command::new(env!("CARGO_BIN_EXE_arc"))</code>)
+and asserts on its actual stdout, stderr, and exit code — black-box CLI
+testing, not calling internal functions directly. It clears API-key
+environment variables and points <code>HOME</code> at a nonexistent path so tests never
+accidentally pick up real credentials or a contributor's local config:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn arc_cmd() -&gt; Command {
+    let mut cmd = Command::new(env!("CARGO_BIN_EXE_arc"));
+    cmd.env_remove("ANTHROPIC_API_KEY");
+    // ... other provider keys removed too
+    cmd.env("HOME", "/nonexistent-arc-test-home");
+    cmd
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Use this style for tests that verify CLI behavior end-to-end (flag parsing,
+<code>--help</code> output, exit codes, error messages) — anything that should keep
+working exactly as an end user experiences it, independent of internal
+refactors. <code>tests/safety_edge_cases.rs</code> is a placeholder file with a comment
+explaining why its actual tests run a different way (the <code>safety</code> module is
+private to <code>main.rs</code>); read the file's header comment before assuming it
+follows the same pattern as <code>integration.rs</code>.</p>
+<h2 id="running-tests"><a class="header" href="#running-tests">Running tests</a></h2>
+<pre><code class="language-bash">cargo test
+</code></pre>
+<p>This is what CI runs (<code>.github/workflows/ci.yml</code>) — no special flags, no
+<code>--test-threads=1</code>. Tests are written to be safe under the default parallel
+execution, which is also why the <code>run_git()</code> guard below exists: without it,
+parallel destructive git tests would race against each other (and against
+your working tree) in the same real repo checkout.</p>
+<p>To run a single module's tests:</p>
+<pre><code class="language-bash">cargo test git::tests::
+</code></pre>
+<p>To run just the integration suite:</p>
+<pre><code class="language-bash">cargo test --test integration
+</code></pre>
+<h2 id="the-run_git-destructive-command-guard"><a class="header" href="#the-run_git-destructive-command-guard">The <code>run_git()</code> destructive-command guard</a></h2>
+<p>This is the most common surprise for new test authors, so read this section
+before writing a test that touches git.</p>
+<p><code>src/git.rs</code> defines <code>run_git()</code>, <code>run_git_in_dir()</code>, and <code>run_git_output()</code>
+as the standard way production code shells out to <code>git</code>. Under
+<code>#[cfg(test)]</code>, all three check the invoked subcommand against a list of
+destructive commands (<code>commit</code>, <code>reset</code>, <code>revert</code>, <code>push</code>, <code>checkout</code>,
+<code>clean</code>, <code>stash</code>, <code>add</code>, <code>merge</code>, <code>rebase</code>, <code>cherry-pick</code>, <code>rm</code>, <code>mv</code>) and
+<strong>panic</strong> if:</p>
+<ol>
+<li>the subcommand is in that destructive list, <strong>and</strong></li>
+<li>the working directory being targeted is the actual project root (the
+crate's <code>CARGO_MANIFEST_DIR</code>) — not a temp directory.</li>
+</ol>
+<pre><code>SAFETY: run_git() called with destructive command 'commit' from project root
+during tests. Use a temp directory or mock instead.
+</code></pre>
+<p>The guard exists because a test that calls <code>run_git(&amp;["commit", ...])</code> (or
+<code>reset --hard</code>, <code>checkout --</code>, etc.) from the real repo checkout would mutate
+or destroy the contributor's actual working tree and git history while
+<code>cargo test</code> runs — this happened in production and cost multiple days of
+lost work before the guard was added (see <code>CLAUDE.md</code>'s Safety Rules).</p>
+<p><strong>What this means for you as a test author:</strong></p>
+<ul>
+<li>Read-only git calls (<code>status</code>, <code>diff</code>, <code>log</code>, <code>rev-parse</code>, <code>--version</code>) are
+never blocked — write these tests exactly as you would call the function
+in production code.</li>
+<li>If your test genuinely needs to run a destructive git command (e.g. you're
+testing worktree creation, which needs <code>git init</code> + <code>git add</code> + <code>git commit</code> to set up a realistic repo), do it inside a <code>tempfile::tempdir()</code>,
+not the project root. The guard only fires when the working directory
+matches the project root, so temp-dir operations are unaffected.</li>
+<li>Because the guard compares directories, not command source, you have two
+ways to sidestep it safely inside a temp dir:
+<ul>
+<li>Call <code>run_git_in_dir(&amp;tmp_path, &amp;[...])</code> — the guard checks <code>tmp_path</code>
+against the project root and passes.</li>
+<li>Or shell out with a raw <code>std::process::Command::new("git").current_dir(&amp;tmp_path)</code>
+directly, bypassing <code>run_git()</code> (and its guard) entirely. This is the
+pattern used by <code>setup_temp_repo()</code> in <code>src/commands_spawn.rs</code>'s test
+module, which does a real <code>git init</code> / <code>git config</code> / <code>git add</code> / <code>git commit</code> sequence inside a <code>tempfile::TempDir</code> to build a throwaway repo
+for worktree tests.</li>
+</ul>
+</li>
+<li>Never try to "fix" a guard panic by changing directory with
+<code>std::env::set_current_dir()</code> inside a test — it's process-global and
+causes flaky races against other tests running in parallel. Pass an
+explicit temp path to <code>run_git_in_dir()</code> (or a raw <code>Command</code> with
+<code>.current_dir(...)</code>) instead.</li>
+</ul>
+<h2 id="never-delete-existing-tests"><a class="header" href="#never-delete-existing-tests">Never delete existing tests</a></h2>
+<p>CLAUDE.md's Safety Rules state tests must never be deleted. In practice,
+this means:</p>
+<ul>
+<li>If you're refactoring a function, refactor its test alongside it — update
+assertions to match new behavior, but don't remove the test wholesale
+because it's inconvenient.</li>
+<li>If a test is genuinely testing removed functionality (the function itself
+was deleted), that's the one legitimate case for removing the test — and
+it should be removed in the same change that removes the function, not
+left dangling.</li>
+<li>If a test is flaky or slow, fix it or mark it <code>#[ignore]</code> with a comment
+explaining why — don't delete it to make CI green.</li>
+<li>Adding new tests when you add new behavior is expected, not optional —
+see the Test Quality expectations below.</li>
+</ul>
+<h2 id="test-quality-expectations"><a class="header" href="#test-quality-expectations">Test quality expectations</a></h2>
+<p>The project's <a href="https://github.com/MKonovalov/arc-evolve#readme">README</a>
+documents a "Test Quality" philosophy: a large unit + integration suite
+covering CLI flags, command parsing, error quality, exit codes, output
+formatting, edge cases, project detection, fuzzy scoring, git operations,
+session management, markdown rendering, cost calculation, permission logic,
+streaming behavior, and more.</p>
+<p>Raw test count is a weak signal on its own, which is why the project also
+runs mutation testing to check whether existing tests actually catch
+regressions rather than just executing code paths. See
+<a href="./mutation-testing.html">Mutation Testing</a> for how to find code that passes
+<code>cargo test</code> today but isn't meaningfully covered.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../contributing/development.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../contributing/mutation-testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../contributing/development.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../contributing/mutation-testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
