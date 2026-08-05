@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>MCP Integration - arcgent Documentation</title>
+        <title>MCP Integration - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h2 id="connecting-to-mcp-servers"><a class="header" href="#connecting-to-mcp-servers">Connecting to MCP Servers</a></h2>
 <h3 id="stdio-transport"><a class="header" href="#stdio-transport">Stdio Transport</a></h3>
 <p>Use <code>with_mcp_server_stdio()</code> to spawn an MCP server process and register its tools:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::Agent;
-use arcgent::provider::ModelConfig;
+<pre><pre class="playground"><code class="language-rust">use arcagent::Agent;
+use arcagent::provider::ModelConfig;
 
 #[tokio::main]
 async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -208,7 +208,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
     .await?;
 <span class="boring">}</span></code></pre></pre>
 <h2 id="how-mcp-tools-work"><a class="header" href="#how-mcp-tools-work">How MCP Tools Work</a></h2>
-<p>When you call <code>with_mcp_server_stdio()</code> or <code>with_mcp_server_http()</code>, arcgent:</p>
+<p>When you call <code>with_mcp_server_stdio()</code> or <code>with_mcp_server_http()</code>, arcagent:</p>
 <ol>
 <li>Connects to the MCP server and performs the <code>initialize</code> handshake</li>
 <li>Calls <code>tools/list</code> to discover available tools</li>
@@ -219,7 +219,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <h2 id="mixing-built-in-and-mcp-tools"><a class="header" href="#mixing-built-in-and-mcp-tools">Mixing Built-in and MCP Tools</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::tools::default_tools;
+</span>use arcagent::tools::default_tools;
 
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
     .with_tools(default_tools())  // bash, read, write, edit, list, search
@@ -231,7 +231,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <p>For lower-level control, use <code>McpClient</code> directly:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::mcp::{McpClient, McpToolAdapter};
+</span>use arcagent::mcp::{McpClient, McpToolAdapter};
 use std::sync::Arc;
 use tokio::sync::Mutex;
 

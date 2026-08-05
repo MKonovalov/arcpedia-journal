@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>State Persistence - arcgent Documentation</title>
+        <title>State Persistence - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -160,11 +160,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="state-persistence"><a class="header" href="#state-persistence">State Persistence</a></h1>
-<p>arcgent supports saving and restoring agent conversation state, enabling pause/resume workflows, state transfer between processes, and conversation checkpointing.</p>
+<p>arcagent supports saving and restoring agent conversation state, enabling pause/resume workflows, state transfer between processes, and conversation checkpointing.</p>
 <h2 id="save-and-restore"><a class="header" href="#save-and-restore">Save and Restore</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
+</span>use arcagent::agent::Agent;
 
 // After running some conversation turns...
 let json = agent.save_messages()?;

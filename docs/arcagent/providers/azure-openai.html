@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Azure OpenAI - arcgent Documentation</title>
+        <title>Azure OpenAI - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -164,7 +164,7 @@
 <h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::{ApiProtocol, ModelConfig};
+</span>use arcagent::provider::{ApiProtocol, ModelConfig};
 
 // Azure has no dedicated ModelConfig preset — build one with `custom`.
 // The provider ("azure") resolves the key from AZURE_OPENAI_API_KEY.
@@ -200,7 +200,7 @@ let agent = Agent::from_config(ModelConfig::custom(
 </ul>
 <h2 id="message-format"><a class="header" href="#message-format">Message Format</a></h2>
 <p>Uses the Responses API input format:</p>
-<div class="table-wrapper"><table><thead><tr><th>arcgent</th><th>Azure Responses API</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>arcagent</th><th>Azure Responses API</th></tr></thead><tbody>
 <tr><td>User message</td><td><code>{"role": "user", "content": "..."}</code></td></tr>
 <tr><td>Assistant text</td><td><code>{"type": "message", "role": "assistant", "content": [{"type": "output_text", ...}]}</code></td></tr>
 <tr><td>Tool call</td><td><code>{"type": "function_call", "call_id": "...", "name": "...", "arguments": "..."}</code></td></tr>

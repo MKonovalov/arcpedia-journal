@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>GASP: Your Agent Is a Git Repo - arcgent Documentation</title>
+        <title>GASP: Your Agent Is a Git Repo - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -166,15 +166,15 @@ event log</strong> (<code>state/events.jsonl</code>) that folds into a typed
 goal/run/model/tool graph, alongside identity, skills, and memory tiers.
 Restore = <code>git clone</code> + replay. Clone your agent onto a new machine and it
 remembers everything, with lineage.</p>
-<p>arcgent bridges to GASP through the <code>gasp</code> feature (backed by
-<a href="https://crates.io/crates/arcgent-state"><code>arcgent-state</code></a>, the reference
-runtime). The bridge is a consumer of the <a href="https://docs.rs/arcgent/latest/arcgent/enum.AgentEvent.html"><code>AgentEvent</code></a> stream — <strong>zero
+<p>arcagent bridges to GASP through the <code>gasp</code> feature (backed by
+<a href="https://crates.io/crates/arcagent-state"><code>arcagent-state</code></a>, the reference
+runtime). The bridge is a consumer of the <a href="https://docs.rs/arcagent/latest/arcagent/enum.AgentEvent.html"><code>AgentEvent</code></a> stream — <strong>zero
 agent-loop changes</strong>:</p>
-<pre><code class="language-toml">arcgent = { version = "0.12", features = ["gasp"] }
+<pre><code class="language-toml">arcagent = { version = "0.12", features = ["gasp"] }
 </code></pre>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::gasp::{GaspRecorder, GoalRef};
+</span>use arcagent::gasp::{GaspRecorder, GoalRef};
 
 let recorder = GaspRecorder::init(
     "./my-agent-repo", "my-agent", "worker-1",
@@ -211,7 +211,7 @@ handle — <strong>always await it</strong> — while event forwarding to your U
 uninterrupted. GASP repos are single-writer: don't share one repo between
 live workers, and record one run at a time.</p>
 <h2 id="tested-conformance"><a class="header" href="#tested-conformance">Tested conformance</a></h2>
-<p>arcgent's CI emits an agent repo with a mock provider and runs the GASP
+<p>arcagent's CI emits an agent repo with a mock provider and runs the GASP
 conformance checker against it — all seven mechanical checks (envelope
 round-trip, replay, vocabulary, append-only git history, causation integrity,
 restore, domain↔ops consistency) must pass on every commit. Try it yourself:</p>

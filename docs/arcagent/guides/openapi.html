@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>OpenAPI Tools - arcgent Documentation</title>
+        <title>OpenAPI Tools - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -165,9 +165,9 @@
 <p><strong>Feature-gated</strong> — add <code>features = ["openapi"]</code> to your <code>Cargo.toml</code>.</p>
 </blockquote>
 <h2 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h2>
-<pre><pre class="playground"><code class="language-rust">use arcgent::Agent;
-use arcgent::openapi::{OpenApiToolAdapter, OpenApiConfig, OperationFilter};
-use arcgent::provider::ModelConfig;
+<pre><pre class="playground"><code class="language-rust">use arcagent::Agent;
+use arcagent::openapi::{OpenApiToolAdapter, OpenApiConfig, OperationFilter};
+use arcagent::provider::ModelConfig;
 
 #[tokio::main]
 async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -267,7 +267,7 @@ let filter = OperationFilter::ByPathPrefix("/repos".into());
 <p>OpenAPI tools work alongside built-in tools and MCP tools:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::tools::default_tools;
+</span>use arcagent::tools::default_tools;
 
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
     .with_tools(default_tools())

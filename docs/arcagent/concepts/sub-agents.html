@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Sub-Agents - arcgent Documentation</title>
+        <title>Sub-Agents - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -175,9 +175,9 @@
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::sync::Arc;
-use arcgent::sub_agent::SubAgentTool;
-use arcgent::provider::ModelConfig;
-use arcgent::tools;
+use arcagent::sub_agent::SubAgentTool;
+use arcagent::provider::ModelConfig;
+use arcagent::tools;
 
 let researcher = SubAgentTool::from_config(
     "researcher",
@@ -194,7 +194,7 @@ let researcher = SubAgentTool::from_config(
 <h2 id="registering-on-a-parent-agent"><a class="header" href="#registering-on-a-parent-agent">Registering on a Parent Agent</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
+</span>use arcagent::agent::Agent;
 
 let mut agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
     .with_system_prompt("You coordinate between sub-agents.")
@@ -231,7 +231,7 @@ let mut agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Cl
 <p><code>SharedState</code> solves this: store an artifact once, and any number of sub-agents read/write it by reference.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::shared_state::SharedState;
+</span>use arcagent::shared_state::SharedState;
 
 let state = SharedState::new();
 state.set("ci_log", large_log_text).await.unwrap();
@@ -289,7 +289,7 @@ let state = SharedState::with_max_bytes(50 * 1024 * 1024); // 50MB
 <p><strong>FileBackend</strong> — one file per key, persistent across process restarts:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::shared_state::FileBackend;
+</span>use arcagent::shared_state::FileBackend;
 
 let state = SharedState::with_backend(FileBackend::new(".agent-state"));
 <span class="boring">}</span></code></pre></pre>
@@ -297,7 +297,7 @@ let state = SharedState::with_backend(FileBackend::new(".agent-state"));
 <p><strong>Custom backends</strong> implement the <code>SharedStateBackend</code> trait:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::shared_state::{SharedStateBackend, SharedStateError};
+</span>use arcagent::shared_state::{SharedStateBackend, SharedStateError};
 
 #[async_trait::async_trait]
 impl SharedStateBackend for MyRedisBackend {
@@ -312,10 +312,10 @@ let state = SharedState::with_backend(MyRedisBackend::new());
 <span class="boring">}</span></code></pre></pre>
 <p>See <a href="../../examples/shared_state.rs"><code>examples/shared_state.rs</code></a> for a complete parallel analysis demo.</p>
 <h2 id="multi-provider-support"><a class="header" href="#multi-provider-support">Multi-Provider Support</a></h2>
-<p>Sub-agents can use any provider supported by arcgent — not just Anthropic. Pass a <code>ModelConfig</code> to configure the base URL, compat flags, and other provider-specific settings:</p>
+<p>Sub-agents can use any provider supported by arcagent — not just Anthropic. Pass a <code>ModelConfig</code> to configure the base URL, compat flags, and other provider-specific settings:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let model_config = ModelConfig::xai("grok-4-1-fast-reasoning", "Grok 3 Mini Fast");
 

@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>OpenAI Compatible - arcgent Documentation</title>
+        <title>OpenAI Compatible - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -166,7 +166,7 @@
 <p>Requires a <code>ModelConfig</code> with <code>compat</code> flags set in <code>StreamConfig.model_config</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let agent = Agent::from_config(ModelConfig::openai("gpt-5.5", "GPT-5.5"));
 <span class="boring">}</span></code></pre></pre>
@@ -202,7 +202,7 @@ let agent = Agent::from_config(ModelConfig::openai("gpt-5.5", "GPT-5.5"));
 </tbody></table>
 </div>
 <p><code>OpenAiCompat</code> presets are lower-level quirk flags. A provider is first-class when it also has a <code>ModelConfig::*</code> constructor; see <a href="model-presets.html">Model Presets</a>.</p>
-<p>DeepSeek context caching is automatic on DeepSeek's side. arcgent does not send
+<p>DeepSeek context caching is automatic on DeepSeek's side. arcagent does not send
 <code>cache_control</code> markers for DeepSeek, but it does parse DeepSeek's
 <code>prompt_cache_hit_tokens</code> and <code>prompt_cache_miss_tokens</code> usage fields into
 <code>Usage.cache_read</code> and <code>Usage.input</code>.</p>
@@ -245,8 +245,8 @@ let agent = Agent::from_config(ModelConfig::openai("gpt-5.5", "GPT-5.5"));
 <p>Use <code>ModelConfig::ollama()</code> for Ollama, or <code>ModelConfig::local()</code> for any other local OpenAI-compatible server. No API key required:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::provider::ModelConfig;
+</span>use arcagent::agent::Agent;
+use arcagent::provider::ModelConfig;
 
 // The `local` provider resolves to an empty API key automatically — none needed.
 let agent = Agent::from_config(ModelConfig::local("http://localhost:1234/v1", "my-model"));
@@ -287,7 +287,7 @@ let qwen_on_ollama = ModelConfig::openai_compat(
 <p><strong>Terms of service.</strong> <code>api.githubcopilot.com</code> is intended for use through official
 GitHub Copilot editor integrations. Accessing it from a third-party agent is against
 GitHub's Copilot terms of service and may result in token revocation or account
-suspension. arcgent does <strong>not</strong> ship a first-class Copilot preset for this reason.
+suspension. arcagent does <strong>not</strong> ship a first-class Copilot preset for this reason.
 The configuration below is documented only for users who understand and accept that
 risk. Use at your own discretion.</p>
 </blockquote>
@@ -296,8 +296,8 @@ risk. Use at your own discretion.</p>
 Copilot token as the API key:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::provider::{ModelConfig, OpenAiCompat};
+</span>use arcagent::agent::Agent;
+use arcagent::provider::{ModelConfig, OpenAiCompat};
 
 let mut config = ModelConfig::openai_compat(
     "https://api.githubcopilot.com",
@@ -317,7 +317,7 @@ exchanging a GitHub OAuth token (from the device-login flow, or from the local C
 config under <code>~/.config/github-copilot/</code>) at
 <code>https://api.github.com/copilot_internal/v2/token</code>. That token <strong>expires after ~25–30
 minutes</strong>.</p>
-<p>arcgent has no built-in credential refresh — <code>api_key</code> is static for the life of the
+<p>arcagent has no built-in credential refresh — <code>api_key</code> is static for the life of the
 provider (<code>Authorization: Bearer {api_key}</code>). For anything longer than a single short
 turn, <strong>you</strong> must exchange and refresh the token yourself and rebuild the agent's config
 with a fresh token before it expires; otherwise long runs will fail with <code>401</code>.</p>

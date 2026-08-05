@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Tools - arcgent Documentation</title>
+        <title>Tools - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -229,7 +229,7 @@ pub trait AgentTool: Send + Sync {
 <h2 id="implementing-a-custom-tool"><a class="header" href="#implementing-a-custom-tool">Implementing a Custom Tool</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::types::*;
+</span>use arcagent::types::*;
 use async_trait::async_trait;
 
 pub struct WeatherTool;
@@ -276,7 +276,7 @@ impl AgentTool for WeatherTool {
 <p>Register custom tools alongside defaults:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::tools::default_tools;
+</span>use arcagent::tools::default_tools;
 
 let mut tools = default_tools();
 tools.push(Box::new(WeatherTool));
@@ -321,7 +321,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <p>Call <code>on_update</code> whenever you have progress to report:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::types::*;
+</span>use arcagent::types::*;
 
 struct DataProcessorTool;
 
@@ -421,9 +421,9 @@ impl AgentTool for DataProcessorTool {
 </ul>
 <h3 id="end-to-end-example"><a class="header" href="#end-to-end-example">End-to-end example</a></h3>
 <p>Here's a complete example: a CLI agent with a deploy tool that streams progress. The human sees real-time output while the LLM only gets the final result.</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::agent::Agent;
-use arcgent::provider::ModelConfig;
-use arcgent::types::*;
+<pre><pre class="playground"><code class="language-rust">use arcagent::agent::Agent;
+use arcagent::provider::ModelConfig;
+use arcagent::types::*;
 
 /// A tool that deploys an app and streams each step.
 struct DeployTool;
@@ -535,7 +535,7 @@ Successfully deployed to production. The deployment completed all 4 stages.
 </code></pre>
 <p>The human sees each step as it happens. The LLM only sees "Successfully deployed to production" and can continue the conversation from there.</p>
 <h3 id="how-agents-benefit"><a class="header" href="#how-agents-benefit">How agents benefit</a></h3>
-<p>When an AI agent (like a coding assistant) uses arcgent, streaming tool output helps in two ways:</p>
+<p>When an AI agent (like a coding assistant) uses arcagent, streaming tool output helps in two ways:</p>
 <ol>
 <li>
 <p><strong>Human oversight</strong> — The human watching the agent work sees real-time progress instead of waiting for a tool to finish. A bash command running <code>cargo build</code> can stream compiler output as it happens, so the human can interrupt early if something is wrong.</p>
@@ -556,8 +556,8 @@ Successfully deployed to production. The deployment completed all 4 stages.
 <h3 id="configuration"><a class="header" href="#configuration">Configuration</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::types::ToolExecutionStrategy;
+</span>use arcagent::agent::Agent;
+use arcagent::types::ToolExecutionStrategy;
 
 // Default — parallel (fastest)
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"));
@@ -579,11 +579,11 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <p>Steering messages are always checked between execution units (between each tool in Sequential, after all tools in Parallel, between batches in Batched). If a user interrupts, remaining tools are skipped.</p>
 <h2 id="permissions-tool-middleware"><a class="header" href="#permissions-tool-middleware">Permissions: Tool Middleware</a></h2>
 <p>Every tool call can be gated by an async <strong>middleware chain</strong> — the mechanism
-behind permission prompts, policy engines, and argument rewriting. arcgent
+behind permission prompts, policy engines, and argument rewriting. arcagent
 ships the hook, not a policy: with no middleware installed, every call runs.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::{ToolCallRequest, ToolDecision, ToolMiddleware};
+</span>use arcagent::{ToolCallRequest, ToolDecision, ToolMiddleware};
 
 struct ReadOnlyPolicy;
 

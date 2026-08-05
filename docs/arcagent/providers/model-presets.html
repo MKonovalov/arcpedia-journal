@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Model Presets - arcgent Documentation</title>
+        <title>Model Presets - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -160,7 +160,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="model-presets"><a class="header" href="#model-presets">Model Presets</a></h1>
-<p>arcgent's first-class model presets are the <code>ModelConfig::*</code> constructors. A preset sets provider routing, base URL, context metadata, default output limits, and provider compatibility flags.</p>
+<p>arcagent's first-class model presets are the <code>ModelConfig::*</code> constructors. A preset sets provider routing, base URL, context metadata, default output limits, and provider compatibility flags.</p>
 <p>Use a preset when the provider is listed here. Use a custom <code>ModelConfig</code> when you need a compatible provider or endpoint that does not have a constructor yet.</p>
 <h2 id="first-class-constructors"><a class="header" href="#first-class-constructors">First-Class Constructors</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Constructor</th><th>Provider</th><th>Protocol</th><th>Default Base URL</th><th>Context</th><th>Default Max Output</th></tr></thead><tbody>
@@ -187,13 +187,13 @@
 <tr><td><code>ModelConfig::local(base_url, model_id)</code></td><td>Local compatible server</td><td><code>OpenAiCompletions</code></td><td>caller provided</td><td>128K</td><td>4,096</td></tr>
 </tbody></table>
 </div>
-<p>The constructors do not validate model IDs. They send the <code>id</code> you pass through to the provider, which lets you use newly released model IDs before arcgent updates its examples.</p>
+<p>The constructors do not validate model IDs. They send the <code>id</code> you pass through to the provider, which lets you use newly released model IDs before arcagent updates its examples.</p>
 <p>The named presets (<code>claude_fable_5</code>, <code>claude_opus_4_8</code>, <code>claude_sonnet_5</code>, <code>claude_haiku_4_5</code>, <code>gpt_5_5</code>) also fill in real <code>CostConfig</code> pricing. The OpenCode presets select the API protocol from the model id — see <a href="opencode.html">OpenCode Zen &amp; Go</a>.</p>
 <h2 id="openai-compatible-presets"><a class="header" href="#openai-compatible-presets">OpenAI-Compatible Presets</a></h2>
 <p>These constructors all use <code>OpenAiCompatProvider</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let agent = Agent::from_config(ModelConfig::deepseek(
     "deepseek-v4-flash",
@@ -263,7 +263,7 @@ let pro = ModelConfig::deepseek("deepseek-v4-pro", "DeepSeek V4 Pro");
 let reasoner = ModelConfig::deepseek("deepseek-reasoner", "DeepSeek Reasoner");
 <span class="boring">}</span></code></pre></pre>
 <p>DeepSeek documents <code>deepseek-chat</code> and <code>deepseek-reasoner</code> as compatibility aliases scheduled for deprecation on 2026-07-24. In DeepSeek's current API, <code>deepseek-chat</code> maps to the non-thinking mode of <code>deepseek-v4-flash</code>, while <code>deepseek-reasoner</code> maps to the thinking mode of <code>deepseek-v4-flash</code>.</p>
-<p>arcgent also sends DeepSeek's current request shape:</p>
+<p>arcagent also sends DeepSeek's current request shape:</p>
 <ul>
 <li><code>max_tokens</code>, not <code>max_completion_tokens</code></li>
 <li><code>thinking: { "type": "enabled" | "disabled" }</code></li>

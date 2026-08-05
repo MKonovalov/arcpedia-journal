@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Overview - arcgent Documentation</title>
+        <title>Overview - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -161,7 +161,7 @@
                     <main>
                         <h1 id="architecture-overview"><a class="header" href="#architecture-overview">Architecture Overview</a></h1>
 <h2 id="layered-design"><a class="header" href="#layered-design">Layered Design</a></h2>
-<p>arcgent is organized as three conceptual layers within a single crate. Dependencies flow strictly downward — upper layers use lower layers, never the reverse.</p>
+<p>arcagent is organized as three conceptual layers within a single crate. Dependencies flow strictly downward — upper layers use lower layers, never the reverse.</p>
 <pre><code>┌─────────────────────────────────────────────┐
 │  Layer 3: Orchestration          (planned)   │
 │  Multi-agent, delegation, work modes         │
@@ -224,7 +224,7 @@
 <p><strong>Why not yet:</strong> Multi-agent orchestration adds complexity. The single-agent loop handles 95% of use cases. Layer 3 will be built when a concrete use case drives it, not speculatively.</p>
 <hr />
 <h2 id="module-layout"><a class="header" href="#module-layout">Module Layout</a></h2>
-<pre><code>arcgent/
+<pre><code>arcagent/
 ├── src/
 │   ├── lib.rs                  # Public re-exports
 │   │
@@ -295,7 +295,7 @@ Events flow back via mpsc::UnboundedSender&lt;AgentEvent&gt;
 <li>Set <code>ModelConfig.api</code> to match that protocol</li>
 <li>The registry dispatches <code>stream()</code> calls to the right provider</li>
 </ol>
-<p>Each provider translates between arcgent's <code>Message</code>/<code>Content</code> types and the provider's native API format. All providers emit <code>StreamEvent</code>s through the channel for real-time updates.</p>
+<p>Each provider translates between arcagent's <code>Message</code>/<code>Content</code> types and the provider's native API format. All providers emit <code>StreamEvent</code>s through the channel for real-time updates.</p>
 <h2 id="how-tools-plug-in"><a class="header" href="#how-tools-plug-in">How Tools Plug In</a></h2>
 <ol>
 <li>Implement <code>AgentTool</code> trait (Layer 1 interface)</li>

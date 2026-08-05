@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Quick Start - arcgent Documentation</title>
+        <title>Quick Start - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -161,9 +161,9 @@
                     <main>
                         <h1 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h1>
 <h2 id="basic-example-with-anthropic"><a class="header" href="#basic-example-with-anthropic">Basic Example with Anthropic</a></h2>
-<pre><pre class="playground"><code class="language-rust">use arcgent::{Agent, AgentEvent, StreamDelta};
-use arcgent::provider::ModelConfig;
-use arcgent::tools::default_tools;
+<pre><pre class="playground"><code class="language-rust">use arcagent::{Agent, AgentEvent, StreamDelta};
+use arcagent::provider::ModelConfig;
+use arcagent::tools::default_tools;
 
 #[tokio::main]
 async fn main() {
@@ -201,9 +201,9 @@ async fn main() {
 }</code></pre></pre>
 <h2 id="example-with-openai-compatible-provider"><a class="header" href="#example-with-openai-compatible-provider">Example with OpenAI-Compatible Provider</a></h2>
 <p>For OpenAI, xAI, Groq, DeepSeek, Mistral, MiniMax, Z.ai, Qwen, Ollama, or any compatible API, pass the matching <code>ModelConfig</code> preset — <code>from_config</code> picks the OpenAI-compatible provider and resolves the provider's env key automatically:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::{Agent, AgentEvent};
-use arcgent::provider::ModelConfig;
-use arcgent::tools::default_tools;
+<pre><pre class="playground"><code class="language-rust">use arcagent::{Agent, AgentEvent};
+use arcagent::provider::ModelConfig;
+use arcagent::tools::default_tools;
 
 #[tokio::main]
 async fn main() {
@@ -217,7 +217,7 @@ async fn main() {
     while let Some(event) = rx.recv().await {
         match event {
             AgentEvent::MessageUpdate { delta, .. } =&gt; {
-                if let arcgent::StreamDelta::Text { delta } = delta {
+                if let arcagent::StreamDelta::Text { delta } = delta {
                     print!("{}", delta);
                 }
             }
@@ -228,9 +228,9 @@ async fn main() {
 }</code></pre></pre>
 <h2 id="real-time-streaming"><a class="header" href="#real-time-streaming">Real-Time Streaming</a></h2>
 <p><code>agent.prompt()</code> spawns the agent loop concurrently and returns a receiver immediately, so events stream in real-time as they're produced. For cases where you want to provide your own channel (e.g., to share a sender across tasks), use <code>prompt_with_sender()</code>:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::{Agent, AgentEvent, StreamDelta};
-use arcgent::provider::ModelConfig;
-use arcgent::tools::default_tools;
+<pre><pre class="playground"><code class="language-rust">use arcagent::{Agent, AgentEvent, StreamDelta};
+use arcagent::provider::ModelConfig;
+use arcagent::tools::default_tools;
 
 #[tokio::main]
 async fn main() {
@@ -263,9 +263,9 @@ async fn main() {
 }</code></pre></pre>
 <h2 id="using-the-low-level-api"><a class="header" href="#using-the-low-level-api">Using the Low-Level API</a></h2>
 <p>For more control, use <code>agent_loop()</code> directly:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::agent_loop::{agent_loop, AgentLoopConfig};
-use arcgent::provider::AnthropicProvider;
-use arcgent::types::*;
+<pre><pre class="playground"><code class="language-rust">use arcagent::agent_loop::{agent_loop, AgentLoopConfig};
+use arcagent::provider::AnthropicProvider;
+use arcagent::types::*;
 use tokio::sync::mpsc;
 use tokio_util::sync::CancellationToken;
 
@@ -277,7 +277,7 @@ async fn main() {
     let mut context = AgentContext {
         system_prompt: "You are helpful.".into(),
         messages: Vec::new(),
-        tools: arcgent::tools::default_tools(),
+        tools: arcagent::tools::default_tools(),
     };
 
     let config = AgentLoopConfig {
@@ -297,7 +297,7 @@ async fn main() {
         execution_limits: None,
         cache_config: CacheConfig::default(),
         tool_execution: ToolExecutionStrategy::default(),
-        retry_config: arcgent::RetryConfig::default(),
+        retry_config: arcagent::RetryConfig::default(),
         before_turn: None,
         after_turn: None,
         on_error: None,

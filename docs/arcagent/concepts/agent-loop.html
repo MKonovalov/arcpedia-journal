@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The Agent Loop - arcgent Documentation</title>
+        <title>The Agent Loop - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -160,7 +160,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="the-agent-loop"><a class="header" href="#the-agent-loop">The Agent Loop</a></h1>
-<p>The agent loop is the core of arcgent. It implements the fundamental cycle:</p>
+<p>The agent loop is the core of arcagent. It implements the fundamental cycle:</p>
 <pre><code>User prompt → LLM call → Tool execution → LLM call → ... → Final response
 </code></pre>
 <h2 id="how-it-works"><a class="header" href="#how-it-works">How It Works</a></h2>
@@ -359,11 +359,11 @@ snapshot and store them separately if they must survive a restart.</li>
 };
 <span class="boring">}</span></code></pre></pre>
 <h2 id="custom-compaction"><a class="header" href="#custom-compaction">Custom Compaction</a></h2>
-<p>By default, when context exceeds the token budget in <code>ContextConfig</code>, arcgent runs a 3-level compaction strategy: truncate tool outputs → summarize old turns → drop middle messages. You can replace this with your own <code>CompactionStrategy</code>:</p>
+<p>By default, when context exceeds the token budget in <code>ContextConfig</code>, arcagent runs a 3-level compaction strategy: truncate tool outputs → summarize old turns → drop middle messages. You can replace this with your own <code>CompactionStrategy</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::context::{CompactionStrategy, ContextConfig, compact_messages};
-use arcgent::types::*;
+</span>use arcagent::context::{CompactionStrategy, ContextConfig, compact_messages};
+use arcagent::types::*;
 
 struct MyCompaction;
 

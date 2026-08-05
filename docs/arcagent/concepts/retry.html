@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Retry with Backoff - arcgent Documentation</title>
+        <title>Retry with Backoff - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -160,7 +160,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="retry-with-backoff"><a class="header" href="#retry-with-backoff">Retry with Backoff</a></h1>
-<p>When an LLM provider returns a transient error — rate limit (HTTP 429) or network failure — arcgent automatically retries with exponential backoff and jitter. No configuration required; it works out of the box.</p>
+<p>When an LLM provider returns a transient error — rate limit (HTTP 429) or network failure — arcagent automatically retries with exponential backoff and jitter. No configuration required; it works out of the box.</p>
 <h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
 <pre><code>Request → Error? → Retryable? → Wait (backoff + jitter) → Retry → ...
                        ↓ No
@@ -207,8 +207,8 @@
 <h3 id="using-the-agent-builder"><a class="header" href="#using-the-agent-builder">Using the Agent builder</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::retry::RetryConfig;
+</span>use arcagent::agent::Agent;
+use arcagent::retry::RetryConfig;
 
 // Default — 3 retries, exponential backoff (recommended)
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"));
@@ -229,8 +229,8 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <h3 id="using-agentloopconfig-directly"><a class="header" href="#using-agentloopconfig-directly">Using AgentLoopConfig directly</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent_loop::AgentLoopConfig;
-use arcgent::retry::RetryConfig;
+</span>use arcagent::agent_loop::AgentLoopConfig;
+use arcagent::retry::RetryConfig;
 
 let config = AgentLoopConfig {
     // ...other fields...
@@ -243,7 +243,7 @@ let config = AgentLoopConfig {
 };
 <span class="boring">}</span></code></pre></pre>
 <h2 id="rate-limit-headers"><a class="header" href="#rate-limit-headers">Rate limit headers</a></h2>
-<p>When a provider returns <code>ProviderError::RateLimited { retry_after_ms: Some(5000) }</code>, arcgent uses that exact delay instead of the calculated backoff. This respects the provider's guidance — if Anthropic says "retry after 5 seconds", we wait 5 seconds, not our own estimate.</p>
+<p>When a provider returns <code>ProviderError::RateLimited { retry_after_ms: Some(5000) }</code>, arcagent uses that exact delay instead of the calculated backoff. This respects the provider's guidance — if Anthropic says "retry after 5 seconds", we wait 5 seconds, not our own estimate.</p>
 <p>If no <code>retry_after_ms</code> is provided, the exponential backoff kicks in.</p>
 <h2 id="observability"><a class="header" href="#observability">Observability</a></h2>
 <p>Retry attempts are logged via <code>tracing</code> at the <code>WARN</code> level:</p>
@@ -260,7 +260,7 @@ tracing_subscriber::fmt::init();
 
 // Or filter to just retries
 tracing_subscriber::fmt()
-    .with_env_filter("arcgent::retry=warn")
+    .with_env_filter("arcagent::retry=warn")
     .init();
 <span class="boring">}</span></code></pre></pre>
 <h2 id="design-notes"><a class="header" href="#design-notes">Design notes</a></h2>

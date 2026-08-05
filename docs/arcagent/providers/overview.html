@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Overview - arcgent Documentation</title>
+        <title>Overview - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -160,7 +160,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="providers-overview"><a class="header" href="#providers-overview">Providers Overview</a></h1>
-<p>arcgent supports multiple LLM providers through the <code>StreamProvider</code> trait and <code>ApiProtocol</code> dispatch.</p>
+<p>arcagent supports multiple LLM providers through the <code>StreamProvider</code> trait and <code>ApiProtocol</code> dispatch.</p>
 <h2 id="supported-protocols"><a class="header" href="#supported-protocols">Supported Protocols</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Protocol</th><th>Provider Struct</th><th>API Format</th></tr></thead><tbody>
 <tr><td><code>AnthropicMessages</code></td><td><code>AnthropicProvider</code></td><td>Anthropic Messages API</td></tr>
@@ -249,7 +249,7 @@ pub trait StreamProvider: Send + Sync {
 <span class="boring">}</span></code></pre></pre>
 <p>All providers receive a <code>StreamConfig</code>, emit <code>StreamEvent</code>s through the channel, and return the final <code>Message</code>.</p>
 <h2 id="openapi-tool-adapter"><a class="header" href="#openapi-tool-adapter">OpenAPI Tool Adapter</a></h2>
-<p>In addition to LLM providers, arcgent can auto-generate tools from any OpenAPI 3.0 spec. This is a tool integration (not a provider), but it complements the provider system by letting agents call external APIs.</p>
+<p>In addition to LLM providers, arcagent can auto-generate tools from any OpenAPI 3.0 spec. This is a tool integration (not a provider), but it complements the provider system by letting agents call external APIs.</p>
 <p>Enable with <code>features = ["openapi"]</code>. See the <a href="../guides/openapi.html">OpenAPI Tools guide</a> for details.</p>
 
                     </main>

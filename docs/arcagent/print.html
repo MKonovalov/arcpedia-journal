@@ -3,13 +3,13 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>arcgent Documentation</title>
+        <title>arcagent Documentation</title>
         <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -122,7 +122,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -157,11 +157,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="arcgent"><a class="header" href="#arcgent">arcgent</a></h1>
+                        <h1 id="arcagent"><a class="header" href="#arcagent">arcagent</a></h1>
 <p><strong>Simple, effective agent loop in Rust.</strong></p>
-<p>arcgent is a library for building LLM-powered agents that can use tools. It provides the core loop — prompt the model, execute tool calls, feed results back — and gets out of your way.</p>
+<p>arcagent is a library for building LLM-powered agents that can use tools. It provides the core loop — prompt the model, execute tool calls, feed results back — and gets out of your way.</p>
 <h2 id="philosophy"><a class="header" href="#philosophy">Philosophy</a></h2>
-<p><strong>The loop is the product.</strong> An agent is just a loop: send messages to an LLM, get back text and tool calls, execute the tools, repeat until the model stops. arcgent implements this loop with streaming, cancellation, context management, and multi-provider support — so you don't have to.</p>
+<p><strong>The loop is the product.</strong> An agent is just a loop: send messages to an LLM, get back text and tool calls, execute the tools, repeat until the model stops. arcagent implements this loop with streaming, cancellation, context management, and multi-provider support — so you don't have to.</p>
 <h2 id="features"><a class="header" href="#features">Features</a></h2>
 <ul>
 <li><strong>Streaming events</strong> — Real-time <code>AgentEvent</code> stream for UI updates (text deltas, thinking, tool execution)</li>
@@ -174,9 +174,9 @@
 <li><strong>Builder pattern</strong> — Ergonomic <code>Agent</code> struct with chainable configuration</li>
 </ul>
 <h2 id="ecosystem"><a class="header" href="#ecosystem">Ecosystem</a></h2>
-<p>arcgent is part of the <a href="https://github.com/MKonovalov">Arc</a> ecosystem. It powers the agent backend for Arc applications.</p>
+<p>arcagent is part of the <a href="https://github.com/MKonovalov">Arc</a> ecosystem. It powers the agent backend for Arc applications.</p>
 <ul>
-<li><strong>Repository:</strong> <a href="https://github.com/MKonovalov/arcgent">github.com/MKonovalov/arcgent</a></li>
+<li><strong>Repository:</strong> <a href="https://github.com/MKonovalov/arcagent">github.com/MKonovalov/arcagent</a></li>
 <li><strong>License:</strong> MIT</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
@@ -187,11 +187,11 @@
 </ul>
 <h2 id="add-to-cargotoml"><a class="header" href="#add-to-cargotoml">Add to Cargo.toml</a></h2>
 <pre><code class="language-toml">[dependencies]
-arcgent = "0.12"
+arcagent = "0.12"
 tokio = { version = "1", features = ["full"] }
 </code></pre>
 <h2 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h2>
-<p>arcgent brings in these key dependencies automatically:</p>
+<p>arcagent brings in these key dependencies automatically:</p>
 <div class="table-wrapper"><table><thead><tr><th>Crate</th><th>Purpose</th></tr></thead><tbody>
 <tr><td><code>tokio</code></td><td>Async runtime (full features)</td></tr>
 <tr><td><code>serde</code> / <code>serde_json</code></td><td>Serialization</td></tr>
@@ -211,13 +211,13 @@ tokio = { version = "1", features = ["full"] }
 </div>
 <p>Enable in <code>Cargo.toml</code>:</p>
 <pre><code class="language-toml">[dependencies]
-arcgent = { version = "0.12", features = ["openapi"] }
+arcagent = { version = "0.12", features = ["openapi"] }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h1>
 <h2 id="basic-example-with-anthropic"><a class="header" href="#basic-example-with-anthropic">Basic Example with Anthropic</a></h2>
-<pre><pre class="playground"><code class="language-rust">use arcgent::{Agent, AgentEvent, StreamDelta};
-use arcgent::provider::ModelConfig;
-use arcgent::tools::default_tools;
+<pre><pre class="playground"><code class="language-rust">use arcagent::{Agent, AgentEvent, StreamDelta};
+use arcagent::provider::ModelConfig;
+use arcagent::tools::default_tools;
 
 #[tokio::main]
 async fn main() {
@@ -255,9 +255,9 @@ async fn main() {
 }</code></pre></pre>
 <h2 id="example-with-openai-compatible-provider"><a class="header" href="#example-with-openai-compatible-provider">Example with OpenAI-Compatible Provider</a></h2>
 <p>For OpenAI, xAI, Groq, DeepSeek, Mistral, MiniMax, Z.ai, Qwen, Ollama, or any compatible API, pass the matching <code>ModelConfig</code> preset — <code>from_config</code> picks the OpenAI-compatible provider and resolves the provider's env key automatically:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::{Agent, AgentEvent};
-use arcgent::provider::ModelConfig;
-use arcgent::tools::default_tools;
+<pre><pre class="playground"><code class="language-rust">use arcagent::{Agent, AgentEvent};
+use arcagent::provider::ModelConfig;
+use arcagent::tools::default_tools;
 
 #[tokio::main]
 async fn main() {
@@ -271,7 +271,7 @@ async fn main() {
     while let Some(event) = rx.recv().await {
         match event {
             AgentEvent::MessageUpdate { delta, .. } =&gt; {
-                if let arcgent::StreamDelta::Text { delta } = delta {
+                if let arcagent::StreamDelta::Text { delta } = delta {
                     print!("{}", delta);
                 }
             }
@@ -282,9 +282,9 @@ async fn main() {
 }</code></pre></pre>
 <h2 id="real-time-streaming"><a class="header" href="#real-time-streaming">Real-Time Streaming</a></h2>
 <p><code>agent.prompt()</code> spawns the agent loop concurrently and returns a receiver immediately, so events stream in real-time as they're produced. For cases where you want to provide your own channel (e.g., to share a sender across tasks), use <code>prompt_with_sender()</code>:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::{Agent, AgentEvent, StreamDelta};
-use arcgent::provider::ModelConfig;
-use arcgent::tools::default_tools;
+<pre><pre class="playground"><code class="language-rust">use arcagent::{Agent, AgentEvent, StreamDelta};
+use arcagent::provider::ModelConfig;
+use arcagent::tools::default_tools;
 
 #[tokio::main]
 async fn main() {
@@ -317,9 +317,9 @@ async fn main() {
 }</code></pre></pre>
 <h2 id="using-the-low-level-api"><a class="header" href="#using-the-low-level-api">Using the Low-Level API</a></h2>
 <p>For more control, use <code>agent_loop()</code> directly:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::agent_loop::{agent_loop, AgentLoopConfig};
-use arcgent::provider::AnthropicProvider;
-use arcgent::types::*;
+<pre><pre class="playground"><code class="language-rust">use arcagent::agent_loop::{agent_loop, AgentLoopConfig};
+use arcagent::provider::AnthropicProvider;
+use arcagent::types::*;
 use tokio::sync::mpsc;
 use tokio_util::sync::CancellationToken;
 
@@ -331,7 +331,7 @@ async fn main() {
     let mut context = AgentContext {
         system_prompt: "You are helpful.".into(),
         messages: Vec::new(),
-        tools: arcgent::tools::default_tools(),
+        tools: arcagent::tools::default_tools(),
     };
 
     let config = AgentLoopConfig {
@@ -351,7 +351,7 @@ async fn main() {
         execution_limits: None,
         cache_config: CacheConfig::default(),
         tool_execution: ToolExecutionStrategy::default(),
-        retry_config: arcgent::RetryConfig::default(),
+        retry_config: arcagent::RetryConfig::default(),
         before_turn: None,
         after_turn: None,
         on_error: None,
@@ -369,7 +369,7 @@ async fn main() {
     println!("Got {} new messages", new_messages.len());
 }</code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-agent-loop"><a class="header" href="#the-agent-loop">The Agent Loop</a></h1>
-<p>The agent loop is the core of arcgent. It implements the fundamental cycle:</p>
+<p>The agent loop is the core of arcagent. It implements the fundamental cycle:</p>
 <pre><code>User prompt → LLM call → Tool execution → LLM call → ... → Final response
 </code></pre>
 <h2 id="how-it-works"><a class="header" href="#how-it-works">How It Works</a></h2>
@@ -568,11 +568,11 @@ snapshot and store them separately if they must survive a restart.</li>
 };
 <span class="boring">}</span></code></pre></pre>
 <h2 id="custom-compaction"><a class="header" href="#custom-compaction">Custom Compaction</a></h2>
-<p>By default, when context exceeds the token budget in <code>ContextConfig</code>, arcgent runs a 3-level compaction strategy: truncate tool outputs → summarize old turns → drop middle messages. You can replace this with your own <code>CompactionStrategy</code>:</p>
+<p>By default, when context exceeds the token budget in <code>ContextConfig</code>, arcagent runs a 3-level compaction strategy: truncate tool outputs → summarize old turns → drop middle messages. You can replace this with your own <code>CompactionStrategy</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::context::{CompactionStrategy, ContextConfig, compact_messages};
-use arcgent::types::*;
+</span>use arcagent::context::{CompactionStrategy, ContextConfig, compact_messages};
+use arcagent::types::*;
 
 struct MyCompaction;
 
@@ -891,7 +891,7 @@ pub trait AgentTool: Send + Sync {
 <h2 id="implementing-a-custom-tool"><a class="header" href="#implementing-a-custom-tool">Implementing a Custom Tool</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::types::*;
+</span>use arcagent::types::*;
 use async_trait::async_trait;
 
 pub struct WeatherTool;
@@ -938,7 +938,7 @@ impl AgentTool for WeatherTool {
 <p>Register custom tools alongside defaults:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::tools::default_tools;
+</span>use arcagent::tools::default_tools;
 
 let mut tools = default_tools();
 tools.push(Box::new(WeatherTool));
@@ -983,7 +983,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <p>Call <code>on_update</code> whenever you have progress to report:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::types::*;
+</span>use arcagent::types::*;
 
 struct DataProcessorTool;
 
@@ -1083,9 +1083,9 @@ impl AgentTool for DataProcessorTool {
 </ul>
 <h3 id="end-to-end-example"><a class="header" href="#end-to-end-example">End-to-end example</a></h3>
 <p>Here's a complete example: a CLI agent with a deploy tool that streams progress. The human sees real-time output while the LLM only gets the final result.</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::agent::Agent;
-use arcgent::provider::ModelConfig;
-use arcgent::types::*;
+<pre><pre class="playground"><code class="language-rust">use arcagent::agent::Agent;
+use arcagent::provider::ModelConfig;
+use arcagent::types::*;
 
 /// A tool that deploys an app and streams each step.
 struct DeployTool;
@@ -1197,7 +1197,7 @@ Successfully deployed to production. The deployment completed all 4 stages.
 </code></pre>
 <p>The human sees each step as it happens. The LLM only sees "Successfully deployed to production" and can continue the conversation from there.</p>
 <h3 id="how-agents-benefit"><a class="header" href="#how-agents-benefit">How agents benefit</a></h3>
-<p>When an AI agent (like a coding assistant) uses arcgent, streaming tool output helps in two ways:</p>
+<p>When an AI agent (like a coding assistant) uses arcagent, streaming tool output helps in two ways:</p>
 <ol>
 <li>
 <p><strong>Human oversight</strong> — The human watching the agent work sees real-time progress instead of waiting for a tool to finish. A bash command running <code>cargo build</code> can stream compiler output as it happens, so the human can interrupt early if something is wrong.</p>
@@ -1218,8 +1218,8 @@ Successfully deployed to production. The deployment completed all 4 stages.
 <h3 id="configuration"><a class="header" href="#configuration">Configuration</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::types::ToolExecutionStrategy;
+</span>use arcagent::agent::Agent;
+use arcagent::types::ToolExecutionStrategy;
 
 // Default — parallel (fastest)
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"));
@@ -1241,11 +1241,11 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <p>Steering messages are always checked between execution units (between each tool in Sequential, after all tools in Parallel, between batches in Batched). If a user interrupts, remaining tools are skipped.</p>
 <h2 id="permissions-tool-middleware"><a class="header" href="#permissions-tool-middleware">Permissions: Tool Middleware</a></h2>
 <p>Every tool call can be gated by an async <strong>middleware chain</strong> — the mechanism
-behind permission prompts, policy engines, and argument rewriting. arcgent
+behind permission prompts, policy engines, and argument rewriting. arcagent
 ships the hook, not a policy: with no middleware installed, every call runs.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::{ToolCallRequest, ToolDecision, ToolMiddleware};
+</span>use arcagent::{ToolCallRequest, ToolDecision, ToolMiddleware};
 
 struct ReadOnlyPolicy;
 
@@ -1291,7 +1291,7 @@ serialize inside your middleware (e.g. a <code>tokio::sync::Mutex</code>) or swi
 is enforced natively by the provider — not by prompt begging.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::{Agent, provider::ModelConfig};
+</span>use arcagent::{Agent, provider::ModelConfig};
 
 #[derive(serde::Deserialize)]
 struct Invoice {
@@ -1350,12 +1350,12 @@ tool-using turns.</li>
 parsing.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="context-management"><a class="header" href="#context-management">Context Management</a></h1>
-<p>Long-running agents accumulate messages that exceed the model's context window. arcgent provides token tracking, overflow detection, tiered compaction, and execution limits.</p>
+<p>Long-running agents accumulate messages that exceed the model's context window. arcagent provides token tracking, overflow detection, tiered compaction, and execution limits.</p>
 <h2 id="token-estimation"><a class="header" href="#token-estimation">Token Estimation</a></h2>
 <p>Fast estimation without external tokenizer dependencies:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::context::{estimate_tokens, message_tokens, total_tokens};
+</span>use arcagent::context::{estimate_tokens, message_tokens, total_tokens};
 
 estimate_tokens("Hello world");          // ~3 tokens (chars / 4)
 message_tokens(&amp;agent_message);          // estimate for a single message
@@ -1365,7 +1365,7 @@ total_tokens(&amp;messages);                 // estimate for all messages
 <p><code>ContextTracker</code> combines real token counts from provider responses with estimation for new messages — more accurate than pure estimation:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::context::ContextTracker;
+</span>use arcagent::context::ContextTracker;
 
 let mut tracker = ContextTracker::new();
 
@@ -1380,12 +1380,12 @@ tracker.reset();
 <span class="boring">}</span></code></pre></pre>
 <p>When no usage data is available, it falls back to chars/4 estimation.</p>
 <h2 id="context-overflow-detection"><a class="header" href="#context-overflow-detection">Context Overflow Detection</a></h2>
-<p>When the context exceeds a model's window, providers return overflow errors. arcgent detects these automatically across all major providers.</p>
+<p>When the context exceeds a model's window, providers return overflow errors. arcagent detects these automatically across all major providers.</p>
 <h3 id="http-level-detection"><a class="header" href="#http-level-detection">HTTP-level detection</a></h3>
 <p>Providers that check before streaming (Google, Bedrock, Vertex) return <code>ProviderError::ContextOverflow</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ProviderError;
+</span>use arcagent::provider::ProviderError;
 
 match agent.prompt("...").await {
     // The loop already handles this — but you can also match it:
@@ -1405,7 +1405,7 @@ match agent.prompt("...").await {
 }
 <span class="boring">}</span></code></pre></pre>
 <h3 id="handling-overflow-in-your-application"><a class="header" href="#handling-overflow-in-your-application">Handling overflow in your application</a></h3>
-<p>arcgent provides the detection and building blocks. Your application wires the compaction strategy:</p>
+<p>arcagent provides the detection and building blocks. Your application wires the compaction strategy:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Proactive: check before each prompt
@@ -1419,7 +1419,7 @@ if tokens &gt; context_window - reserve {
 // ... on ContextOverflow or message.is_context_overflow():
 //   compact, then retry with agent.continue_loop()
 <span class="boring">}</span></code></pre></pre>
-<p>For LLM-based summarization (asking the model to summarize old messages), implement that in your application layer — arcgent provides <code>replace_messages()</code> and <code>compact_messages()</code> as building blocks.</p>
+<p>For LLM-based summarization (asking the model to summarize old messages), implement that in your application layer — arcagent provides <code>replace_messages()</code> and <code>compact_messages()</code> as building blocks.</p>
 <h2 id="contextconfig"><a class="header" href="#contextconfig">ContextConfig</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1480,7 +1480,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <span class="boring">}</span></code></pre></pre>
 <p>This sets both <code>context_config</code> and <code>execution_limits</code> to <code>None</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="prompt-caching"><a class="header" href="#prompt-caching">Prompt Caching</a></h1>
-<p>arcgent automatically optimizes API costs through prompt caching. For providers that support it, stable content (system prompts, tool definitions, conversation history) is cached between turns, giving you up to <strong>90% savings</strong> on input tokens.</p>
+<p>arcagent automatically optimizes API costs through prompt caching. For providers that support it, stable content (system prompts, tool definitions, conversation history) is cached between turns, giving you up to <strong>90% savings</strong> on input tokens.</p>
 <h2 id="how-it-works-1"><a class="header" href="#how-it-works-1">How It Works</a></h2>
 <p>In a multi-turn agent loop, each request sends the full context: system prompt + tools + conversation history. Without caching, you pay full price for all of it every turn. With caching, the provider reuses previously processed prefixes.</p>
 <h3 id="provider-support"><a class="header" href="#provider-support">Provider Support</a></h3>
@@ -1494,7 +1494,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 </tbody></table>
 </div>
 <h3 id="what-gets-cached-anthropic"><a class="header" href="#what-gets-cached-anthropic">What Gets Cached (Anthropic)</a></h3>
-<p>arcgent places up to 3 cache breakpoints automatically:</p>
+<p>arcagent places up to 3 cache breakpoints automatically:</p>
 <ol>
 <li><strong>System prompt</strong> — stable across all turns</li>
 <li><strong>Tool definitions</strong> — rarely change between turns</li>
@@ -1502,7 +1502,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 </ol>
 <p>This means on a typical multi-turn conversation, only the latest user message and the new assistant response cost full price.</p>
 <h3 id="deepseek"><a class="header" href="#deepseek">DeepSeek</a></h3>
-<p>DeepSeek's API manages context caching automatically. arcgent does not send
+<p>DeepSeek's API manages context caching automatically. arcagent does not send
 Anthropic-style <code>cache_control</code> markers for DeepSeek; instead, keep stable
 prefixes stable (system prompt, tool definitions, and earlier messages) and
 monitor DeepSeek's <code>prompt_cache_hit_tokens</code> / <code>prompt_cache_miss_tokens</code>
@@ -1512,7 +1512,7 @@ usage fields through <code>Usage.cache_read</code> and <code>Usage.input</code>.
 <h3 id="disable-explicit-cache-hints"><a class="header" href="#disable-explicit-cache-hints">Disable Explicit Cache Hints</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::{CacheConfig, CacheStrategy};
+</span>use arcagent::{CacheConfig, CacheStrategy};
 
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
     .with_cache_config(CacheConfig {
@@ -1520,7 +1520,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
         ..Default::default()
     });
 <span class="boring">}</span></code></pre></pre>
-<p>This disables arcgent-managed cache hints for providers such as Anthropic. It
+<p>This disables arcagent-managed cache hints for providers such as Anthropic. It
 does not turn off automatic server-side caching for providers such as DeepSeek
 or OpenAI.</p>
 <h3 id="fine-grained-control"><a class="header" href="#fine-grained-control">Fine-Grained Control</a></h3>
@@ -1567,7 +1567,7 @@ println!("Cache hit rate: {:.1}%", usage.cache_hit_rate() * 100.0);
 <li><strong>Monitor <code>cache_hit_rate()</code></strong> — if it's consistently low, check if your system prompt or tools are changing unexpectedly</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="retry-with-backoff"><a class="header" href="#retry-with-backoff">Retry with Backoff</a></h1>
-<p>When an LLM provider returns a transient error — rate limit (HTTP 429) or network failure — arcgent automatically retries with exponential backoff and jitter. No configuration required; it works out of the box.</p>
+<p>When an LLM provider returns a transient error — rate limit (HTTP 429) or network failure — arcagent automatically retries with exponential backoff and jitter. No configuration required; it works out of the box.</p>
 <h2 id="how-it-works-2"><a class="header" href="#how-it-works-2">How it works</a></h2>
 <pre><code>Request → Error? → Retryable? → Wait (backoff + jitter) → Retry → ...
                        ↓ No
@@ -1614,8 +1614,8 @@ println!("Cache hit rate: {:.1}%", usage.cache_hit_rate() * 100.0);
 <h3 id="using-the-agent-builder"><a class="header" href="#using-the-agent-builder">Using the Agent builder</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::retry::RetryConfig;
+</span>use arcagent::agent::Agent;
+use arcagent::retry::RetryConfig;
 
 // Default — 3 retries, exponential backoff (recommended)
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"));
@@ -1636,8 +1636,8 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <h3 id="using-agentloopconfig-directly"><a class="header" href="#using-agentloopconfig-directly">Using AgentLoopConfig directly</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent_loop::AgentLoopConfig;
-use arcgent::retry::RetryConfig;
+</span>use arcagent::agent_loop::AgentLoopConfig;
+use arcagent::retry::RetryConfig;
 
 let config = AgentLoopConfig {
     // ...other fields...
@@ -1650,7 +1650,7 @@ let config = AgentLoopConfig {
 };
 <span class="boring">}</span></code></pre></pre>
 <h2 id="rate-limit-headers"><a class="header" href="#rate-limit-headers">Rate limit headers</a></h2>
-<p>When a provider returns <code>ProviderError::RateLimited { retry_after_ms: Some(5000) }</code>, arcgent uses that exact delay instead of the calculated backoff. This respects the provider's guidance — if Anthropic says "retry after 5 seconds", we wait 5 seconds, not our own estimate.</p>
+<p>When a provider returns <code>ProviderError::RateLimited { retry_after_ms: Some(5000) }</code>, arcagent uses that exact delay instead of the calculated backoff. This respects the provider's guidance — if Anthropic says "retry after 5 seconds", we wait 5 seconds, not our own estimate.</p>
 <p>If no <code>retry_after_ms</code> is provided, the exponential backoff kicks in.</p>
 <h2 id="observability"><a class="header" href="#observability">Observability</a></h2>
 <p>Retry attempts are logged via <code>tracing</code> at the <code>WARN</code> level:</p>
@@ -1667,7 +1667,7 @@ tracing_subscriber::fmt::init();
 
 // Or filter to just retries
 tracing_subscriber::fmt()
-    .with_env_filter("arcgent::retry=warn")
+    .with_env_filter("arcagent::retry=warn")
     .init();
 <span class="boring">}</span></code></pre></pre>
 <h2 id="design-notes"><a class="header" href="#design-notes">Design notes</a></h2>
@@ -1713,10 +1713,10 @@ For complex diffs: `bash {baseDir}/scripts/diff_summary.sh`
 <h2 id="loading-skills"><a class="header" href="#loading-skills">Loading skills</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::SkillSet;
+</span>use arcagent::SkillSet;
 
 // Load from multiple directories (later dirs override earlier on name conflict)
-let skills = SkillSet::load(&amp;["./skills", "~/.arcgent/skills"])?;
+let skills = SkillSet::load(&amp;["./skills", "~/.arcagent/skills"])?;
 
 // Or load from a single directory with a label
 let workspace_skills = SkillSet::load_dir("./skills", "workspace")?;
@@ -1724,7 +1724,7 @@ let workspace_skills = SkillSet::load_dir("./skills", "workspace")?;
 <h2 id="using-with-agent"><a class="header" href="#using-with-agent">Using with Agent</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::{Agent, SkillSet};
+</span>use arcagent::{Agent, SkillSet};
 
 let skills = SkillSet::load(&amp;["./skills"])?;
 
@@ -1744,19 +1744,19 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 </code></pre>
 <p>When the agent encounters a task matching a skill, it reads the SKILL.md using the <code>read_file</code> tool and follows the instructions. No special infrastructure needed.</p>
 <h2 id="precedence"><a class="header" href="#precedence">Precedence</a></h2>
-<p>When loading from multiple directories, later directories take precedence. A skill in <code>./skills/</code> overrides the same-named skill in <code>~/.arcgent/skills/</code>.</p>
+<p>When loading from multiple directories, later directories take precedence. A skill in <code>./skills/</code> overrides the same-named skill in <code>~/.arcagent/skills/</code>.</p>
 <p>You can also merge skill sets explicitly:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut base = SkillSet::load_dir("/usr/share/arcgent/skills", "bundled")?;
-let user = SkillSet::load_dir("~/.arcgent/skills", "user")?;
+</span>let mut base = SkillSet::load_dir("/usr/share/arcagent/skills", "bundled")?;
+let user = SkillSet::load_dir("~/.arcagent/skills", "user")?;
 let workspace = SkillSet::load_dir("./skills", "workspace")?;
 
 base.merge(user);
 base.merge(workspace); // workspace wins on conflict
 <span class="boring">}</span></code></pre></pre>
 <h2 id="compatibility"><a class="header" href="#compatibility">Compatibility</a></h2>
-<p>By following the AgentSkills standard, skills written for arcgent work with Claude Code, Codex CLI, Gemini CLI, Cursor, OpenCode, Goose, and any other compatible agent. Write once, use everywhere.</p>
+<p>By following the AgentSkills standard, skills written for arcagent work with Claude Code, Codex CLI, Gemini CLI, Cursor, OpenCode, Goose, and any other compatible agent. Write once, use everywhere.</p>
 <h2 id="design-philosophy"><a class="header" href="#design-philosophy">Design philosophy</a></h2>
 <p>Skills are deliberately simple:</p>
 <ul>
@@ -1782,9 +1782,9 @@ base.merge(workspace); // workspace wins on conflict
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::sync::Arc;
-use arcgent::sub_agent::SubAgentTool;
-use arcgent::provider::ModelConfig;
-use arcgent::tools;
+use arcagent::sub_agent::SubAgentTool;
+use arcagent::provider::ModelConfig;
+use arcagent::tools;
 
 let researcher = SubAgentTool::from_config(
     "researcher",
@@ -1801,7 +1801,7 @@ let researcher = SubAgentTool::from_config(
 <h2 id="registering-on-a-parent-agent"><a class="header" href="#registering-on-a-parent-agent">Registering on a Parent Agent</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
+</span>use arcagent::agent::Agent;
 
 let mut agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
     .with_system_prompt("You coordinate between sub-agents.")
@@ -1838,7 +1838,7 @@ let mut agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Cl
 <p><code>SharedState</code> solves this: store an artifact once, and any number of sub-agents read/write it by reference.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::shared_state::SharedState;
+</span>use arcagent::shared_state::SharedState;
 
 let state = SharedState::new();
 state.set("ci_log", large_log_text).await.unwrap();
@@ -1896,7 +1896,7 @@ let state = SharedState::with_max_bytes(50 * 1024 * 1024); // 50MB
 <p><strong>FileBackend</strong> — one file per key, persistent across process restarts:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::shared_state::FileBackend;
+</span>use arcagent::shared_state::FileBackend;
 
 let state = SharedState::with_backend(FileBackend::new(".agent-state"));
 <span class="boring">}</span></code></pre></pre>
@@ -1904,7 +1904,7 @@ let state = SharedState::with_backend(FileBackend::new(".agent-state"));
 <p><strong>Custom backends</strong> implement the <code>SharedStateBackend</code> trait:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::shared_state::{SharedStateBackend, SharedStateError};
+</span>use arcagent::shared_state::{SharedStateBackend, SharedStateError};
 
 #[async_trait::async_trait]
 impl SharedStateBackend for MyRedisBackend {
@@ -1919,10 +1919,10 @@ let state = SharedState::with_backend(MyRedisBackend::new());
 <span class="boring">}</span></code></pre></pre>
 <p>See <a href="concepts/../../examples/shared_state.rs"><code>examples/shared_state.rs</code></a> for a complete parallel analysis demo.</p>
 <h2 id="multi-provider-support"><a class="header" href="#multi-provider-support">Multi-Provider Support</a></h2>
-<p>Sub-agents can use any provider supported by arcgent — not just Anthropic. Pass a <code>ModelConfig</code> to configure the base URL, compat flags, and other provider-specific settings:</p>
+<p>Sub-agents can use any provider supported by arcagent — not just Anthropic. Pass a <code>ModelConfig</code> to configure the base URL, compat flags, and other provider-specific settings:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let model_config = ModelConfig::xai("grok-4-1-fast-reasoning", "Grok 3 Mini Fast");
 
@@ -1946,11 +1946,11 @@ let analyst = SubAgentTool::from_config("analyst", model_config)
 <li><a href="concepts/../../examples/rlm.rs"><code>examples/rlm.rs</code></a> — Recursive Language Model: nested sub-agents with autonomous file discovery</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="state-persistence"><a class="header" href="#state-persistence">State Persistence</a></h1>
-<p>arcgent supports saving and restoring agent conversation state, enabling pause/resume workflows, state transfer between processes, and conversation checkpointing.</p>
+<p>arcagent supports saving and restoring agent conversation state, enabling pause/resume workflows, state transfer between processes, and conversation checkpointing.</p>
 <h2 id="save-and-restore"><a class="header" href="#save-and-restore">Save and Restore</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
+</span>use arcagent::agent::Agent;
 
 // After running some conversation turns...
 let json = agent.save_messages()?;
@@ -2032,7 +2032,7 @@ branch stays intact</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::{Agent, Session, provider::ModelConfig};
+</span>use arcagent::{Agent, Session, provider::ModelConfig};
 
 let mut session = Session::new();
 
@@ -2100,15 +2100,15 @@ event log</strong> (<code>state/events.jsonl</code>) that folds into a typed
 goal/run/model/tool graph, alongside identity, skills, and memory tiers.
 Restore = <code>git clone</code> + replay. Clone your agent onto a new machine and it
 remembers everything, with lineage.</p>
-<p>arcgent bridges to GASP through the <code>gasp</code> feature (backed by
-<a href="https://crates.io/crates/arcgent-state"><code>arcgent-state</code></a>, the reference
-runtime). The bridge is a consumer of the <a href="https://docs.rs/arcgent/latest/arcgent/enum.AgentEvent.html"><code>AgentEvent</code></a> stream — <strong>zero
+<p>arcagent bridges to GASP through the <code>gasp</code> feature (backed by
+<a href="https://crates.io/crates/arcagent-state"><code>arcagent-state</code></a>, the reference
+runtime). The bridge is a consumer of the <a href="https://docs.rs/arcagent/latest/arcagent/enum.AgentEvent.html"><code>AgentEvent</code></a> stream — <strong>zero
 agent-loop changes</strong>:</p>
-<pre><code class="language-toml">arcgent = { version = "0.12", features = ["gasp"] }
+<pre><code class="language-toml">arcagent = { version = "0.12", features = ["gasp"] }
 </code></pre>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::gasp::{GaspRecorder, GoalRef};
+</span>use arcagent::gasp::{GaspRecorder, GoalRef};
 
 let recorder = GaspRecorder::init(
     "./my-agent-repo", "my-agent", "worker-1",
@@ -2145,7 +2145,7 @@ handle — <strong>always await it</strong> — while event forwarding to your U
 uninterrupted. GASP repos are single-writer: don't share one repo between
 live workers, and record one run at a time.</p>
 <h2 id="tested-conformance"><a class="header" href="#tested-conformance">Tested conformance</a></h2>
-<p>arcgent's CI emits an agent repo with a mock provider and runs the GASP
+<p>arcagent's CI emits an agent repo with a mock provider and runs the GASP
 conformance checker against it — all seven mechanical checks (envelope
 round-trip, replay, vocabulary, append-only git history, causation integrity,
 restore, domain↔ops consistency) must pass on every commit. Try it yourself:</p>
@@ -2155,7 +2155,7 @@ cargo run -q -- /tmp/my-agent
 # conformant: all checks passed
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="lifecycle-callbacks"><a class="header" href="#lifecycle-callbacks">Lifecycle Callbacks</a></h1>
-<p>arcgent provides three lifecycle callbacks that let you observe and control the agent loop without modifying its internals.</p>
+<p>arcagent provides three lifecycle callbacks that let you observe and control the agent loop without modifying its internals.</p>
 <h2 id="callbacks"><a class="header" href="#callbacks">Callbacks</a></h2>
 <h3 id="before_turn"><a class="header" href="#before_turn"><code>before_turn</code></a></h3>
 <p>Called before each LLM call. Receives the current message history and the turn number (0-indexed). Return <code>false</code> to abort the loop.</p>
@@ -2209,7 +2209,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::sync::Arc;
-use arcgent::agent_loop::AgentLoopConfig;
+use arcagent::agent_loop::AgentLoopConfig;
 
 let config = AgentLoopConfig {
     before_turn: Some(Arc::new(|_msgs, turn| turn &lt; 5)),
@@ -2233,7 +2233,7 @@ let config = AgentLoopConfig {
   10. Emit TurnEnd event
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="telemetry"><a class="header" href="#telemetry">Telemetry</a></h1>
-<p>arcgent instruments the loop with <a href="https://docs.rs/tracing"><code>tracing</code></a> <strong>spans</strong>
+<p>arcagent instruments the loop with <a href="https://docs.rs/tracing"><code>tracing</code></a> <strong>spans</strong>
 — structured, timed, nested units your observability stack can consume. With
 no subscriber installed the overhead is near-zero (a cached per-callsite
 interest check); nothing is exported unless you opt in.</p>
@@ -2258,7 +2258,7 @@ duration comes free with the span.</li>
 <span class="boring">}</span></code></pre></pre>
 <p>Run <code>cargo run --example telemetry</code> to see it.</p>
 <h2 id="production-opentelemetry"><a class="header" href="#production-opentelemetry">Production: OpenTelemetry</a></h2>
-<p>The OTel bridge is <strong>application-side</strong> — arcgent needs no OTel dependency
+<p>The OTel bridge is <strong>application-side</strong> — arcagent needs no OTel dependency
 (that's the point of <code>tracing</code>). Install the
 <a href="https://docs.rs/tracing-opentelemetry"><code>tracing-opentelemetry</code></a> layer and the
 same spans flow to any OTLP backend — Datadog, Grafana Tempo, Honeycomb,
@@ -2277,12 +2277,12 @@ let provider = opentelemetry_sdk::trace::SdkTracerProvider::builder()
     .build();
 
 let subscriber = tracing_subscriber::registry()
-    .with(tracing_opentelemetry::layer().with_tracer(provider.tracer("arcgent-app")));
+    .with(tracing_opentelemetry::layer().with_tracer(provider.tracer("arcagent-app")));
 tracing::subscriber::set_global_default(subscriber)?;
 <span class="boring">}</span></code></pre></pre>
 <p>(The OTel crates rework their builder APIs between releases — if this snippet
 drifts, the authoritative wiring is the
-<a href="https://docs.rs/tracing-opentelemetry"><code>tracing-opentelemetry</code> docs</a>; arcgent
+<a href="https://docs.rs/tracing-opentelemetry"><code>tracing-opentelemetry</code> docs</a>; arcagent
 only emits standard <code>tracing</code> spans and does not depend on OTel.)</p>
 <p>Because these are ordinary <code>tracing</code> spans, an agent call nests inside your
 app's existing request traces (e.g. an axum handler span) automatically.</p>
@@ -2303,8 +2303,8 @@ same <code>CostConfig</code> data as <a href="concepts/../reference/api.html"><c
 <h2 id="connecting-to-mcp-servers"><a class="header" href="#connecting-to-mcp-servers">Connecting to MCP Servers</a></h2>
 <h3 id="stdio-transport"><a class="header" href="#stdio-transport">Stdio Transport</a></h3>
 <p>Use <code>with_mcp_server_stdio()</code> to spawn an MCP server process and register its tools:</p>
-<pre><pre class="playground"><code class="language-rust">use arcgent::Agent;
-use arcgent::provider::ModelConfig;
+<pre><pre class="playground"><code class="language-rust">use arcagent::Agent;
+use arcagent::provider::ModelConfig;
 
 #[tokio::main]
 async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -2342,7 +2342,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
     .await?;
 <span class="boring">}</span></code></pre></pre>
 <h2 id="how-mcp-tools-work"><a class="header" href="#how-mcp-tools-work">How MCP Tools Work</a></h2>
-<p>When you call <code>with_mcp_server_stdio()</code> or <code>with_mcp_server_http()</code>, arcgent:</p>
+<p>When you call <code>with_mcp_server_stdio()</code> or <code>with_mcp_server_http()</code>, arcagent:</p>
 <ol>
 <li>Connects to the MCP server and performs the <code>initialize</code> handshake</li>
 <li>Calls <code>tools/list</code> to discover available tools</li>
@@ -2353,7 +2353,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <h2 id="mixing-built-in-and-mcp-tools"><a class="header" href="#mixing-built-in-and-mcp-tools">Mixing Built-in and MCP Tools</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::tools::default_tools;
+</span>use arcagent::tools::default_tools;
 
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
     .with_tools(default_tools())  // bash, read, write, edit, list, search
@@ -2365,7 +2365,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <p>For lower-level control, use <code>McpClient</code> directly:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::mcp::{McpClient, McpToolAdapter};
+</span>use arcagent::mcp::{McpClient, McpToolAdapter};
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
@@ -2398,9 +2398,9 @@ let adapters = McpToolAdapter::from_client(client).await?;
 <p><strong>Feature-gated</strong> — add <code>features = ["openapi"]</code> to your <code>Cargo.toml</code>.</p>
 </blockquote>
 <h2 id="quick-start-1"><a class="header" href="#quick-start-1">Quick Start</a></h2>
-<pre><pre class="playground"><code class="language-rust">use arcgent::Agent;
-use arcgent::openapi::{OpenApiToolAdapter, OpenApiConfig, OperationFilter};
-use arcgent::provider::ModelConfig;
+<pre><pre class="playground"><code class="language-rust">use arcagent::Agent;
+use arcagent::openapi::{OpenApiToolAdapter, OpenApiConfig, OperationFilter};
+use arcagent::provider::ModelConfig;
 
 #[tokio::main]
 async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -2500,7 +2500,7 @@ let filter = OperationFilter::ByPathPrefix("/repos".into());
 <p>OpenAPI tools work alongside built-in tools and MCP tools:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::tools::default_tools;
+</span>use arcagent::tools::default_tools;
 
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"))
     .with_tools(default_tools())
@@ -2516,7 +2516,7 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 <li>Path-level <code>$ref</code> items are skipped</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="providers-overview"><a class="header" href="#providers-overview">Providers Overview</a></h1>
-<p>arcgent supports multiple LLM providers through the <code>StreamProvider</code> trait and <code>ApiProtocol</code> dispatch.</p>
+<p>arcagent supports multiple LLM providers through the <code>StreamProvider</code> trait and <code>ApiProtocol</code> dispatch.</p>
 <h2 id="supported-protocols"><a class="header" href="#supported-protocols">Supported Protocols</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Protocol</th><th>Provider Struct</th><th>API Format</th></tr></thead><tbody>
 <tr><td><code>AnthropicMessages</code></td><td><code>AnthropicProvider</code></td><td>Anthropic Messages API</td></tr>
@@ -2605,10 +2605,10 @@ pub trait StreamProvider: Send + Sync {
 <span class="boring">}</span></code></pre></pre>
 <p>All providers receive a <code>StreamConfig</code>, emit <code>StreamEvent</code>s through the channel, and return the final <code>Message</code>.</p>
 <h2 id="openapi-tool-adapter-1"><a class="header" href="#openapi-tool-adapter-1">OpenAPI Tool Adapter</a></h2>
-<p>In addition to LLM providers, arcgent can auto-generate tools from any OpenAPI 3.0 spec. This is a tool integration (not a provider), but it complements the provider system by letting agents call external APIs.</p>
+<p>In addition to LLM providers, arcagent can auto-generate tools from any OpenAPI 3.0 spec. This is a tool integration (not a provider), but it complements the provider system by letting agents call external APIs.</p>
 <p>Enable with <code>features = ["openapi"]</code>. See the <a href="providers/../guides/openapi.html">OpenAPI Tools guide</a> for details.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="model-presets"><a class="header" href="#model-presets">Model Presets</a></h1>
-<p>arcgent's first-class model presets are the <code>ModelConfig::*</code> constructors. A preset sets provider routing, base URL, context metadata, default output limits, and provider compatibility flags.</p>
+<p>arcagent's first-class model presets are the <code>ModelConfig::*</code> constructors. A preset sets provider routing, base URL, context metadata, default output limits, and provider compatibility flags.</p>
 <p>Use a preset when the provider is listed here. Use a custom <code>ModelConfig</code> when you need a compatible provider or endpoint that does not have a constructor yet.</p>
 <h2 id="first-class-constructors"><a class="header" href="#first-class-constructors">First-Class Constructors</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Constructor</th><th>Provider</th><th>Protocol</th><th>Default Base URL</th><th>Context</th><th>Default Max Output</th></tr></thead><tbody>
@@ -2635,13 +2635,13 @@ pub trait StreamProvider: Send + Sync {
 <tr><td><code>ModelConfig::local(base_url, model_id)</code></td><td>Local compatible server</td><td><code>OpenAiCompletions</code></td><td>caller provided</td><td>128K</td><td>4,096</td></tr>
 </tbody></table>
 </div>
-<p>The constructors do not validate model IDs. They send the <code>id</code> you pass through to the provider, which lets you use newly released model IDs before arcgent updates its examples.</p>
+<p>The constructors do not validate model IDs. They send the <code>id</code> you pass through to the provider, which lets you use newly released model IDs before arcagent updates its examples.</p>
 <p>The named presets (<code>claude_fable_5</code>, <code>claude_opus_4_8</code>, <code>claude_sonnet_5</code>, <code>claude_haiku_4_5</code>, <code>gpt_5_5</code>) also fill in real <code>CostConfig</code> pricing. The OpenCode presets select the API protocol from the model id — see <a href="providers/opencode.html">OpenCode Zen &amp; Go</a>.</p>
 <h2 id="openai-compatible-presets"><a class="header" href="#openai-compatible-presets">OpenAI-Compatible Presets</a></h2>
 <p>These constructors all use <code>OpenAiCompatProvider</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let agent = Agent::from_config(ModelConfig::deepseek(
     "deepseek-v4-flash",
@@ -2711,7 +2711,7 @@ let pro = ModelConfig::deepseek("deepseek-v4-pro", "DeepSeek V4 Pro");
 let reasoner = ModelConfig::deepseek("deepseek-reasoner", "DeepSeek Reasoner");
 <span class="boring">}</span></code></pre></pre>
 <p>DeepSeek documents <code>deepseek-chat</code> and <code>deepseek-reasoner</code> as compatibility aliases scheduled for deprecation on 2026-07-24. In DeepSeek's current API, <code>deepseek-chat</code> maps to the non-thinking mode of <code>deepseek-v4-flash</code>, while <code>deepseek-reasoner</code> maps to the thinking mode of <code>deepseek-v4-flash</code>.</p>
-<p>arcgent also sends DeepSeek's current request shape:</p>
+<p>arcagent also sends DeepSeek's current request shape:</p>
 <ul>
 <li><code>max_tokens</code>, not <code>max_completion_tokens</code></li>
 <li><code>thinking: { "type": "enabled" | "disabled" }</code></li>
@@ -2735,7 +2735,7 @@ let reasoner_agent = Agent::from_config(ModelConfig::deepseek("deepseek-reasoner
 <h2 id="usage-1"><a class="header" href="#usage-1">Usage</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude Sonnet 5"));
 <span class="boring">}</span></code></pre></pre>
@@ -2807,7 +2807,7 @@ speaks the Anthropic Messages protocol (e.g. OpenCode Zen/Go — see
 <p>Requires a <code>ModelConfig</code> with <code>compat</code> flags set in <code>StreamConfig.model_config</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let agent = Agent::from_config(ModelConfig::openai("gpt-5.5", "GPT-5.5"));
 <span class="boring">}</span></code></pre></pre>
@@ -2843,7 +2843,7 @@ let agent = Agent::from_config(ModelConfig::openai("gpt-5.5", "GPT-5.5"));
 </tbody></table>
 </div>
 <p><code>OpenAiCompat</code> presets are lower-level quirk flags. A provider is first-class when it also has a <code>ModelConfig::*</code> constructor; see <a href="providers/model-presets.html">Model Presets</a>.</p>
-<p>DeepSeek context caching is automatic on DeepSeek's side. arcgent does not send
+<p>DeepSeek context caching is automatic on DeepSeek's side. arcagent does not send
 <code>cache_control</code> markers for DeepSeek, but it does parse DeepSeek's
 <code>prompt_cache_hit_tokens</code> and <code>prompt_cache_miss_tokens</code> usage fields into
 <code>Usage.cache_read</code> and <code>Usage.input</code>.</p>
@@ -2886,8 +2886,8 @@ let agent = Agent::from_config(ModelConfig::openai("gpt-5.5", "GPT-5.5"));
 <p>Use <code>ModelConfig::ollama()</code> for Ollama, or <code>ModelConfig::local()</code> for any other local OpenAI-compatible server. No API key required:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::provider::ModelConfig;
+</span>use arcagent::agent::Agent;
+use arcagent::provider::ModelConfig;
 
 // The `local` provider resolves to an empty API key automatically — none needed.
 let agent = Agent::from_config(ModelConfig::local("http://localhost:1234/v1", "my-model"));
@@ -2928,7 +2928,7 @@ let qwen_on_ollama = ModelConfig::openai_compat(
 <p><strong>Terms of service.</strong> <code>api.githubcopilot.com</code> is intended for use through official
 GitHub Copilot editor integrations. Accessing it from a third-party agent is against
 GitHub's Copilot terms of service and may result in token revocation or account
-suspension. arcgent does <strong>not</strong> ship a first-class Copilot preset for this reason.
+suspension. arcagent does <strong>not</strong> ship a first-class Copilot preset for this reason.
 The configuration below is documented only for users who understand and accept that
 risk. Use at your own discretion.</p>
 </blockquote>
@@ -2937,8 +2937,8 @@ risk. Use at your own discretion.</p>
 Copilot token as the API key:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::agent::Agent;
-use arcgent::provider::{ModelConfig, OpenAiCompat};
+</span>use arcagent::agent::Agent;
+use arcagent::provider::{ModelConfig, OpenAiCompat};
 
 let mut config = ModelConfig::openai_compat(
     "https://api.githubcopilot.com",
@@ -2958,7 +2958,7 @@ exchanging a GitHub OAuth token (from the device-login flow, or from the local C
 config under <code>~/.config/github-copilot/</code>) at
 <code>https://api.github.com/copilot_internal/v2/token</code>. That token <strong>expires after ~25–30
 minutes</strong>.</p>
-<p>arcgent has no built-in credential refresh — <code>api_key</code> is static for the life of the
+<p>arcagent has no built-in credential refresh — <code>api_key</code> is static for the life of the
 provider (<code>Authorization: Bearer {api_key}</code>). For anything longer than a single short
 turn, <strong>you</strong> must exchange and refresh the token yourself and rebuild the agent's config
 with a fresh token before it expires; otherwise long runs will fail with <code>401</code>.</p>
@@ -2973,7 +2973,7 @@ with a fresh token before it expires; otherwise long runs will fail with <code>4
 <h2 id="google-ai-studio"><a class="header" href="#google-ai-studio">Google AI Studio</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
+</span>use arcagent::provider::ModelConfig;
 
 let agent = Agent::from_config(ModelConfig::google("gemini-2.5-flash", "Gemini 2.5 Flash"));
 <span class="boring">}</span></code></pre></pre>
@@ -2986,7 +2986,7 @@ let agent = Agent::from_config(ModelConfig::google("gemini-2.5-flash", "Gemini 2
 </ul>
 <h3 id="message-format"><a class="header" href="#message-format">Message Format</a></h3>
 <p>Google uses a different message format than OpenAI/Anthropic:</p>
-<div class="table-wrapper"><table><thead><tr><th>arcgent</th><th>Google API</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>arcagent</th><th>Google API</th></tr></thead><tbody>
 <tr><td><code>user</code> role</td><td><code>user</code> role</td></tr>
 <tr><td><code>assistant</code> role</td><td><code>model</code> role</td></tr>
 <tr><td><code>Content::Text</code></td><td><code>{"text": "..."}</code></td></tr>
@@ -3011,7 +3011,7 @@ let agent = Agent::from_config(ModelConfig::google("gemini-2.5-flash", "Gemini 2
 <h2 id="usage-3"><a class="header" href="#usage-3">Usage</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::{ApiProtocol, ModelConfig};
+</span>use arcagent::provider::{ApiProtocol, ModelConfig};
 
 // Bedrock has no dedicated ModelConfig preset — build one with `custom`.
 let agent = Agent::from_config(ModelConfig::custom(
@@ -3037,7 +3037,7 @@ let agent = Agent::from_config(ModelConfig::custom(
 </ul>
 <h2 id="message-format-1"><a class="header" href="#message-format-1">Message Format</a></h2>
 <p>Bedrock uses its own content block format:</p>
-<div class="table-wrapper"><table><thead><tr><th>arcgent</th><th>Bedrock API</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>arcagent</th><th>Bedrock API</th></tr></thead><tbody>
 <tr><td><code>Content::Text</code></td><td><code>{"text": "..."}</code></td></tr>
 <tr><td><code>Content::Image</code></td><td><code>{"image": {"format": "...", "source": {"bytes": "..."}}}</code></td></tr>
 <tr><td><code>Content::ToolCall</code></td><td><code>{"toolUse": {"toolUseId": "...", "name": "...", "input": ...}}</code></td></tr>
@@ -3061,7 +3061,7 @@ let agent = Agent::from_config(ModelConfig::custom(
 <h2 id="usage-4"><a class="header" href="#usage-4">Usage</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::{ApiProtocol, ModelConfig};
+</span>use arcagent::provider::{ApiProtocol, ModelConfig};
 
 // Azure has no dedicated ModelConfig preset — build one with `custom`.
 // The provider ("azure") resolves the key from AZURE_OPENAI_API_KEY.
@@ -3097,7 +3097,7 @@ let agent = Agent::from_config(ModelConfig::custom(
 </ul>
 <h2 id="message-format-2"><a class="header" href="#message-format-2">Message Format</a></h2>
 <p>Uses the Responses API input format:</p>
-<div class="table-wrapper"><table><thead><tr><th>arcgent</th><th>Azure Responses API</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>arcagent</th><th>Azure Responses API</th></tr></thead><tbody>
 <tr><td>User message</td><td><code>{"role": "user", "content": "..."}</code></td></tr>
 <tr><td>Assistant text</td><td><code>{"type": "message", "role": "assistant", "content": [{"type": "output_text", ...}]}</code></td></tr>
 <tr><td>Tool call</td><td><code>{"type": "function_call", "call_id": "...", "name": "...", "arguments": "..."}</code></td></tr>
@@ -3115,7 +3115,7 @@ let agent = Agent::from_config(ModelConfig::custom(
 <tr><td>Go</td><td>GLM, Kimi, DeepSeek, MiMo, ...</td><td>Chat Completions</td><td><code>OpenAiCompatProvider</code></td></tr>
 </tbody></table>
 </div>
-<p>Gemini models on Zen are <strong>not supported</strong> — Zen serves them over a Google-native endpoint shape arcgent does not target. A <code>gemini-*</code> id falls through to Chat Completions (with a warning logged) and will fail at request time.</p>
+<p>Gemini models on Zen are <strong>not supported</strong> — Zen serves them over a Google-native endpoint shape arcagent does not target. A <code>gemini-*</code> id falls through to Chat Completions (with a warning logged) and will fail at request time.</p>
 <p>The routing table mirrors the Zen/Go endpoint docs as of mid-2026. OpenCode can change gateway-side routing at any time — if a model errors, verify its protocol against <code>{base}/models</code>.</p>
 <h2 id="usage-5"><a class="header" href="#usage-5">Usage</a></h2>
 <p><code>Agent::from_config</code> selects the built-in provider from the preset's protocol
@@ -3123,8 +3123,8 @@ let agent = Agent::from_config(ModelConfig::custom(
 works whichever model family you pick:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::provider::ModelConfig;
-use arcgent::Agent;
+</span>use arcagent::provider::ModelConfig;
+use arcagent::Agent;
 
 // Chat-completions model (GLM, Kimi, DeepSeek, ...)
 let agent = Agent::from_config(ModelConfig::opencode_zen("glm-5.2"));
@@ -3150,10 +3150,10 @@ config.context_window = 256_000;
 </ul>
 <p>Model list and metadata: <code>https://opencode.ai/zen/v1/models</code> and <code>https://opencode.ai/zen/go/v1/models</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="built-in-tools"><a class="header" href="#built-in-tools">Built-in Tools</a></h1>
-<p>arcgent ships with six coding-oriented tools. Get them all with <code>default_tools()</code>:</p>
+<p>arcagent ships with six coding-oriented tools. Get them all with <code>default_tools()</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::tools::default_tools;
+</span>use arcagent::tools::default_tools;
 let tools = default_tools();
 <span class="boring">}</span></code></pre></pre>
 <h2 id="bashtool"><a class="header" href="#bashtool">BashTool</a></h2>
@@ -3359,7 +3359,7 @@ compat flags enable it; the Google and Bedrock providers currently ignore
 }
 <span class="boring">}</span></code></pre></pre>
 <h2 id="modelconfig-presets"><a class="header" href="#modelconfig-presets">ModelConfig Presets</a></h2>
-<p>arcgent provides first-class <code>ModelConfig::*</code> constructors for Anthropic, OpenAI, Google Gemini, xAI, Groq, DeepSeek, Mistral, MiniMax, Z.ai, Qwen, Ollama, and local OpenAI-compatible servers.</p>
+<p>arcagent provides first-class <code>ModelConfig::*</code> constructors for Anthropic, OpenAI, Google Gemini, xAI, Groq, DeepSeek, Mistral, MiniMax, Z.ai, Qwen, Ollama, and local OpenAI-compatible servers.</p>
 <p>See <a href="reference/../providers/model-presets.html">Model Presets</a> for the full table of constructors, default base URLs, context windows, and DeepSeek legacy alias notes.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="api-reference"><a class="header" href="#api-reference">API Reference</a></h1>
 <h2 id="top-level-functions"><a class="header" href="#top-level-functions">Top-Level Functions</a></h2>
@@ -3536,7 +3536,7 @@ let sub = SubAgentTool::from_provider("name", Arc::new(provider), ModelConfig::a
 <h3 id="construction-2"><a class="header" href="#construction-2">Construction</a></h3>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::shared_state::{SharedState, FileBackend};
+</span>use arcagent::shared_state::{SharedState, FileBackend};
 
 let state = SharedState::new();                              // MemoryBackend, 10MB cap
 let state = SharedState::with_max_bytes(50 * 1024 * 1024);  // MemoryBackend, 50MB cap
@@ -3580,7 +3580,7 @@ pub use types::*;  // Message, Content, AgentMessage, AgentEvent, etc.
 <span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="architecture-overview"><a class="header" href="#architecture-overview">Architecture Overview</a></h1>
 <h2 id="layered-design"><a class="header" href="#layered-design">Layered Design</a></h2>
-<p>arcgent is organized as three conceptual layers within a single crate. Dependencies flow strictly downward — upper layers use lower layers, never the reverse.</p>
+<p>arcagent is organized as three conceptual layers within a single crate. Dependencies flow strictly downward — upper layers use lower layers, never the reverse.</p>
 <pre><code>┌─────────────────────────────────────────────┐
 │  Layer 3: Orchestration          (planned)   │
 │  Multi-agent, delegation, work modes         │
@@ -3643,7 +3643,7 @@ pub use types::*;  // Message, Content, AgentMessage, AgentEvent, etc.
 <p><strong>Why not yet:</strong> Multi-agent orchestration adds complexity. The single-agent loop handles 95% of use cases. Layer 3 will be built when a concrete use case drives it, not speculatively.</p>
 <hr />
 <h2 id="module-layout"><a class="header" href="#module-layout">Module Layout</a></h2>
-<pre><code>arcgent/
+<pre><code>arcagent/
 ├── src/
 │   ├── lib.rs                  # Public re-exports
 │   │
@@ -3714,7 +3714,7 @@ Events flow back via mpsc::UnboundedSender&lt;AgentEvent&gt;
 <li>Set <code>ModelConfig.api</code> to match that protocol</li>
 <li>The registry dispatches <code>stream()</code> calls to the right provider</li>
 </ol>
-<p>Each provider translates between arcgent's <code>Message</code>/<code>Content</code> types and the provider's native API format. All providers emit <code>StreamEvent</code>s through the channel for real-time updates.</p>
+<p>Each provider translates between arcagent's <code>Message</code>/<code>Content</code> types and the provider's native API format. All providers emit <code>StreamEvent</code>s through the channel for real-time updates.</p>
 <h2 id="how-tools-plug-in"><a class="header" href="#how-tools-plug-in">How Tools Plug In</a></h2>
 <ol>
 <li>Implement <code>AgentTool</code> trait (Layer 1 interface)</li>

@@ -3,12 +3,12 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Skills - arcgent Documentation</title>
+        <title>Skills - arcagent Documentation</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Documentation for arcgent - simple, effective agent loop in Rust">
+        <meta name="description" content="Documentation for arcagent - simple, effective agent loop in Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">arcgent Documentation</h1>
+                    <h1 class="menu-title">arcagent Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -195,10 +195,10 @@ For complex diffs: `bash {baseDir}/scripts/diff_summary.sh`
 <h2 id="loading-skills"><a class="header" href="#loading-skills">Loading skills</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::SkillSet;
+</span>use arcagent::SkillSet;
 
 // Load from multiple directories (later dirs override earlier on name conflict)
-let skills = SkillSet::load(&amp;["./skills", "~/.arcgent/skills"])?;
+let skills = SkillSet::load(&amp;["./skills", "~/.arcagent/skills"])?;
 
 // Or load from a single directory with a label
 let workspace_skills = SkillSet::load_dir("./skills", "workspace")?;
@@ -206,7 +206,7 @@ let workspace_skills = SkillSet::load_dir("./skills", "workspace")?;
 <h2 id="using-with-agent"><a class="header" href="#using-with-agent">Using with Agent</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use arcgent::{Agent, SkillSet};
+</span>use arcagent::{Agent, SkillSet};
 
 let skills = SkillSet::load(&amp;["./skills"])?;
 
@@ -226,19 +226,19 @@ let agent = Agent::from_config(ModelConfig::anthropic("claude-sonnet-5", "Claude
 </code></pre>
 <p>When the agent encounters a task matching a skill, it reads the SKILL.md using the <code>read_file</code> tool and follows the instructions. No special infrastructure needed.</p>
 <h2 id="precedence"><a class="header" href="#precedence">Precedence</a></h2>
-<p>When loading from multiple directories, later directories take precedence. A skill in <code>./skills/</code> overrides the same-named skill in <code>~/.arcgent/skills/</code>.</p>
+<p>When loading from multiple directories, later directories take precedence. A skill in <code>./skills/</code> overrides the same-named skill in <code>~/.arcagent/skills/</code>.</p>
 <p>You can also merge skill sets explicitly:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut base = SkillSet::load_dir("/usr/share/arcgent/skills", "bundled")?;
-let user = SkillSet::load_dir("~/.arcgent/skills", "user")?;
+</span>let mut base = SkillSet::load_dir("/usr/share/arcagent/skills", "bundled")?;
+let user = SkillSet::load_dir("~/.arcagent/skills", "user")?;
 let workspace = SkillSet::load_dir("./skills", "workspace")?;
 
 base.merge(user);
 base.merge(workspace); // workspace wins on conflict
 <span class="boring">}</span></code></pre></pre>
 <h2 id="compatibility"><a class="header" href="#compatibility">Compatibility</a></h2>
-<p>By following the AgentSkills standard, skills written for arcgent work with Claude Code, Codex CLI, Gemini CLI, Cursor, OpenCode, Goose, and any other compatible agent. Write once, use everywhere.</p>
+<p>By following the AgentSkills standard, skills written for arcagent work with Claude Code, Codex CLI, Gemini CLI, Cursor, OpenCode, Goose, and any other compatible agent. Write once, use everywhere.</p>
 <h2 id="design-philosophy"><a class="header" href="#design-philosophy">Design philosophy</a></h2>
 <p>Skills are deliberately simple:</p>
 <ul>
